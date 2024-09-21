@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { PiCaretDownBold } from "react-icons/pi";
 import cn from "@utils/class-names";
@@ -198,7 +197,7 @@ export function LinkMenu({
   const { t } = useTranslation(lang!, "nav");
 
   return (
-    <ul className={cn("w-full", className, "bg-gray-0 dark:bg-gray-100")}>
+    <ul className={cn("w-full", className, " ms-autobg-gray-0 dark:bg-gray-100")}>
       {items.map((item, index) => {
         const Icon = lithiumMenuIcons?.[item.icon as LithiumMenuIconType];
         const isActive = item.href === pathname;
@@ -208,7 +207,8 @@ export function LinkMenu({
             className="relative my-0.5 "
           >
             <Link
-              href={`/${lang}${item?.href}` ?? "/"}
+            lang={lang!}
+              href={`/${lang!}${item?.href}` ?? "/"}
               className={cn(
                 "flex items-center gap-3 whitespace-nowrap rounded-md bg-gray-100/0 px-3 py-2 font-medium text-gray-900 duration-200 hover:bg-gray-100 hover:dark:bg-gray-50/50",
                 { "bg-gray-100 dark:bg-gray-50/50": isActive }
@@ -227,33 +227,38 @@ export function LinkMenu({
 export default function HeaderMenuLeft({ lang }: { lang?: string }) {
   const { direction } = useDirection();
   const pathname = usePathname();
+  
   const { t } = useTranslation(lang!, "nav");
   return (
     <>
       <NavMenu
         dir={direction as NavMenuDirection}
-        menuClassName="pb-5 top-3 gap-8 relative"
+        menuClassName="pb-5 top-3  relative  font-bold"
         menuContentClassName="mt-2 border border-gray-200 dark:border-gray-300"
       >
-        <NavMenu.Item>
-          <NavMenu.Trigger className="flex items-center gap-1 duration-200 ">
-            <MenuTriggerButton name="overview" />
+        <NavMenu.Item >
+          <NavMenu.Trigger  className="flex items-center text-sm  gap-1 pt-2 hover:text-orange-500">
+            <Link  lang={lang} href={`/${lang!}/subscriptions`}>
+            <MenuTriggerButton  name="Home" lang={lang}/>
+            </Link>
           </NavMenu.Trigger>
-          <NavMenu.Content className="border border-[red] bg-white dark:bg-gray-100">
+          {/* <NavMenu.Content className="border border-[red] bg-white dark:bg-gray-100">
             <div className="w-[172px]">
               <LinkMenu
                 className="flex flex-col p-3 dark:bg-gray-100"
-                items={lithiumMenuItems.overview.dropdownItems ?? []}
+                items={lithiumMenuItems.Subscriptions.dropdownItems ?? []}
                 lang={lang}
               />
             </div>
-          </NavMenu.Content>
+          </NavMenu.Content> */}
         </NavMenu.Item>
-        <NavMenu.Item>
-          <NavMenu.Trigger className="flex items-center gap-1 duration-200 ">
-            <MenuTriggerButton name="widgets" />
+        <NavMenu.Item >
+          <NavMenu.Trigger className="flex  items-center gap-1 pt-2 hover:text-orange-500   ">
+            <Link href={`/${lang!}/features`}>
+            <MenuTriggerButton name="Categories"  />
+            </Link>
           </NavMenu.Trigger>
-          <NavMenu.Content>
+          {/* <NavMenu.Content>
             <div className="w-[127px]">
               <LinkMenu
                 className="flex flex-col p-3 dark:bg-gray-100"
@@ -261,13 +266,15 @@ export default function HeaderMenuLeft({ lang }: { lang?: string }) {
                 lang={lang}
               />
             </div>
-          </NavMenu.Content>
+          </NavMenu.Content> */}
         </NavMenu.Item>
         <NavMenu.Item>
-          <NavMenu.Trigger className="flex items-center gap-1 duration-200 ">
-            <MenuTriggerButton name="forms" />
+          <NavMenu.Trigger className="flex  items-center gap-1 pt-2 hover:text-orange-500 ">
+            <Link lang={lang} href={`/${lang!}/faq`}>
+              <MenuTriggerButton name="FAQ" lang={lang!} />
+            </Link>
           </NavMenu.Trigger>
-          <NavMenu.Content>
+          {/* <NavMenu.Content>
             <div className="w-[460px]">
               <LinkMenu
                 className="grid grid-cols-2 gap-x-2 p-3 dark:bg-gray-100"
@@ -275,7 +282,7 @@ export default function HeaderMenuLeft({ lang }: { lang?: string }) {
                 lang={lang}
               />
             </div>
-          </NavMenu.Content>
+          </NavMenu.Content> */}
         </NavMenu.Item>
       </NavMenu>
     </>
@@ -295,22 +302,21 @@ function MenuTriggerButton({
     <>
       <span
         className={cn(
-          "inline-block w-full overflow-hidden whitespace-nowrap pe-1.5 ps-0 text-sm font-medium leading-5 text-gray-900 transition-all duration-200",
-          isActive(lithiumMenuItems[name].dropdownItems)
-            ? "text-primary "
-            : "group-hover:text-gray-900"
+          "inline-block 4xl:text-2xl w-full overflow-hidden whitespace-nowrap pe-1.5 ps-0 text-sm  leading-5 font-montserrat  font-monbold   transition-all duration-200",
+          isActive(lithiumMenuItems[name].name!) ?
+           "text-yellow-500 hover:text-orange-500" : " text-darkGreenColor dark:text-mainText hover:text-greenColor dark:hover:text-greenColor"
         )}
       >
         {t(lithiumMenuItems[name].name)}
       </span>
-      <span
+      {/* <span
         className={cn(
-          "text-gray-900 duration-200",
+          "text-mainText duration-200",
           isActive(lithiumMenuItems[name].dropdownItems!) && "text-primary"
         )}
       >
         <PiCaretDownBold />
-      </span>
+      </span> */}
     </>
   );
 }

@@ -5,6 +5,10 @@
   "sidebar-menu-apps": "تطبيقات",
   "sidebar-menu-auth": "مصادقة",
   "sidebar-menu-clear": "واضح",
+
+  "Home": "الرئيسيه",
+  "Categories": "الاقسام",
+  "FAQ": "الاسئله الشائعه",
   "sidebar-menu-search-here": "ابحث هنا",
   "sidebar-menu-quick-page-links": "روابط الصفحات السريعة",
   "sidebar-menu-no-result-found": "لم يتم العثور على نتائج",

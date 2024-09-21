@@ -1,5 +1,4 @@
 import { routes } from '@/config/routes';
-import { DUMMY_ID } from '@/config/constants';
 
 export type SubMenuItemType = {
   name: string;
@@ -23,8 +22,8 @@ export type LithiumMenuItem = {
 };
 
 export const lithiumMenuItems: LithiumMenuItem = {
-  overview: {
-    name: 'sidebar-menu-overview',
+  Home : {
+    name: 'Home',
     type: 'link',
     dropdownItems: [
       {
@@ -34,8 +33,8 @@ export const lithiumMenuItems: LithiumMenuItem = {
       },
     ],
   },
-  widgets: {
-    name: 'sidebar-menu-widgets',
+  Categories: {
+    name: 'Categories',
     type: 'link',
     dropdownItems: [
       {
@@ -52,6 +51,58 @@ export const lithiumMenuItems: LithiumMenuItem = {
   },
   forms: {
     name: 'sidebar-menu-forms',
+    type: 'link',
+    dropdownItems: [
+      {
+        name: 'sidebar-menu-account-settings',
+        href: routes.forms.profileSettings,
+        icon: 'UserSettingsIcon',
+      },
+      {
+        name: 'sidebar-menu-notification-preference',
+        href: routes.forms.notificationPreference,
+        icon: 'NotificationSettingsIcon',
+      },
+      {
+        name: 'sidebar-menu-personal-information',
+        href: routes.forms.personalInformation,
+        icon: 'UserInfoIcon',
+      },
+      {
+        name: 'sidebar-menu-newsletter',
+        href: routes.forms.newsletter,
+        icon: 'NewsletterAnnouncement',
+      },
+    ],
+  },
+  Documentation: {
+    name: 'Documentation',
+    type: 'link',
+    dropdownItems: [
+      {
+        name: 'sidebar-menu-account-settings',
+        href: routes.forms.profileSettings,
+        icon: 'UserSettingsIcon',
+      },
+      {
+        name: 'sidebar-menu-notification-preference',
+        href: routes.forms.notificationPreference,
+        icon: 'NotificationSettingsIcon',
+      },
+      {
+        name: 'sidebar-menu-personal-information',
+        href: routes.forms.personalInformation,
+        icon: 'UserInfoIcon',
+      },
+      {
+        name: 'sidebar-menu-newsletter',
+        href: routes.forms.newsletter,
+        icon: 'NewsletterAnnouncement',
+      },
+    ],
+  },
+  FAQ: {
+    name: 'FAQ',
     type: 'link',
     dropdownItems: [
       {
