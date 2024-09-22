@@ -1,5 +1,6 @@
 import type { CouponType } from "@/config/enums";
 
+
 export interface Coupon {
   id: string;
   name: string;
@@ -122,4 +123,58 @@ export interface FlightingCardProps {
   cheapest?: boolean;
   best?: boolean;
   quickest?: boolean;
+}
+
+ export type FullProduct = {
+  id: string
+  vat: number
+  vatType: number
+  discount: number
+  discountType: number
+  isTopSelling: boolean
+  isTopRated: boolean
+  seoDescription: string
+  categoryId: string
+  numberOfSales: number
+  variations: Array<{
+    id: string
+    name: string
+    buttonType: number
+    isActive: boolean
+    productId: string
+    choices: Array<{
+      id: string
+      name: string
+      price: number
+      isDefault: boolean
+      isActive: boolean
+      variationId: string
+    }>
+  }>
+  frequentlyOrderedWith: Array<{
+    productId: string
+    relatedProductId: string
+    relatedProduct: {
+      id: string
+      price: number
+      oldPrice: number
+      imageUrl: string
+    }
+  }>
+  reviews: Array<{
+    reviewText: string
+    rate: number
+    createdAt: string
+    lastUpdatedAt: string
+    endUserId: string
+  }>
+  name: string
+  price: number
+  oldPrice: number
+  description: string
+  imageUrl: string
+  isActive: boolean
+  createdAt: string
+  lastUpdatedAt: string
+  isOffer: boolean
 }

@@ -229,6 +229,28 @@ export default function HeaderMenuLeft({ lang }: { lang?: string }) {
   const pathname = usePathname();
   
   const { t } = useTranslation(lang!, "nav");
+  const [scrollY, setScrollY] = useState(0);
+  const [isStickyVisible, setStickyVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > 0) {
+        setStickyVisible(true);  // Show StickyHeader and hide Navbar when scrolling
+      } else {
+        setStickyVisible(false); // Show both Navbar and StickyHeader when at the top
+      }
+
+      setScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollY]);
   return (
     <>
       <NavMenu
@@ -237,7 +259,7 @@ export default function HeaderMenuLeft({ lang }: { lang?: string }) {
         menuContentClassName="mt-2 border border-gray-200 dark:border-gray-300"
       >
         <NavMenu.Item >
-          <NavMenu.Trigger  className="flex items-center text-sm  gap-1 pt-2 hover:text-orange-500">
+          <NavMenu.Trigger  className={`flex items-center text-sm  gap-1 pt-2 ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`}>
             <Link  lang={lang} href={`/${lang!}/subscriptions`}>
             <MenuTriggerButton  name="Home" lang={lang}/>
             </Link>
@@ -253,7 +275,7 @@ export default function HeaderMenuLeft({ lang }: { lang?: string }) {
           </NavMenu.Content> */}
         </NavMenu.Item>
         <NavMenu.Item >
-          <NavMenu.Trigger className="flex  items-center gap-1 pt-2 hover:text-orange-500   ">
+        <NavMenu.Trigger  className={`flex items-center text-sm  gap-1 pt-2 ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`}>
             <Link href={`/${lang!}/features`}>
             <MenuTriggerButton name="Categories"  />
             </Link>
@@ -269,8 +291,8 @@ export default function HeaderMenuLeft({ lang }: { lang?: string }) {
           </NavMenu.Content> */}
         </NavMenu.Item>
         <NavMenu.Item>
-          <NavMenu.Trigger className="flex  items-center gap-1 pt-2 hover:text-orange-500 ">
-            <Link lang={lang} href={`/${lang!}/faq`}>
+        <NavMenu.Trigger  className={`flex items-center text-sm  gap-1 pt-2 ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`}>
+              <Link lang={lang} href={`/${lang!}/faq`}>
               <MenuTriggerButton name="FAQ" lang={lang!} />
             </Link>
           </NavMenu.Trigger>

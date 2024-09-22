@@ -2,7 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+ul::-webkit-scrollbar {
+  display: none; /* إخفاء شريط التمرير */
+}
 
+/* لإخفاء شريط التمرير في Firefox */
+ul {
+  scrollbar-width: none; /* إخفاء شريط التمرير */
+}
 @layer base {
   /* default theme */
   :root {
@@ -1500,4 +1507,51 @@ div[style='z-index: 1000001;'],
 
 [dir='rtl'] :is(.rizzui-checkbox-icon, .rizzui-switch-on-icon) {
   @apply -scale-x-100;
+}
+
+/* slick slider top home */
+.slick-dots {
+  position: absolute;
+  bottom: 50px; /* يمكنك تعديل القيمة حسب الرغبة */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex !important;
+  justify-content: center;
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
+  color: white; /* يمكنك تغيير اللون حسب الرغبة */
+}
+
+.slick-dots li.slick-active button:before {
+  color: #f97316; /* تغيير لون النقطة النشطة */
+}
+
+
+
+@layer components {
+  @media (max-width: 991px) {
+    .mobile {
+      @apply hidden;
+    }
+  }
+}
+.imgBg{
+  background-image: url(../../../public/assets/kfc-background.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 25vh;
+  z-index: 2;
+}
+
+
+
+.blur1{
+  width: 100%;
+  min-height: 100vh;
+  filter: blur(1px);
+  pointer-events: none;
+  user-select: none;
 }
