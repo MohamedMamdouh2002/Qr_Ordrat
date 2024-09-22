@@ -101,8 +101,8 @@ export default function Header({ lang }: { lang?: string }) {
   <Navbar className={`  ${isStickyVisible ? "hidden" : ""}`} />
 
 <StickyHeader
-  className={` border-b-2 fixed top-0 w-full z-[990] py-3  ${
-    isStickyVisible ? "bg-orange-500/75 backdrop-blur-lg *:text-white border-orange-500" : "mt-14 block bg-white"
+  className={` border-b-2  w-full z-[990]   ${
+    isStickyVisible ? "bg-orange-500/75 fixed top-0 backdrop-blur-lg *:text-white" : "bg-white"
   }`}
 >
   <div className=" w-[90%] mx-auto z-[990] flex justify-between 2xl:py-1 3xl:px-8">
@@ -129,14 +129,16 @@ export default function Header({ lang }: { lang?: string }) {
         >
           <Logo iconOnly={true} />
         </Link>
-        <Input
-          type="search"
-          placeholder="Are you looking for something?"
-          value=""
-          className="w-72 outline-none focus:outline-none border-none hover:outline-none hover:border-none"
-          prefix={<PiMagnifyingGlassBold className="h-4 w-4" />}
-        />
-        <Link href="/cart">
+        <Link href={`/${lang!}/search`}>
+          <Input
+            type="search"
+            placeholder="Are you looking for something?"
+            value=""
+            className="w-72 outline-none focus:outline-none border-none hover:outline-none hover:border-none"
+            prefix={<PiMagnifyingGlassBold className="h-4 w-4" />}
+          />
+        </Link>
+        <Link href={`/${lang!}/card`}>
           <ShoppingCart className="transition duration-150 hover:text-orange-500" />
         </Link>
         <button className="transition duration-150 hover:text-orange-500">
