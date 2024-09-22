@@ -16,7 +16,7 @@ const config: Pick<Config, "prefix" | "presets" | "content" | "theme"> = {
 
     }
   },
-
+  
   presets: [sharedConfig],
 };
 

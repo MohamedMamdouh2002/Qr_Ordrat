@@ -24,8 +24,11 @@ import SearchWidget from "@/app/shared/search/search";
 import Navbar from "@/app/components/navbar/Navbar";
 import Image from "next/image";
 import logo from '@public/assets/karam-el-sham.png'
-import { AlignCenter, ShoppingCart } from "lucide-react";
+import { AlignCenter, ShoppingCart,User } from "lucide-react";
 import { useEffect, useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import  SideNav  from "@/app/components/sideNav/SideNav";
+
 function HeaderMenuRight() {
   return (
     <div className="ms-auto flex shrink-0 items-center gap-2 text-gray-700 xs:gap-3 xl:gap-4">
@@ -77,15 +80,16 @@ function HeaderMenuRight() {
 export default function Header({ lang }: { lang?: string }) {
   const [scrollY, setScrollY] = useState(0);
   const [isStickyVisible, setStickyVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // حالة التحكم في ظهور الـ SideNav
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > 0) {
-        setStickyVisible(true);  // Show StickyHeader and hide Navbar when scrolling
+        setStickyVisible(true);
       } else {
-        setStickyVisible(false); // Show both Navbar and StickyHeader when at the top
+        setStickyVisible(false);
       }
 
       setScrollY(currentScrollY);
@@ -97,58 +101,114 @@ export default function Header({ lang }: { lang?: string }) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [scrollY]);
+
   return <>
-  <Navbar className={`  ${isStickyVisible ? "hidden" : ""}`} />
+  <Navbar className={`   ${isStickyVisible ? "hidden  " : " "}`} />
 
 <StickyHeader
-  className={` border-b-2  w-full z-[990]   ${
-    isStickyVisible ? "bg-orange-500/75 fixed top-0 backdrop-blur-lg *:text-white" : "bg-white"
+
+  className={`hidden lg:flex  w-full z-[990]   ${
+    isStickyVisible ? "bg-orange-500/75    backdrop-blur-lg *:text-white" : "bg-white border-b-2"
+
   }`}
 >
   <div className=" w-[90%] mx-auto z-[990] flex justify-between 2xl:py-1 3xl:px-8">
-    <div className="hidden items-center gap-3 xl:flex">
+    <div className="hidden items-center gap-3 lg:flex">
       <Link
         aria-label="Site Logo"
         href="/"
-        className="me-4 hidden w-[210px] shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 xl:flex gap-4 items-center"
+        className="me-4 hidden w-[220px] shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 lg:flex gap-4 items-center"
       >
-        <Image src={logo} alt="logo" className="max-w-[50px]" />
-        <h1 className="font-bold text-lg">Karam El Sham</h1>
+        <Image src={logo} alt="logo" className="max-w-[60px]" />
+        <h1 className={`font-bold text-lg ${isStickyVisible?`text-white`:`text-black`}`}>Karam El Sham</h1>
       </Link>
       <HeaderMenuLeft lang={lang} />
     </div>
-    <div className="flex w-full items-center gap-5 xl:w-auto 3xl:gap-6">
-      <div className="flex w-full max-w-2xl items-center xl:w-auto gap-4">
+    <div className="flex w-full items-center gap-5 lg:w-auto 3xl:gap-6">
+      <div className="flex w-full max-w-2xl items-center lg:w-auto gap-4">
         <HamburgerButton
           view={<Sidebar className="static w-full 2xl:w-full" lang={lang} />}
         />
         <Link
           aria-label="Site Logo"
           href="/"
-          className="me-4 w-9 shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 xl:hidden"
+          className="me-4 w-9 shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 lg:hidden"
         >
           <Logo iconOnly={true} />
         </Link>
-        <Link href={`/${lang!}/search`}>
-          <Input
-            type="search"
-            placeholder="Are you looking for something?"
-            value=""
-            className="w-72 outline-none focus:outline-none border-none hover:outline-none hover:border-none"
-            prefix={<PiMagnifyingGlassBold className="h-4 w-4" />}
-          />
-        </Link>
+
+ <Link href={`/${lang!}/search`}>
+        <Input
+          type="search"
+          placeholder="Are you looking for something?"
+          value=""
+          
+          inputClassName={` ${isStickyVisible ? 
+            `hover:border-none focus:border-none focus:outline-none focus:ring-none border-none  placeholder:text-white` 
+            : 
+            `hover:border-none focus:border-none focus:outline-none focus:ring-none border-none  placeholder:text-white`
+          } placeholder:text-white`}  // تغيير لون الـ placeholder هنا
+          className={`w-72 ${isStickyVisible?"placeholder:text-yellow-400 placeholder-shown:text-yellow-300":"placeholder:text-yellow-400"}`}
+          prefix={<PiMagnifyingGlassBold className="h-4 w-4" />}
+        />
+  </Link>
         <Link href={`/${lang!}/card`}>
-          <ShoppingCart className="transition duration-150 hover:text-orange-500" />
+          <ShoppingCart className={`transition duration-150  ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`} />
+
         </Link>
-        <button className="transition duration-150 hover:text-orange-500">
+        <button
+          onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر
+          className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
+        >
           <AlignCenter />
         </button>
+
+        <AnimatePresence mode="wait">
+          {isOpen && <SideNav isOpen={isOpen} setIsOpen={setIsOpen} />} {/* تمرير الحالة ودالة الإغلاق */}
+        </AnimatePresence>
       </div>
       <HeaderMenuRight />
     </div>
   </div>
 </StickyHeader>
+<nav>
+    <div  className={`flex lg:hidden ${
+        isStickyVisible
+          ? "fixed top-0 z-[999] w-full bg-white  "
+          : "hidden"}`}>
+            <div className="w-5/6 mx-auto flex justify-between h-16  items-center">
+              <h1 className='text-base'>karam El Sham</h1>
+              <div className="  flex justify-between items-center">
+                    <LanguageSwitcher
+                    lang={lang!}
+                    className="ms-3 rounded-none shadow-none"
+                    variant="text"
+                    />
+                    <div className="flex gap-5">
+                        <PiMagnifyingGlassBold size={20} />    
+                        <User size={20} />    
+                    </div>
+              </div>
+            </div>
+    </div>
+  </nav>
+<div className={`imgBg  lg:hidden `}>
+  <div className={`w-10/12 mx-auto mt-5 flex justify-between items-center ${isStickyVisible ? "hidden  " : " "}`}>
+    <LanguageSwitcher
+      lang={lang!}
+      className="ms-3 rounded-none shadow-none"
+      variant="text"
+    />
+    <div className="flex gap-5">
+      <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
+        <PiMagnifyingGlassBold className="w-5 " />    
+      </div>
+      <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
+        <User className=" w-5 " />    
+      </div>
+    </div>
+  </div>
+</div>
   </>
   
 }

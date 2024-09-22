@@ -13,10 +13,12 @@ import { useCart } from '@/store/quick-cart/cart.context';
 import usePrice from '@hooks/use-price';
 import { Empty, EmptyProductBoxIcon, Title, Text, Input, Button } from 'rizzui';
 import ProductCarousel from '@/app/shared/product-carousel';
+
 import cardImage from '../../../../../public/assets/card.png'
 import sandwitsh from '../../../../../public/assets/sandwitsh.jpg'
 import SpecialNotes from '@/app/components/ui/SpecialNotes';
 import { useUserContext } from '@/app/components/context/UserContext';
+
 
 type FormValues = {
   couponCode: string;
@@ -45,6 +47,7 @@ function CheckCoupon() {
             <Input
               type="text"
               placeholder="Enter coupon code"
+
               inputClassName="text-sm [&.is-hover]:border-mainColor [&.is-focus]:border-mainColor [&.is-focus]:ring-mainColor"
               className="w-full"
               label={<Text>Do you have a promo code?</Text>}
@@ -53,6 +56,7 @@ function CheckCoupon() {
             />
             <Button
               type="submit"
+
               className={`ms-3 ${watch('couponCode') ? 'bg-mainColor hover:bg-mainColorHover dark:hover:bg-mainColor/90' : 'bg-muted/70'}`}
               disabled={watch('couponCode') ? false : true}
             >
@@ -104,6 +108,7 @@ function CartCalculations() {
             size="xl"
             rounded="pill"
             onClick={() => router.push(routes.eCommerce.checkout)}
+
             className="w-full bg-mainColor hover:bg-mainColorHover"
           >
             Proceed To Checkout
@@ -113,6 +118,7 @@ function CartCalculations() {
           size="xl"
           variant="outline"
           rounded="pill"
+
           className="w-full dark:bg-gray-100 dark:active:bg-gray-100 hover:border-mainColor"
         >
           <Image
@@ -258,10 +264,12 @@ export default function CartPageWrapper() {
         </div>
       </div>
 {/* 
+
       <ProductCarousel
         title={'Recommendations'}
         data={recommendationProducts}
       />
+
       <ProductCarousel title={'Recently Viewed'} data={recentlyProducts} /> */}
     </div>
   );

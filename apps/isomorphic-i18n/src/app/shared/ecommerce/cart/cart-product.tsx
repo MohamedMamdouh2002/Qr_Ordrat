@@ -47,6 +47,7 @@ export default function CartProduct({ product }: { product: CartItem }) {
               <li className="flex items-center gap-3 text-gray-500">
                 <span>sizeFood :</span>
                 <span className="text-gray-1000">{product.sizeFood}</span>
+
               </li>
             )}
             {!isEmpty(product.color) && (

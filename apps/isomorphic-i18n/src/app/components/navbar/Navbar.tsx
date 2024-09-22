@@ -6,7 +6,7 @@ import Link from 'next/link';
 import LanguageSwitcher from '@/app/i18n/language-switcher';
 function Navbar( {className, lang }: {className?:string, lang?: string }) {
   return <>
-    <div className="h-14 bg-orange-500 text-white text-sm" >
+    <div className="hidden lg:block h-14 bg-mainColor text-white text-sm" >
         <div className="w-[90%] mx-auto grid grid-cols-9 *:col-span-3 items-center justify-between py-4">
                 <div className="flex items-center gap-3">
                     <TicketPercentIcon /><span>EGP 239.5 off on select items</span>
