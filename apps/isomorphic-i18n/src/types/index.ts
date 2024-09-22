@@ -1,4 +1,5 @@
 import type { CouponType } from "@/config/enums";
+import { StaticImageData } from "next/image";
 
 
 export interface Coupon {
@@ -43,12 +44,13 @@ export interface CartItem {
   name: string;
   slug?: string;
   description?: string;
-  image: string;
+  image: string | StaticImageData;
   color?: ProductColor | null;
   price: number;
   salePrice?: number;
   quantity: number;
-  size: number;
+  size?: number;
+  sizeFood?: string;
   stock?: number;
   discount?: number;
 }

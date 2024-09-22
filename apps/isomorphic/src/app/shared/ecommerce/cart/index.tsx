@@ -126,6 +126,8 @@ function CartCalculations() {
 
 export default function CartPageWrapper() {
   const { items } = useCart();
+  console.log(items);
+  
   return (
     <div className="@container">
       <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">

@@ -14,6 +14,8 @@
     "@dnd-kit/sortable": "^8.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@floating-ui/react": "^0.26.13",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@googlemaps/js-api-loader": "^1.16.6",
     "@headlessui/react": "^1.7.19",
     "@isomorphic/core": "workspace:*",
@@ -81,6 +83,10 @@
     "react-hot-toast": "^2.4.1",
     "react-i18next": "^14.1.1",
     "react-icons": "^5.2.1",
+
+    "react-intersection-observer": "^9.13.1",
+    "react-loading-skeleton": "^3.5.0",
+
     "react-modal-sheet": "^3.1.0",
     "react-phone-input-2": "^2.15.1",
     "react-player": "^2.16.0",

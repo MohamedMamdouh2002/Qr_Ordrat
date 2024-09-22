@@ -41,12 +41,13 @@ export default function CartProduct({ product }: { product: CartItem }) {
           {product.description}
         </Text>
 
-        {(!isEmpty(product.size) || !isEmpty(product.color)) && (
+        {(!isEmpty(product.sizeFood) || !isEmpty(product.color)) && (
           <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-3 sm:mt-4 sm:gap-x-8">
-            {product.size !== 0 && (
+            {product.sizeFood && (
               <li className="flex items-center gap-3 text-gray-500">
-                <span>Size :</span>
-                <span className="text-gray-1000">{product.size}</span>
+                <span>sizeFood :</span>
+                <span className="text-gray-1000">{product.sizeFood}</span>
+
               </li>
             )}
             {!isEmpty(product.color) && (

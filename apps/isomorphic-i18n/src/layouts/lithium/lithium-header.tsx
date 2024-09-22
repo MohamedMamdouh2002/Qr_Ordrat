@@ -106,8 +106,10 @@ export default function Header({ lang }: { lang?: string }) {
   <Navbar className={`   ${isStickyVisible ? "hidden  " : " "}`} />
 
 <StickyHeader
+
   className={`hidden lg:flex  w-full z-[990]   ${
     isStickyVisible ? "bg-orange-500/75    backdrop-blur-lg *:text-white" : "bg-white border-b-2"
+
   }`}
 >
   <div className=" w-[90%] mx-auto z-[990] flex justify-between 2xl:py-1 3xl:px-8">
@@ -134,6 +136,8 @@ export default function Header({ lang }: { lang?: string }) {
         >
           <Logo iconOnly={true} />
         </Link>
+
+ <Link href={`/${lang!}/search`}>
         <Input
           type="search"
           placeholder="Are you looking for something?"
@@ -147,9 +151,10 @@ export default function Header({ lang }: { lang?: string }) {
           className={`w-72 ${isStickyVisible?"placeholder:text-yellow-400 placeholder-shown:text-yellow-300":"placeholder:text-yellow-400"}`}
           prefix={<PiMagnifyingGlassBold className="h-4 w-4" />}
         />
-
-        <Link href="/cart">
+  </Link>
+        <Link href={`/${lang!}/card`}>
           <ShoppingCart className={`transition duration-150  ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`} />
+
         </Link>
         <button
           onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر
