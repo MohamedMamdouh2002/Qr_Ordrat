@@ -22,7 +22,7 @@ const Card = ({ name, description, price, sale_price, newtrend, className, photo
   };
 
   return (
-    <div className={cn('group')}>
+    <div className={cn('group', className)}>
       <div onClick={handleOpenModal} className="sm:w-5/6 hover:scale-105 duration-200">
         <div className="relative w-full">
           <Image
