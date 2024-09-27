@@ -55,17 +55,7 @@ export interface CartItem {
   discount?: number;
 }
 
-export interface Product {
-  id: number;
-  slug?: string;
-  title: string;
-  description?: string;
-  price: number;
-  sale_price?: number;
-  thumbnail: string;
-  colors?: ProductColor[];
-  sizes?: number[];
-}
+
 
 export interface PosProduct {
   id: number;
@@ -180,3 +170,75 @@ export interface FlightingCardProps {
   lastUpdatedAt: string
   isOffer: boolean
 }
+
+export interface Product {
+  id: number;
+  slug?: string;
+  title: string;
+  description?: string;
+  price: number;
+  sale_price?: number;
+  thumbnail: string;
+  colors?: ProductColor[];
+  sizes?: number[];
+}
+export type AllCategories = Array<{
+  id: string
+  imageUrl: string
+  priority: number
+  isActive: boolean
+  numberOfProducts: number
+  bannerUrl?:string
+  numberOfColumns: '1' | '2' | 'full'
+  products: Array<Food>
+  name: string
+}>
+
+export type Food = {
+    id: string
+    isTopSelling: boolean
+    isTopRated: boolean
+    name: string
+    price: number
+    oldPrice: number
+    description: string
+    imageUrl: string
+    isActive: boolean
+    createdAt: string
+    lastUpdatedAt: string
+    isOffer: boolean
+}
+
+export type FoodId= {
+  id: string;
+  name: string;
+  description: string;
+  vat: number;
+  vatType: number;
+  discount: number;
+  discountType: number;
+  isActive: boolean;
+  createdAt: string;
+  lastUpdatedAt: string;
+  isTopSelling: boolean;
+  isTopRated: boolean;
+  seoDescription: string | null;
+  imageUrl: string;
+  categoryId: string;
+  numberOfSales: number;
+  category: string | null;
+  variations: any[]; // يمكنك تخصيص نوع البيانات بناءً على شكل الـ variations إذا كانت معلومة.
+  frequentlyOrderedWith: any[]; // يمكنك تخصيص نوع البيانات بناءً على شكل الـ frequentlyOrderedWith إذا كانت معلومة.
+  reviews: any[]; // يمكنك تخصيص نوع البيانات بناءً على شكل الـ reviews إذا كانت معلومة.
+  price: number;
+  oldPrice?: number; // الحقل اختياري لأنه يمكن أن يكون غير موجود في بعض الحالات.
+}
+export type Review = {
+  id: string;
+  createdAt: string;
+  endUser: {
+    name: string;
+  };
+  reviewText: string;
+  rate: number;
+};

@@ -19,7 +19,7 @@ function ItemPrice({ type, action, price, oldPrice, className }: Props) {
 				type={type}
 				mainItem={true}
 				action={action}
-				className={cn("w-full py-2", className)}
+				className='w-full py-2 '
 				price={price}
 				oldPrice={oldPrice}
 			/>

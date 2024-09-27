@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 import sharedConfig from "@repo/tailwind-config";
 
-const config: Pick<Config, "prefix" | "presets" | "content" | "theme"> = {
+const config: Pick<Config, "prefix" | "presets" | "content" | "theme" |"plugins"> = {
   content: [
     "./src/**/*.tsx",
     "./node_modules/rizzui/dist/*.{js,ts,jsx,tsx}",
@@ -18,6 +18,10 @@ const config: Pick<Config, "prefix" | "presets" | "content" | "theme"> = {
   },
   
   presets: [sharedConfig],
+  plugins: [
+    require('tailwind-scrollbar-hide'),
+    // باقي الإضافات
+  ],
 };
 
 export default config;

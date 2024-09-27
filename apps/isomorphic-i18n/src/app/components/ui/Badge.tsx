@@ -15,11 +15,11 @@ function Badge({ Icon, title, className }: Props) {
 	return (
 		<div
 			className={cn(
-				'flex items-center gap-1 bg-red-200 text-red-500 font-bold text-xs w-fit px-2 py-1 rounded-lg',
+				'flex items-center gap-1 bg-[#ffe3d3] text-[#F26F2F] font-semibold text-[10px] w-fit px-1 py-.5 rounded-md',
 				className
 			)}
 		>
-			<Icon className="fill-red-500 text-red-500" size={12} /> {title}
+			<Icon className="fill-[#F26F2F] text-[#F26F2F]" size={12} /> {title}
 		</div>
 	);
 }

@@ -4,6 +4,12 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: 'http',
+        hostname: 'api.ordrat.com',
+        port: '',
+        pathname: '/images/**',
+      },
+      {
         protocol: "https",
         hostname: "randomuser.me",
         pathname: "/api/portraits/**",

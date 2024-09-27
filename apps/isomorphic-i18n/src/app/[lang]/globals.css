@@ -1546,8 +1546,6 @@ div[style='z-index: 1000001;'],
   z-index: 2;
 }
 
-
-
 .blur1{
   width: 100%;
   min-height: 100vh;
@@ -1593,3 +1591,4 @@ div[style='z-index: 1000001;'],
     background: #3f3f46;
   }
 }
+

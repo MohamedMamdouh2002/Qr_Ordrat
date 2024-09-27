@@ -1,20 +1,11 @@
-import React from 'react';
+// import React from 'react';
 
-type Props = {};
+// type Props = {};
 
-function Choices({}: Props) {
-	return (
-		<div className="flex flex-col gap-3 py-4">
-			<div className="flex items-start justify-between">
-				<div className="flex flex-col gap-1">
-					<strong>Your choice of:</strong>
-					<span className='text-black/75'>Choose 1</span>
-				</div>
-				<div className="text-white bg-black px-2 py-1 rounded-full text-sm">Required</div>
-			</div>
+// function Choices({}: Props) {
+// 	return (
+// 	// 
+// 	);
+// }
 
-		</div>
-	);
-}
-
-export default Choices;
+// export default Choices;

@@ -27,7 +27,7 @@ import logo from '@public/assets/karam-el-sham.png'
 import { AlignCenter, ShoppingCart,User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import  SideNav  from "@/app/components/sideNav/SideNav";
+import  {SideNav}  from "@/app/components/sideNav/SideNav";
 
 function HeaderMenuRight() {
   return (
@@ -112,7 +112,7 @@ export default function Header({ lang }: { lang?: string }) {
 
   }`}
 >
-  <div className=" w-[90%] mx-auto z-[990] flex justify-between 2xl:py-1 3xl:px-8">
+  <div className=" w-[91%] mx-auto z-[990] flex  justify-between 2xl:py-1 3xl:px-8">
     <div className="hidden items-center gap-3 lg:flex">
       <Link
         aria-label="Site Logo"
@@ -136,36 +136,38 @@ export default function Header({ lang }: { lang?: string }) {
         >
           <Logo iconOnly={true} />
         </Link>
+      
 
- <Link href={`/${lang!}/search`}>
-        <Input
-          type="search"
-          placeholder="Are you looking for something?"
-          value=""
-          
-          inputClassName={` ${isStickyVisible ? 
-            `hover:border-none focus:border-none focus:outline-none focus:ring-none border-none  placeholder:text-white` 
-            : 
-            `hover:border-none focus:border-none focus:outline-none focus:ring-none border-none  placeholder:text-white`
-          } placeholder:text-white`}  // تغيير لون الـ placeholder هنا
-          className={`w-72 ${isStickyVisible?"placeholder:text-yellow-400 placeholder-shown:text-yellow-300":"placeholder:text-yellow-400"}`}
-          prefix={<PiMagnifyingGlassBold className="h-4 w-4" />}
-        />
-  </Link>
-        <Link href={`/${lang!}/card`}>
-          <ShoppingCart className={`transition duration-150  ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`} />
+          <Link href={`/${lang!}/search`}>
+                  <Input
+                    type="search"
+                    placeholder="Are you looking for something?"
+                    value=""
+                    
+                    inputClassName={` ${isStickyVisible ? 
+                      `hover:border-none focus:border-none focus:outline-none focus:ring-none border-none  placeholder:text-white` 
+                      : 
+                      `hover:border-none focus:border-none focus:outline-none focus:ring-none border-none  placeholder:text-white`
+                    } placeholder:text-white`}  // تغيير لون الـ placeholder هنا
+                    className={`w-72  ${isStickyVisible?"placeholder:text-yellow-400 placeholder-shown:text-yellow-300":"placeholder:text-yellow-400"}`}
+                    prefix={<PiMagnifyingGlassBold className="h-4 w-4" />}
+                  />
+          </Link>
+          <Link href={`/${lang!}/card`}>
+            <ShoppingCart className={`transition duration-150  ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`} />
 
-        </Link>
-        <button
-          onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر
-          className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
-        >
-          <AlignCenter />
-        </button>
+          </Link>
+          <button
+            onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر
+            className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
+          >
+            <AlignCenter />
+          </button>
 
-        <AnimatePresence mode="wait">
-          {isOpen && <SideNav isOpen={isOpen} setIsOpen={setIsOpen} />} {/* تمرير الحالة ودالة الإغلاق */}
-        </AnimatePresence>
+          <AnimatePresence mode="wait">
+            {isOpen && <SideNav isOpen={isOpen} setIsOpen={setIsOpen} />} {/* تمرير الحالة ودالة الإغلاق */}
+          </AnimatePresence>
+
       </div>
       <HeaderMenuRight />
     </div>

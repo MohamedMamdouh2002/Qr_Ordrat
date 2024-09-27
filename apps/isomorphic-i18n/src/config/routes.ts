@@ -141,6 +141,11 @@ export const routes = {
     otp5: '/auth/otp-5',
   },
   signIn: '/signin',
+  orders: '/orders',
+  order:{
+    orderId: (id: string) => `/orders/${id}`,
+
+  },
   faq: {
     details: (id: string) => `/faq/${id}`
   },
