@@ -6,7 +6,36 @@ import { useCart } from '@/store/quick-cart/cart.context';
 import { Title, Text } from 'rizzui';
 import { toCurrency } from '@utils/to-currency';
 import { CartItem } from '@/types';
-
+const cartItems: CartItem[] = [
+  {
+    id: 1,
+    name: "Product 1",
+    slug: "product-1",
+    description: "Description of Product 1",
+    image: "/path/to/image1.jpg", // يمكنك استبدال هذا بصورة ثابتة
+    color: null,
+    price: 100,
+    salePrice: 90,
+    quantity: 2,
+    size: 10,
+    sizeFood: "Large",
+    stock: 50,
+    discount: 10,
+  },
+  {
+    id: 2,
+    name: "Product 2",
+    slug: "product-2",
+    description: "Description of Product 2",
+    image: "/path/to/image2.jpg", // يمكنك استبدال هذا بصورة ثابتة
+    color: null,
+    price: 150,
+    quantity: 1,
+    size: 12,
+    stock: 20,
+  },
+  // يمكنك إضافة المزيد من العناصر هنا
+];
 const columns = [
   {
     title: <HeaderCell title="Product" />,
@@ -37,8 +66,8 @@ const columns = [
     dataIndex: 'price',
     key: 'price',
     width: 200,
-    render: (price: string) => (
-      <Text className="text-end text-sm">{toCurrency(price)}</Text>
+    render: (price: number) => (
+      <Text className="text-end text-sm">{toCurrency(price)} ddd</Text>
     ),
   },
   {
@@ -50,11 +79,10 @@ const columns = [
       <Text className="text-center text-sm font-semibold">{quantity}</Text>
     ),
   },
-
   {
-    title: <HeaderCell title="Price" align="right" />,
+    title: <HeaderCell title="Total Price" align="right" />,
     dataIndex: 'price',
-    key: 'price',
+    key: 'totalPrice',
     width: 200,
     render: (price: number, row: CartItem) => (
       <Text className="text-end text-sm">

@@ -1,55 +1,81 @@
+import { Food, Product } from '@/types';
 import Image from 'next/image'
-import React from 'react'
-type ProductProps = {
-    name: string;
-    description: string;
-    price: number;
-    sale_price?: number;
-    newtrend?:string;
-    className?: string;
-    photo:any;
+import React, { Dispatch, SetStateAction, useState } from 'react'
+import Modal from '../modal/Modal';
+import Badge from '../Badge';
+import { Star, Flame } from 'lucide-react';
+import TextTruncate from '../../ui/TruncateText'; // استيراد مكون تقطيع النص
+
+type Props = Food & {
+	setCurrentItem: Dispatch<
+		SetStateAction<{
+			type?: string;
+			id: string;
+		} | null>
+	>;
+};
+function MediumCard(data:Props) {
+
+  const [isModalOpen, setIsModalOpen] = useState(false); // حالة التحكم في ظهور المودال
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
   };
-function MediumCard({ name, description, price, sale_price , newtrend , className ,photo }: ProductProps) {
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   return <>
-    
-            <div className="sm:flex hidden xl:w-[550px] 2xl:w-full h-[135px] border rounded-lg ">
-                <Image src={photo} width={300} height={100} className='w-4/12 h-full sm:rounded-s-lg'  alt=''/>
-                <div className="ms-5 mt-2 relative w-8/12">
-                    <div className="flex justify-between items-center pe-2">
-                        <h2 className='text-lg font-medium'>{name}</h2>
-                        <span className=" text-[10px] font-bold p-1 min-w-10 rounded-lg bg-[#FECACA] text-[#EF4444]" >
-                            {newtrend}
-                        </span>
-                    </div>
-                    <h3 className=' text-sm font-normal'>{description}</h3>
-                    <div className="mt-2 flex items-center font-semibold text-mainColor absolute bottom-2  ">
-                        <span>EGP {price}</span>
-                            <del className="ps-1.5 text-[13px] font-normal text-gray-500">
-                               EGP {sale_price}
-                            </del>
-                    </div>
-                </div>
-            </div>
-            <div className="sm:hidden flex justify-between   w-full h-[154px]   ">
-                <div className="  relative w-4/6">
-                    <div className="  pe-2">
-                        <h2 className='text-lg font-medium'>{name}</h2>
-                   
-                    </div>
-                    <h3 className='text-sm font-light  my-1 '>{description}</h3>
-                    <span className=" text-[10px] font-bold p-1 min-w-10 rounded-lg my-1 bg-[#FECACA] text-[#EF4444]" >
-                            {newtrend}
-                    </span>
-                    <div className="mt-2 flex items-center font-semibold text-mainColor absolute bottom-0  ">
-                        <span>EGP {price}</span>
-                            <del className="ps-1.5 text-[13px] font-normal text-gray-500">
-                               EGP {sale_price}
-                            </del>
-                    </div>
-                </div>
-                <Image src={photo} width={300} height={100} className='w-[35%] h-[154px] rounded-lg'  alt=''/>
-            </div>
-                <hr className='mt-3 sm:hidden flex'/>
+  {!isModalOpen && (
+
+  <div onClick={handleOpenModal} className="flex flex-wrap justify-between mt-5 gap-5 hover:cursor-pointer">
+    <div className="flex  sm:flex-row w-full sm:gap-0 gap-3    h-[135px]  rounded-lg mb-4">
+      <div className="  relative w-full sm:w-8/12">
+        <div className="  sm:pe-2">
+          {data?.isTopRated || data.isTopSelling ? (
+            <span className=" text-[8px] font-bold text-center  rounded-lg bg-[#FECACA] text-[#EF4444]">
+              {data?.isTopRated ? 
+                <>
+                  <Badge Icon={Star} title="Top Rated" className="-ms-1" />
+                </>
+                :
+                <>
+                  <Badge Icon={Flame} title="Top Sall" className="-ms-1" />
+                </>
+              }
+            </span>
+          ) : (
+            ""
+          )}
+          <h2 className='text-lg  font-medium'>{data.name}</h2>
+        </div>
+        <TextTruncate text={data.description} limit={10} /> {/* استخدام مكون تقطيع النص */}
+
+        {/* <h3 className='text-sm font-normal truncate'>{truncateDescription('dldsfkjfdskjfsklflkdklfjbfdfmgr opgmcport5vyyybtbu6S')}</h3> */}
+        <div className="mt-2 flex items-center font-semibold text-mainColor absolute bottom-2">
+          <span>EGP {data.price}</span>
+          <del className="ps-1.5 text-[13px] font-normal text-gray-500">
+            EGP {data.oldPrice}
+          </del>
+        </div>
+      </div>
+      <Image src={data.imageUrl} width={300} height={100} className='w-[130px]  h-[130px]  sm:w-4/12 sm:h-full rounded-lg sm:rounded-s-lg' alt='' />
+    </div>
+  </div>
+  )}
+  {isModalOpen && <Modal modalId={data.id} setIsModalOpen={handleCloseModal} quantity={0} setQuantity={function (value: SetStateAction<number>): void {
+        throw new Error('Function not implemented.');
+      } } notes={''} setNotes={function (val: string): void {
+        throw new Error('Function not implemented.');
+      } } handleUpdateCart={function (): void {
+        throw new Error('Function not implemented.');
+      } } setShowItem={function (val: boolean): void {
+        throw new Error('Function not implemented.');
+      } } />}
+
+{/* <hr className='mt-3 sm:hidden flex'/> */}
+
+            
   </>
 }
 

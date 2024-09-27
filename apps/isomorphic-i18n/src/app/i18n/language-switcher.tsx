@@ -87,7 +87,7 @@ export default function LanguageSwitcher({
         onChange={handleItemClick}
       >
         {({ open }) => (
-          <div className="relative z-10 lg:top-[1px]">
+          <div className="relative z-[999] lg:top-[1px]">
             <Listbox.Button
               className={cn(
                 "relative flex h-[34px] w-14 items-center justify-center rounded-md p-1 shadow backdrop-blur-md transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900/30 focus-visible:ring-opacity-50 hover:enabled:text-gray-1000 active:enabled:translate-y-px dark:bg-gray-100",

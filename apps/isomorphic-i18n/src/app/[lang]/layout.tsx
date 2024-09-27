@@ -13,6 +13,7 @@ import { dir } from "i18next";
 import { languages } from "../i18n/settings";
 import { CartProvider } from "@/store/quick-cart/cart.context";
 import { UserProvider } from "../components/context/UserContext";
+import { MantineProvider } from "@mantine/core";
 
 const NextProgress = dynamic(() => import("@components/next-progress"), {
   ssr: false,
@@ -45,6 +46,8 @@ export default async function RootLayout({
         suppressHydrationWarning
         className={cn(inter.variable, lexendDeca.variable, "font-inter")}
       >
+        	<MantineProvider>
+
         <AuthProvider session={session}>
           <CartProvider>
             <ThemeProvider>
@@ -58,6 +61,7 @@ export default async function RootLayout({
             </ThemeProvider>
           </CartProvider>
         </AuthProvider>
+          </MantineProvider>
       </body>
     </html>
   );

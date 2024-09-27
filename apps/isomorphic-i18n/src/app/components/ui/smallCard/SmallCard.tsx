@@ -1,52 +1,97 @@
-import React from 'react'
-import sliderPhoto from '@public/assets/landing-poster.png'
-import slider from '@public/assets/kfc-background.jpg'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import Image from 'next/image'
-import { Title, Text, Button } from 'rizzui';
+import { Title, Text } from 'rizzui';
+import { Food } from '@/types';
+import {  Flame, Plus, Star } from 'lucide-react';
+import Badge from '../Badge';
+import photo from '@public/assets/شاورما-عربي-لحمة-768x768.png'
+import Modal from '../modal/Modal';
+type Props = Food & {
+	setCurrentItem: Dispatch<
+		SetStateAction<{
+			type?: string;
+			id: string;
+		} | null>
+	>;
+};
+function SmallCard(data:Props) {
+    const [isModalOpen, setIsModalOpen] = useState(false); 
 
-type ProductProps = {
-    name: string;
-    description: string;
-    price: number;
-    sale_price?: number;
-    newtrend?:string;
-    className?: string;
-    photo:any;
-  };
-function SmallCard({ name, description, price, sale_price , newtrend , className ,photo }: ProductProps) {
+    const handleOpenModal = () => {
+      setIsModalOpen(true);
+    };
+  
+    const handleCloseModal = () => {
+      setIsModalOpen(false);
+    };
   return<>
-
-  <div className="grid grid-cols-8 ">
-
-    <div className="col-span-8  ">
-
-    <div className="relative">
-
-        <Image src={photo} width={300} height={100} className='w-[150px] h-[150px] rounded-lg relative'  alt=''/>
-        <div className="absolute bottom-1 start-1 w-10 h-10 bg-yellow-50 rounded-lg flex justify-center items-center text-3xl text-orange-500">
-            +
+    {!isModalOpen &&
+    <>
+        <div
+        onClick={handleOpenModal} 
+        className="w-[115px] hover:cursor-pointer  sm:w-[120px] md:w-[150px] lg:w-[200px]  overflow-x-auto">
+            <div className="relative">
+                <Image 
+                src={photo} 
+                width={200} 
+                height={180} 
+                className="md:w-[200px] p-2 sm:p-10 bg-[#E8E8E8]  h-[115px] md:h-40 rounded-2xl" 
+                alt="" 
+                />
+                {data?.isTopRated || data.isTopSelling ? (
+                <span className="absolute start-1.5 top-1.5 text-[8px] font-bold text-center min-w-10   rounded-md   ">
+                    {data?.isTopRated ? 
+                    <>
+                        <Badge Icon={Star} title="Top Rated" className="" />
+                    </>
+                    :
+                    <>
+                        <Badge Icon={Flame} title="Top Sell" className="" />
+                    </>
+                    }
+                </span>
+                ) : (
+                ""
+                )}
+                <div className="absolute bottom-1.5 end-1.5 w-9 h-9 bg-white rounded-lg flex justify-center items-center text-3xl text-orange-500">
+                <Plus />
+                </div>
+            </div>
+            <div>
+                <Title
+                as="h6"
+                className="mt-1 text-sm truncate font-semibold transition-colors group-hover:text-mainColor"
+                >
+                {data.name}
+                </Title>
+                <Text as="p" className="truncate text-sm pe-6">
+                {data.description}
+                </Text>
+                <div className="mt-2 flex  items-center font-semibold text-mainColor">
+                <div className='text-[10px] sm:pt-0 pt-0.5 font-normal sm:text-[13px]'>
+                    <span>EGP {data.price}</span>
+                </div>
+                <div>
+                    <del className="ps-1.5  text-[10px] sm:text-[13px] font-normal text-gray-500">
+                    EGP {data.oldPrice}
+                    </del>
+                </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <Title
-          as="h6"
-          className="mb-1 text-sm truncate font-semibold transition-colors group-hover:text-mainColor"
-        >
-          {name} {/* تم استخدام name هنا */}
-    </Title>
+    </>
+    }
+    {isModalOpen && <Modal modalId={data.id} setIsModalOpen={handleCloseModal} quantity={0} setQuantity={function (value: SetStateAction<number>): void {
+            throw new Error('Function not implemented.');
+        } } notes={''} setNotes={function (val: string): void {
+            throw new Error('Function not implemented.');
+        } } handleUpdateCart={function (): void {
+            throw new Error('Function not implemented.');
+        } } setShowItem={function (val: boolean): void {
+            throw new Error('Function not implemented.');
+    } } />
+    }
 
-    <Text as="p" className="truncate text-sm pe-6">
-        {description}
-    </Text>
-    <div className="mt-2 flex items-center font-semibold text-mainColor  ">
-        <span>EGP {price}</span>
-            <del className="ps-1.5 text-[13px] font-normal text-gray-500">
-                EGP {sale_price}
-            </del>
-        
-    </div>
-    </div>
-
-  </div>
   </>
 }
 

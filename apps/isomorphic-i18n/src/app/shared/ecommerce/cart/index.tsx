@@ -13,7 +13,6 @@ import { useCart } from '@/store/quick-cart/cart.context';
 import usePrice from '@hooks/use-price';
 import { Empty, EmptyProductBoxIcon, Title, Text, Input, Button } from 'rizzui';
 import ProductCarousel from '@/app/shared/product-carousel';
-
 import cardImage from '../../../../../public/assets/card.png'
 import sandwitsh from '../../../../../public/assets/sandwitsh.jpg'
 import SpecialNotes from '@/app/components/ui/SpecialNotes';
@@ -230,8 +229,7 @@ export default function CartPageWrapper() {
 
   const { items } = useCart();
   const [notes, setNotes] = useState('');
-  const { userData, setUserData } = useUserContext();
-  console.log("userData: ",userData);
+
   
   return (
     <div className="@container">

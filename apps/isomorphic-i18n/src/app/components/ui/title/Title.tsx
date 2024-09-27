@@ -1,13 +1,15 @@
 import React from 'react'
 
-const Title= ({title}: {title:string})=> {
-  return <>
-    <div className="">
+const Title = ({ title, className = '' }: { title: string, className?: string }) => {
+  return (
+    <>
+      <div className={`mb-5 ${className}`}>
         <h1 className="font-monbold text-xl md:text-3xl 4xl:text-5xl">
-            {title}
+          {title}
         </h1>
-    </div>
-  </>
+      </div>
+    </>
+  );
 }
 
-export default Title
+export default Title;
