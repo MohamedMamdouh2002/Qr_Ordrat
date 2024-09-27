@@ -17,7 +17,6 @@ import ProductCarousel from '@/app/shared/product-carousel';
 import cardImage from '../../../../../public/assets/card.png'
 import sandwitsh from '../../../../../public/assets/sandwitsh.jpg'
 import SpecialNotes from '@/app/components/ui/SpecialNotes';
-import { useUserContext } from '@/app/components/context/UserContext';
 
 
 type FormValues = {
@@ -144,7 +143,7 @@ export default function CartPageWrapper() {
   //       "image": cardImage,
   //       "price": 142,
   //       "quantity": 1,
-  //       "size": "small",
+  //       "sizeFood": "small",
   //       "color": {
   //           "name": "Purple Heart",
   //           "code": "#5D30DD"
@@ -159,7 +158,7 @@ export default function CartPageWrapper() {
   //       "image": sandwitsh,
   //       "price": 295,
   //       "quantity": 2,
-  //       "size": "large",
+  //       "sizeFood": "large",
   //       "color": {
   //           "name": "Alizarin Crimson",
   //           "code": "#D72222"
@@ -174,7 +173,7 @@ export default function CartPageWrapper() {
   //       "image": cardImage,
   //       "price": 142,
   //       "quantity": 1,
-  //       "size": "small",
+  //       "sizeFood": "small",
   //       "color": {
   //           "name": "Purple Heart",
   //           "code": "#5D30DD"
@@ -189,7 +188,7 @@ export default function CartPageWrapper() {
   //       "image": sandwitsh,
   //       "price": 295,
   //       "quantity": 2,
-  //       "size": "large",
+  //       "sizeFood": "large",
   //       "color": {
   //           "name": "Alizarin Crimson",
   //           "code": "#D72222"
@@ -204,7 +203,7 @@ export default function CartPageWrapper() {
   //       "image": cardImage,
   //       "price": 142,
   //       "quantity": 1,
-  //       "size": "small",
+  //       "sizeFood": "small",
   //       "color": {
   //           "name": "Purple Heart",
   //           "code": "#5D30DD"
@@ -219,7 +218,7 @@ export default function CartPageWrapper() {
   //       "image": sandwitsh,
   //       "price": 295,
   //       "quantity": 2,
-  //       "size": "large",
+  //       "sizeFood": "large",
   //       "color": {
   //           "name": "Alizarin Crimson",
   //           "code": "#D72222"
@@ -230,9 +229,6 @@ export default function CartPageWrapper() {
 
   const { items } = useCart();
   const [notes, setNotes] = useState('');
-  const { userData, setUserData } = useUserContext();
-  console.log("userData: ",userData);
-  
   return (
     <div className="@container">
       <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">

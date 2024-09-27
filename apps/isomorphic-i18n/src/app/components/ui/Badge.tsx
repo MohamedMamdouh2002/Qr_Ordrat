@@ -1,4 +1,5 @@
-import cn from '../../../../../../../isomorphic/packages/isomorphic-core/src/utils/class-names';
+// import cn from '../../../../../../../isomorphic/packages/isomorphic-core/src/utils/class-names';
+import cn from '@utils/class-names';
 import { LucideProps, Star } from 'lucide-react';
 import React, { HTMLAttributes } from 'react';
 
