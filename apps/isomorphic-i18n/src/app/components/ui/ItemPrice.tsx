@@ -1,7 +1,8 @@
 import React from 'react'
 import AddToCartButton from './item/AddToCartButton';
+import cn from '@utils/class-names';
 
-import cn from '../../../../../../../isomorphic/packages/isomorphic-core/src/utils/class-names';
+// import cn from '../../../../../../../isomorphic/packages/isomorphic-core/src/utils/class-names';
 
 type Props = {
 	type?: string;

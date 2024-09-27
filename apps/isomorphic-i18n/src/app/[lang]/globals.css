@@ -1546,10 +1546,49 @@ div[style='z-index: 1000001;'],
   z-index: 2;
 }
 
-.bg-fade {
-  background: linear-gradient(
-    to bottom, 
-    rgba(255, 255, 255, 0), /* اللون الشفاف (ممسوح) */
-    rgba(255, 255, 255, 0.85) /* اللون الأبيض الباهت */
-  ), 
+.blur1{
+  width: 100%;
+  min-height: 100vh;
+  filter: blur(1px);
+  pointer-events: none;
+  user-select: none;
 }
+
+/* Adress Modal scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #f97316;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ea580c;
+}
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+.scrollable {
+  max-height: 60vh;
+  overflow-y: auto;
+  /* scrollbar-color: #f97316 #f0f0f0;
+  scrollbar-width: thin; */
+}
+.scrollable::-webkit-scrollbar {
+  width: 7px;
+}
+.scrollable::-webkit-scrollbar-track{
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-thumb {
+    background-color: #d97706;
+  }
+  ::-webkit-scrollbar-track {
+    background: #3f3f46;
+  }
+}
+

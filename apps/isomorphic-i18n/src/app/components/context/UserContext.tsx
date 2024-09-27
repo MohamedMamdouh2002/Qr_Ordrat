@@ -3,19 +3,33 @@
 import { AllCategories, Food, FoodId, Review } from '@/types';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
+type FaqType = {
+  name: string;
+  faQs: { question: string; answer: string }[];
+};
+
 type UserContextType = {
+
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   GetHome: () => Promise<AllCategories | any>; 
   GetProduct: (id: string) => Promise<FoodId | any>; 
   GetRewiew:()=>  Promise<Review | any>; // تعديل GetProduct لتأخذ id كمعلمة
+
+  userData: boolean;
+  setUserData: React.Dispatch<React.SetStateAction<boolean>>;
+  faqs: FaqType[];
+  setFaqs: React.Dispatch<React.SetStateAction<FaqType[]>>;
+
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [page, setPage] = useState<number>(0);
-
+  const [userData, setUserData] = useState<boolean>(false);
+  const [faqs, setFaqs] = useState<FaqType[]>([]);
+    
   async function GetHome() {
     try {
       const response = await fetch(`https://testapi.ordrat.com/api/Category/GetAll/90918974-8C68-4E4B-9718-4B08FFD887AC`);
@@ -56,9 +70,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return null; // في حالة حدوث خطأ، يمكن إرجاع null أو قيمة أخرى مناسبة
     }
   }
-
+  
   return (
-    <UserContext.Provider value={{ page, setPage, GetHome, GetProduct ,GetRewiew }}>
+    <UserContext.Provider value={{ userData, setUserData, faqs, setFaqs, page, setPage, GetHome, GetProduct ,GetRewiew }}>
       {children}
     </UserContext.Provider>
   );

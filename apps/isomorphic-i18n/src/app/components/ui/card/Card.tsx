@@ -71,6 +71,7 @@ const Card = (data: Props) => {
               </del>
             )}
           </div>
+
         </div>
       )}
       {isModalOpen && <Modal modalId={data.id} setIsModalOpen={handleCloseModal} quantity={0} setQuantity={function (value: SetStateAction<number>): void {

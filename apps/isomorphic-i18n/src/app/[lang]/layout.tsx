@@ -13,7 +13,10 @@ import { dir } from "i18next";
 import { languages } from "../i18n/settings";
 import { CartProvider } from "@/store/quick-cart/cart.context";
 import { UserProvider } from "../components/context/UserContext";
+
 import { MantineProvider } from "@mantine/core";
+
+import { SessionContextProvider } from "@/utils/fetch/contexts";
 
 const NextProgress = dynamic(() => import("@components/next-progress"), {
   ssr: false,
@@ -49,17 +52,19 @@ export default async function RootLayout({
         	<MantineProvider>
 
         <AuthProvider session={session}>
-          <CartProvider>
-            <ThemeProvider>
-              <UserProvider>
-                <NextProgress />
-                {children}
-                <Toaster />
-                <GlobalDrawer />
-                <GlobalModal />
-              </UserProvider>
-            </ThemeProvider>
-          </CartProvider>
+          <SessionContextProvider>
+            <CartProvider>
+              <ThemeProvider>
+                <UserProvider>
+                  <NextProgress />
+                  {children}
+                  <Toaster />
+                  <GlobalDrawer />
+                  <GlobalModal />
+                </UserProvider>
+              </ThemeProvider>
+            </CartProvider>
+          </SessionContextProvider>
         </AuthProvider>
           </MantineProvider>
       </body>
