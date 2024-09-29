@@ -31,7 +31,7 @@ export async function fetchData<T>({
 		headers: headers,
 		next: {
 			tags: [section],
-			revalidate: revalidate // comment it on live coz revalidateTag not working
+			revalidate: revalidate
 		}
 	};
 	if (!multipart && !(data instanceof FormData)) {

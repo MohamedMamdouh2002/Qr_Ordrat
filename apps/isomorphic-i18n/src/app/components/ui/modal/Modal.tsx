@@ -7,18 +7,16 @@ import QuantityHandler from '../item/QuantityHandler';
 import ItemPrice from '../ItemPrice';
 import OftenOrderedWith from '../item/OftenOrderedWith';
 import { motion } from 'framer-motion';
-import cn from '../../../../../../../packages/isomorphic-core/src/utils/class-names';
 import Badge from '../Badge';
-// import Choices from '../item/Choices';
 import img from "@public/assets/kfc-background.jpg";
 import Image from 'next/image';
 import sliderPhoto from '@public/assets/landing-poster.png';
 import { FullProduct, FoodId } from '@/types';
 import { useUserContext } from '../../context/UserContext';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
-// type Props = {
+import cn from '@utils/class-names';
+import { Minus, Plus, Trash } from 'lucide-react';
 
-// };
 type ModalProps = {
     data?: FullProduct;
     quantity: number;
@@ -54,7 +52,7 @@ function Modal({
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await GetProduct(modalId); // تمرير id إلى GetProduct
+      const data = await GetProduct(modalId);
       setProdId(data);
       
       console.log('Fetched Data prod:', data);
@@ -319,31 +317,31 @@ return <>
                         </div>
                     )}
                 </div>
-
-                {/*  buttons */}
                 <div className=' items-center col-span-full w-full grid grid-cols-3 gap-0 bg-white rounded-b-lg'>
                     <div className={cn('bg-white rounded-bl-lg rtl:rounded-br-lg h-full', { 'rtl:rounded-bl-none': hasMoreDetails })}>
-                        <QuantityHandler quantity={quantity} setQuantity={setQuantity} className='shadow-none w-full h-full rounded-none' />
+                        <QuantityHandler
+                            quantity={quantity}
+                            setQuantity={setQuantity}
+                            className="shadow-none w-full h-full rounded-none "
+                        />
                     </div>
                     <div className={'col-span-2'}>
                         <ItemPrice
                             type={type}
                             action={handleUpdateCart}
-                            price={`EGP ${data?.price! * quantity}`}
-                            oldPrice={data?.oldPrice ? `EGP ${data.oldPrice * quantity}` : undefined}
-                            className={cn('rounded-none rounded-br-lg rtl:rounded-bl-lg rtl:rounded-br-none', { 'rounded-br-none rtl:rounded-bl-none': hasMoreDetails })}
+                            price={`EGP ${prodId?.price! * quantity}`}
+                            oldPrice={data?.oldPrice ? `EGP ${prodId.oldPrice * quantity}` : undefined}
+                            className={cn(
+                                'rounded-none rounded-br-lg rtl:rounded-bl-lg rtl:rounded-br-none',
+                                { 'rounded-br-none rtl:rounded-bl-none': hasMoreDetails }
+                            )}
                         />
                     </div>
                 </div>
-            </div>
-            
+            </div>        
         </motion.div>
-
-
     </>
     }   
 </>
- 
 }
-
 export default Modal;

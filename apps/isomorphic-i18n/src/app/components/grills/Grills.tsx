@@ -30,7 +30,6 @@ function Grills({ data, initialCategory }: Props) {
   
 
     // const [isScrollable, setIsScrollable] = useState(false);
-    console.log("home:",home)    
   return <>
   <div className="">
     {home.map((sec)=>

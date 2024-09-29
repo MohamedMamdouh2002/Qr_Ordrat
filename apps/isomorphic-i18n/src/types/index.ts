@@ -180,7 +180,7 @@ export interface Product {
   sale_price?: number;
   thumbnail: string;
   colors?: ProductColor[];
-  sizes?: number[];
+  sizes?: number[];
 }
 export type AllCategories = Array<{
   id: string

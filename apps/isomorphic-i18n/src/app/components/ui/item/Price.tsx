@@ -1,4 +1,4 @@
-import  cn  from '../../../../../../../packages/isomorphic-core/src/utils/class-names';
+import cn from '@utils/class-names';
 import React from 'react';
 
 type Props = {

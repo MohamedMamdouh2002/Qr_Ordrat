@@ -14,7 +14,7 @@ type UserContextType = {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   GetHome: () => Promise<AllCategories | any>; 
   GetProduct: (id: string) => Promise<FoodId | any>; 
-  GetRewiew:()=>  Promise<Review | any>; // تعديل GetProduct لتأخذ id كمعلمة
+  GetRewiew:()=>  Promise<Review | any>;
 
   userData: boolean;
   setUserData: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,7 +32,12 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     
   async function GetHome() {
     try {
-      const response = await fetch(`https://testapi.ordrat.com/api/Category/GetAll/90918974-8C68-4E4B-9718-4B08FFD887AC`);
+      const response = await fetch(`https://testapi.ordrat.com/api/Category/GetAll/90918974-8C68-4E4B-9718-4B08FFD887AC`, {
+        method: 'GET',
+        headers: {
+          'Accept-Language': 'en',
+        },
+      });
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
@@ -57,7 +62,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return null; 
     }
   }
-  async function GetRewiew() { // تعديل هنا
+  async function GetRewiew() {
     try {
       const response = await fetch(`https://testapi.ordrat.com/api/Review/GetShopReviews/90918974-8C68-4E4B-9718-4B08FFD887AC?pageNumber=1&pageSize=50`);
       if (!response.ok) {
@@ -67,7 +72,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return data;
     } catch (error) {
       console.error('Error fetching data:', error);
-      return null; // في حالة حدوث خطأ، يمكن إرجاع null أو قيمة أخرى مناسبة
+      return null;
     }
   }
   
@@ -78,7 +83,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   );
 };
 
-// هوك لاستخدام السياق في أي مكون
 export const useUserContext = () => {
   const context = useContext(UserContext);
   if (context === undefined) {

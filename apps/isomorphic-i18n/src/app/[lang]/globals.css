@@ -1561,7 +1561,7 @@ div[style='z-index: 1000001;'],
 }
 ::-webkit-scrollbar-thumb {
   background-color: #f97316;
-  border-radius: 10px;
+  border-radius: 0;
 }
 ::-webkit-scrollbar-thumb:hover {
   background-color: #ea580c;

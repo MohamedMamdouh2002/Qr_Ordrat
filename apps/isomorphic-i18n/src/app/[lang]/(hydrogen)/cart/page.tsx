@@ -1,16 +1,16 @@
-import CardBody from '@/app/components/card/CardBody';
+import CartBody from '@/app/components/cart/CartBody';
 import { metaObject } from '@/config/site.config';
 
 export const metadata = {
-  ...metaObject('card'),
+  ...metaObject('cart'),
 };
 
-export default function Card({
+export default function Cart({
   params: { lang },
 }: {
   params: {
     lang: string;
   };
 }) {
-  return <CardBody lang={lang}/>;
+  return <CartBody lang={lang}/>;
 }

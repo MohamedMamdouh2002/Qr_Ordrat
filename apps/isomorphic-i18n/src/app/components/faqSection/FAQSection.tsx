@@ -19,6 +19,7 @@ import { routes } from '@/config/routes';
 import { fetchData } from '@/utils/fetch/fetch';
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../context/UserContext';
+import { shopId } from '@/config/shopId';
 
 function FAQSection({ lang }: { lang?: string }) {
   // const faq = [
@@ -149,7 +150,7 @@ function FAQSection({ lang }: { lang?: string }) {
   useEffect(() => {
     async function getFAQs() {
       const { data, message } = await fetchData<FaqType[]>({
-        link: `api/FAQCategory/GetShopFAQs/90918974-8C68-4E4B-9718-4B08FFD887AC`,
+        link: `api/FAQCategory/GetShopFAQs/${shopId}`,
         lang: "en"
       });
       console.log('faq data: ', data);
@@ -163,7 +164,6 @@ function FAQSection({ lang }: { lang?: string }) {
 
     getFAQs();
   }, [lang]);
-  console.log("fuck");
   
   return <>
     <div className={style.faqContainer}>

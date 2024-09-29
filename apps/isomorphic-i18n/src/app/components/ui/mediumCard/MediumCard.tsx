@@ -16,7 +16,7 @@ type Props = Food & {
 };
 function MediumCard(data:Props) {
 
-  const [isModalOpen, setIsModalOpen] = useState(false); // حالة التحكم في ظهور المودال
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);

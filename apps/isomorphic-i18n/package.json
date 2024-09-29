@@ -20,6 +20,7 @@
     "@headlessui/react": "^2.1.2",
     "@isomorphic/core": "workspace:*",
     "@mantine/core": "^7.12.2",
+    "@mui/material": "^6.1.1",
     "@paralleldrive/cuid2": "^2.2.2",
     "@react-email/body": "0.0.8",
     "@react-email/button": "0.0.15",

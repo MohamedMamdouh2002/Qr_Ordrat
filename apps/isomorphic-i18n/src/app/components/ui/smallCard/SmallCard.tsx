@@ -5,6 +5,8 @@ import { Food } from '@/types';
 import {  Flame, Plus, Star } from 'lucide-react';
 import Badge from '../Badge';
 import photo from '@public/assets/شاورما-عربي-لحمة-768x768.png'
+import hamburger from '@public/assets/hamburger.png'
+import potato from '@public/assets/شاورما-عراقي-لحمة-مع-بطاطا.png'
 import Modal from '../modal/Modal';
 type Props = Food & {
 	setCurrentItem: Dispatch<

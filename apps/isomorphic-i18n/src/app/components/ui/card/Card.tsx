@@ -17,8 +17,9 @@ type Props = Food & {
 };
 
 const Card = (data: Props) => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // حالة التحكم في ظهور المودال
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -29,17 +30,16 @@ const Card = (data: Props) => {
 
   return (
     <>
-      {/* إخفاء الديف عند فتح المودال */}
       {!isModalOpen && (
         <div onClick={handleOpenModal} className="hover:scale-105 hover:cursor-pointer  w-[100%] duration-200">
-          <div className="relative w-full">
+          <div className="relative w-full h-[100px] xs:h-[200px] md:h-[200px] lg:h-[220px] xl:h-[270px] 2xl:h-[300px]">
             <Image
               alt="card food"
               src={data.imageUrl}
-              width={300}
-              height={268}
+              layout="fill"
+              objectFit="cover"
               quality={90}
-              className="h-[130px] md:h-[268px] w-full rounded-lg"
+              className="rounded-lg"
             />
             {data?.isTopRated || data.isTopSelling ? (
               <span className="  text-[8px] font-bold text-center min-w-10 rounded-lg bg-[#FECACA] text-[#EF4444]">
@@ -74,15 +74,24 @@ const Card = (data: Props) => {
 
         </div>
       )}
-      {isModalOpen && <Modal modalId={data.id} setIsModalOpen={handleCloseModal} quantity={0} setQuantity={function (value: SetStateAction<number>): void {
-        throw new Error('Function not implemented.');
-      } } notes={''} setNotes={function (val: string): void {
-        throw new Error('Function not implemented.');
-      } } handleUpdateCart={function (): void {
-        throw new Error('Function not implemented.');
-      } } setShowItem={function (val: boolean): void {
-        throw new Error('Function not implemented.');
-      } } />}
+      {isModalOpen && (
+        <Modal
+          modalId={data.id}
+          setIsModalOpen={handleCloseModal}
+          quantity={quantity}
+          setQuantity={setQuantity}
+          notes={''}
+          setNotes={function (val: string): void {
+            throw new Error('Function not implemented.');
+          }}
+          handleUpdateCart={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          setShowItem={function (val: boolean): void {
+            throw new Error('Function not implemented.');
+          } }
+        />
+      )}
     </>
   );
 };
