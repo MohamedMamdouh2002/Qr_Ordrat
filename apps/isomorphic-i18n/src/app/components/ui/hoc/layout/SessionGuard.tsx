@@ -13,7 +13,8 @@ const SessionGuard = ({ children }: Props) => {
 	useEffect(() => {
 		const token = localStorage.getItem('token');
 		if (!token) {
-			router.push('/');
+			// router.push('/');
+			setLoading(false);
 		} else {
 			setLoading(false);
 		}

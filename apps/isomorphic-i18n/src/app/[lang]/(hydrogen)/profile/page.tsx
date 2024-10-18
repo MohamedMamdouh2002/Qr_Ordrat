@@ -12,7 +12,7 @@ type Props = {
 	};
 };
 
-async function ProfilePage({ params: { locale } }: Props) {
+async function Profile({ params: { locale } }: Props) {
 	unstable_setRequestLocale(locale);
 	return (
 		<>
@@ -46,4 +46,4 @@ async function ProfilePage({ params: { locale } }: Props) {
 	);
 }
 
-export default ProfilePage;
+export default Profile;

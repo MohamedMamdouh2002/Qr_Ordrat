@@ -1,6 +1,6 @@
 import React from 'react';
 
-const API_KEY = 'AIzaSyDgsO1fpcQWpFMByZnAeRskAg4T22_Fl38'; 
+const API_KEY = 'AIzaSyCPQicAmrON3EtFwOmHvSZQ9IbONbLQmtA'; 
 
 const MapEmbed = ({
 	latitude,

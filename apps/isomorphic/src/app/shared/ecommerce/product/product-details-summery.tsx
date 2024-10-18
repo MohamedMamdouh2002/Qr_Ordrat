@@ -40,7 +40,8 @@ export default function ProductDetailsSummery({
       color: data.productColor,
       size: data.productSize,
     });
-
+    console.log("product: ",product);
+    
     setLoading(true);
     setTimeout(() => {
       setLoading(false);

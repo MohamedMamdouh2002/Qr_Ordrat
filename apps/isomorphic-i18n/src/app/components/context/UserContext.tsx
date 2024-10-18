@@ -1,5 +1,6 @@
 'use client';
 
+import { shopId } from '@/config/shopId';
 import { AllCategories, Food, FoodId, Review } from '@/types';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
@@ -32,7 +33,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     
   async function GetHome() {
     try {
-      const response = await fetch(`https://testapi.ordrat.com/api/Category/GetAll/90918974-8C68-4E4B-9718-4B08FFD887AC`, {
+      const response = await fetch(`https://testapi.ordrat.com/api/Category/GetAll/${shopId}`, {
         method: 'GET',
         headers: {
           'Accept-Language': 'en',
@@ -51,7 +52,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   async function GetProduct(id: string) {
     try {
-      const response = await fetch(`https://testapi.ordrat.com/api/Products/GetById/90918974-8C68-4E4B-9718-4B08FFD887AC/${id}`);
+      const response = await fetch(`https://testapi.ordrat.com/api/Products/GetById/${shopId}/${id}`);
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
@@ -64,7 +65,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
   async function GetRewiew() {
     try {
-      const response = await fetch(`https://testapi.ordrat.com/api/Review/GetShopReviews/90918974-8C68-4E4B-9718-4B08FFD887AC?pageNumber=1&pageSize=50`);
+      const response = await fetch(`https://testapi.ordrat.com/api/Review/GetShopReviews/${shopId}?pageNumber=1&pageSize=50`);
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }

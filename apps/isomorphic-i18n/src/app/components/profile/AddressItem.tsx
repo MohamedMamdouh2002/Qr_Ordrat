@@ -21,21 +21,28 @@ function AddressItem({ address, i, setIsOpen, setSelectedAddress }: Props) {
 				initial={{ opacity: 0, y: 15 }}
 				animate={{ opacity: 1, y: 0, transition: { duration: 0.25 } }}
 				exit={{ opacity: 0, y: 15 }}
-				className="flex w-full flex-col  gap-3"
+				className="flex w-full flex-col shadow-md relative"
 			>
+				{setIsOpen && (
+					<div
+						className="absolute top-2 right-2 border border-red-400 text-red-500 cursor-pointer hover:bg-red-500 hover:text-slate-50 transition duration-150 rounded-md p-1 flex items-center justify-center"
+					>
+						<Trash2Icon onClick={() => setDeleteModal(true)} size={24} className='w-[20px] h-[20px]'/>
+					</div>
+				)}
 				<MapEmbed latitude={address.lat} longitude={address.lng} />
 				<div className="grid grid-cols-4 items-center gap-3">
-					{setIsOpen && (
+					{/* {setIsOpen && (
 						<div className="text-red-500 col-span-1 cursor-pointer hover:bg-red-500 hover:text-slate-50 transition duration-150 rounded-lg h-full w-full flex items-center justify-center">
 							<Trash2Icon onClick={() => setDeleteModal(true)} size={24} className="w-full" />
 						</div>
-					)}
+					)} */}
 					<div
 						onClick={() => {
 							setSelectedAddress(address);
 							setIsOpen && setIsOpen(true);
 						}}
-						className={`cursor-pointer col-span-3 w-full hover:bg-orange-500/20 py-2 px-3 rounded-lg`}
+						className={`cursor-pointer col-span-full w-full hover:bg-orange-500/20 py-2 px-3`}
 					>
 						<Address address={address} />
 					</div>
