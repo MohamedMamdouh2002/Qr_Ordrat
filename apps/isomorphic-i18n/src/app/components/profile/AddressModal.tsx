@@ -88,6 +88,7 @@ export default function AddressModal({
 															setFieldValue('lat', vals?.lat);
 															setFieldValue('lng', vals?.lng);
 														}}
+														initialLocation = {{ lat: 30.023173855111207, lng: 31.185028997638923 }}
 													/>
 													<RadioGroup
 													value={values['type']}
