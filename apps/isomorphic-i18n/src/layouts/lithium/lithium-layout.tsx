@@ -1,3 +1,4 @@
+import Footer from '@/app/components/footer/Footer';
 import Header from '@/layouts/lithium/lithium-header';
 export default function LithiumLayout({
   children,
@@ -12,6 +13,8 @@ export default function LithiumLayout({
         <Header lang={lang} />
         <div className="">
           {children}
+          <Footer/>
+
         </div>
       </div>
     </main>

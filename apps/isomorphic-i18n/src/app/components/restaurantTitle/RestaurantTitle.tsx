@@ -1,4 +1,4 @@
-import { Info, Link, Search, Share2, TicketPercentIcon, User } from 'lucide-react'
+import { Info, Link, Search, Share2, Star, TicketPercentIcon, User } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 import { } from 'rizzui'
@@ -15,7 +15,10 @@ function RestaurantTitle({lang} :{lang? :string}) {
                 <div className="">
                     <h1 className='text-base'>karam El Sham</h1>
                     <h2 className='xs:text-sm text-xs font-normal '>Fried chicken, Sandwiches, Fast Food...</h2>
-                    <p> *4.3(8, 206 ratings)</p>
+                    <div className="flex items-center gap-1">
+                    <Star size={14}  color='#facc15' className='fill-yellow-400'/>
+                    <p> 4.3(8, 206 ratings)</p>
+                    </div>
                 </div>
             </div>
             <div className="flex gap-3 me-5">

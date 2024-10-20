@@ -3,12 +3,11 @@
 @tailwind utilities;
 
 ul::-webkit-scrollbar {
-  display: none; /* إخفاء شريط التمرير */
+  display: none; 
 }
 
-/* لإخفاء شريط التمرير في Firefox */
 ul {
-  scrollbar-width: none; /* إخفاء شريط التمرير */
+  scrollbar-width: none;
 }
 @layer base {
   /* default theme */
@@ -1528,7 +1527,13 @@ div[style='z-index: 1000001;'],
   color: #f97316; /* تغيير لون النقطة النشطة */
 }
 
-
+@layer utilities {
+  input:-webkit-autofill:focus {
+    @apply border-2 border-blue-500 outline-none; /* تطبيق الـ border عند التركيز */
+    -webkit-box-shadow: 0 0 0 30px white inset !important; /* لمنع تغيير لون الخلفية */
+    -webkit-text-fill-color: black !important; /* لضمان أن النص يظهر بشكل صحيح */
+  }
+}
 
 @layer components {
   @media (max-width: 991px) {

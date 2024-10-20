@@ -54,7 +54,7 @@ function Navbar( {className, lang }: {className?:string, lang?: string }) {
                     />
                        <LanguageSwitcher
                         lang={lang!}
-                        className="me-3 rounded-none shadow-none"
+                        className="ms-3 rounded-none shadow-none"
                         variant="text"
                         />
                     {/* <LangChanger isTop={true} className="outline-0  bg-transparent" /> */}

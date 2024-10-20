@@ -69,8 +69,8 @@ const NavMobile = () => {
           <AlignCenter className="" />
         </button>
         <ul ref={navRef} className="flex items-center ps-5 gap-6 whitespace-nowrap overflow-x-auto flex-nowrap w-full h-16"> {/* تأكد أن الـ ul لديها ارتفاع محدد */}
-          {home.map((item, index) => (
-            <li key={item.id} className="relative w-full h-full  text-left"> {/* الارتفاع الكامل للعنصر */}
+          {home?.map((item, index) => (
+            <li key={item.id} className="relative w-full h-full  text-left">
               <Link
                 to={item.id}
                 smooth={true}

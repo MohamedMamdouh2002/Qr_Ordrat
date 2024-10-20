@@ -242,3 +242,26 @@ export type Review = {
   reviewText: string;
   rate: number;
 };
+
+
+export type OrderItem = {
+  quantity: number;
+  totalChoicesPrice: number;
+  itemPrice: number;
+  productId: string;
+  product: {
+    name: string;
+    imageUrl: string;
+  };
+};
+
+export type Order = {
+  id: string;
+  totalPrice: number;
+  totalVat: number;
+  shippingFees: number;
+  createdAt: string;
+  status: number;
+  totalChoicePrices: number;
+  items: OrderItem[];
+};

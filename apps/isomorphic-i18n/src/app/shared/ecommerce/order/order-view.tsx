@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { useAtomValue } from 'jotai';
 import isEmpty from 'lodash/isEmpty';
 import { PiCheckBold } from 'react-icons/pi';
+import { useParams } from 'next/navigation'; 
+
 import {
   billingAddressAtom,
   orderNoteAtom,
@@ -16,6 +18,8 @@ import cn from '@utils/class-names';
 import { toCurrency } from '@utils/to-currency';
 import { formatDate } from '@utils/format-date';
 import usePrice from '@hooks/use-price';
+import { useEffect, useState } from 'react';
+import { Order } from '@/types';
 
 const orderStatus = [
   { id: 1, label: 'Order Pending' },
@@ -101,15 +105,51 @@ export default function OrderView() {
   const orderNote = useAtomValue(orderNoteAtom);
   const billingAddress = useAtomValue(billingAddressAtom);
   const shippingAddress = useAtomValue(shippingAddressAtom);
+  const [order, setOrder] = useState<Order | null>(null);
+  const { id } = useParams();
+  const phone=localStorage.getItem('phoneNumber')
+
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const response = await fetch(
+          `https://testapi.ordrat.com/api/Order/GetById/${id}`,
+          {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch order');
+        }
+        const data: Order = await response.json();
+        setOrder(data);
+      } catch (error) {
+        console.error('Error fetching order:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrder();
+  }, []);
   return (
     <div className="@container">
       <div className="flex flex-wrap justify-center border-b border-t border-gray-300 py-4 font-medium text-gray-700 @5xl:justify-start">
         <span className="my-2 border-r border-muted px-5 py-0.5 first:ps-0 last:border-r-0">
           {/* October 22, 2022 at 10:30 pm */}
-          {formatDate(new Date(), 'MMMM D, YYYY')} at{' '}
-          {formatDate(new Date(), 'h:mm A')}
+          <div>
+            ordered At: {order?.createdAt ? new Date(order.createdAt).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            }) : 'N/A'}
+          </div>
         </span>
-        <span className="my-2 border-r border-muted px-5 py-0.5 first:ps-0 last:border-r-0">
+        {/* <span className="my-2 border-r border-muted px-5 py-0.5 first:ps-0 last:border-r-0">
           {totalItems} Items
         </span>
         <span className="my-2 border-r border-muted px-5 py-0.5 first:ps-0 last:border-r-0">
@@ -117,7 +157,7 @@ export default function OrderView() {
         </span>
         <span className="my-2 ms-5 rounded-3xl border-r border-muted bg-green-lighter px-2.5 py-1 text-xs text-green-dark first:ps-0 last:border-r-0">
           Paid
-        </span>
+        </span> */}
       </div>
       <div className="items-start pt-10 @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
         <div className="space-y-7 @5xl:col-span-8 @5xl:space-y-10 @6xl:col-span-7">
@@ -135,18 +175,18 @@ export default function OrderView() {
           <div className="pb-5">
             <OrderViewProducts />
             <div className="border-t border-muted pt-7 @5xl:mt-3">
-              <div className="ms-auto max-w-lg space-y-6">
+            <div className="ms-auto max-w-lg space-y-6">
                 <div className="flex justify-between font-medium">
-                  Subtotal <span>{subtotal}</span>
+                  Subtotal <span>{order?.totalPrice}</span>
                 </div>
                 <div className="flex justify-between font-medium">
-                  Store Credit <span>{toCurrency(0)}</span>
+                  Shipping Fees <span>{order?.shippingFees}</span>
                 </div>
                 <div className="flex justify-between font-medium">
-                  Subtotal <span>{toCurrency(0)}</span>
+                  Vat <span>{order?.totalVat}</span>
                 </div>
                 <div className="flex justify-between border-t border-muted pt-5 text-base font-semibold">
-                  Total <span>{totalPrice}</span>
+                  Total <span>{toCurrency((order?.totalPrice || 0) + (order?.shippingFees || 0) + (order?.totalVat || 0))}</span>
                 </div>
               </div>
             </div>
@@ -254,9 +294,9 @@ export default function OrderView() {
               <Image
                 fill
                 alt="avatar"
-                className="object-cover"
+                className="object-cover rounded-full"
                 sizes="(max-width: 768px) 100vw"
-                src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatar.png"
+                src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-11.webp"
               />
             </div>
             <div className="ps-4 @5xl:ps-6">
@@ -266,11 +306,11 @@ export default function OrderView() {
               >
                 Leslie Alexander
               </Title>
-              <Text as="p" className="mb-2 break-all last:mb-0">
+              {/* <Text as="p" className="mb-2 break-all last:mb-0">
                 nevaeh.simmons@example.com
-              </Text>
+              </Text> */}
               <Text as="p" className="mb-2 last:mb-0">
-                (316) 555-0116
+                {phone}
               </Text>
             </div>
           </WidgetCard>
