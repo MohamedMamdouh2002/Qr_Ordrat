@@ -3,7 +3,7 @@ import React from 'react'
 
 function page() {
   return <>
-  <div className="w-[90%] mx-auto mt-10">
+  <div className="w-[90%] mx-auto mt-20">
     <Reviews/>   
   </div>
   </>

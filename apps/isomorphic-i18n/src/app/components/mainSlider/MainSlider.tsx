@@ -18,6 +18,7 @@ function MainSlider() {
     const settings = {
         className: "",
         dots: true,
+        arrows:false,
         speed: 500,
         autoplay: true,
         infinite: true,

@@ -40,7 +40,7 @@ function Grills({ data, initialCategory }: Props) {
           <div className=" relative">
             <Image
               id="offers"
-              src={photo}
+              src={sec.bannerUrl}
               // layout='response'
               width={900}
               height={300}
@@ -66,26 +66,7 @@ function Grills({ data, initialCategory }: Props) {
                 <>
                 <div className="">
                     <SmallCard key={prod.id} {...prod} />     
-                      {/* <div className="">
-                        <div className="">
-                            <div className="relative">
-                              <div className={`w-[90%] mx-auto ${isScrollable ? 'overflow-x-auto hide-scrollbar' : ''}`}>
-                                <div className="flex flex-nowrap gap-5">
-                                </div>
-                          <style jsx>{`
-                            .hide-scrollbar {
-                              scrollbar-width: none; 
-                              -ms-overflow-style: none; 
-                            }
-                            
-                            .hide-scrollbar::-webkit-scrollbar {
-                              display: none;
-                          `}</style>
-                              </div>
-                            </div>
-                        </div>
-  
-                      </div>  */}
+
                 </div>
                 </>
               )

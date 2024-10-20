@@ -9,6 +9,8 @@ import { useIsMounted } from '@hooks/use-is-mounted';
 import LithiumLayout from '@/layouts/lithium/lithium-layout';
 import BoronLayout from '@/layouts/boron/boron-layout';
 import CarbonLayout from '@/layouts/carbon/carbon-layout';
+import { useUserContext } from '@/app/components/context/UserContext';
+import { useEffect } from 'react';
 
 export default function DefaultLayout({
   children,
@@ -21,7 +23,7 @@ export default function DefaultLayout({
 }) {
   const { layout } = useLayout();
   const isMounted = useIsMounted();
-
+  
   if (!isMounted) {
     return null;
   }
@@ -29,8 +31,8 @@ export default function DefaultLayout({
   if (layout === LAYOUT_OPTIONS.HELIUM) {
     return <HeliumLayout lang={lang}>{children}</HeliumLayout>;
   }
-  if (layout === LAYOUT_OPTIONS.LITHIUM) {
-    return <LithiumLayout lang={lang}>{children}</LithiumLayout>;
+  if (layout === LAYOUT_OPTIONS.HYDROGEN) {
+    return <HydrogenLayout lang={lang}>{children}</HydrogenLayout>;
   }
   if (layout === LAYOUT_OPTIONS.BERYLLIUM) {
     return <BerylLiumLayout lang={lang}>{children}</BerylLiumLayout>;
@@ -41,6 +43,7 @@ export default function DefaultLayout({
   if (layout === LAYOUT_OPTIONS.CARBON) {
     return <CarbonLayout lang={lang}>{children}</CarbonLayout>;
   }
-
-  return <HydrogenLayout lang={lang}>{children}</HydrogenLayout>;
+  
+  return <LithiumLayout lang={lang}>{children}</LithiumLayout>
+;
 }

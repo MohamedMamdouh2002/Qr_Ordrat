@@ -2,6 +2,9 @@
 
 const nextConfig = {
   images: {
+    domains:[
+      'testapi.ordrat.com'
+    ],
     remotePatterns: [
       {
         protocol: 'http',

@@ -5,6 +5,8 @@ import NavMobile from "@/app/components/navMobile/NavMobile";
 import RestaurantTitle from "@/app/components/restaurantTitle/RestaurantTitle";
 // import SyrianFood from "@/app/components/syrianFood/SyrianFood";
 import { metaObject } from "@/config/site.config";
+import Header from "@/app/components/header/Header";
+
 
 export const metadata = {
   ...metaObject(),
@@ -21,7 +23,7 @@ export default function FileDashboardPage({
 
     <RestaurantTitle/>
     <NavMobile/>
-    <LoginBanner/>
+    <Header/>
     <MainSlider/>
     <Grills/>
     {/* <PopularMeals/> */}

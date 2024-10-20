@@ -7,16 +7,19 @@ import QuantityHandler from '../item/QuantityHandler';
 import ItemPrice from '../ItemPrice';
 import OftenOrderedWith from '../item/OftenOrderedWith';
 import { motion } from 'framer-motion';
+import cn from '../../../../../../../packages/isomorphic-core/src/utils/class-names';
 import Badge from '../Badge';
+// import Choices from '../item/Choices';
 import img from "@public/assets/kfc-background.jpg";
 import Image from 'next/image';
 import sliderPhoto from '@public/assets/landing-poster.png';
 import { FullProduct, FoodId } from '@/types';
 import { useUserContext } from '../../context/UserContext';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
-import cn from '@utils/class-names';
-import { Minus, Plus, Trash } from 'lucide-react';
+import { Input } from 'rizzui';
+// type Props = {
 
+// };
 type ModalProps = {
     data?: FullProduct;
     quantity: number;
@@ -104,10 +107,8 @@ return <>
                                 className="bg-white rounded-full p-2 absolute top-2 start-2 hover:cursor-pointer"
                                 size={36}
                             />
-                            {/* cart content */}
                             <div className="">
                                 <div className="px-4 pt-2 flex flex-col">
-                                    {/* Badge and product info */}
                                     <div className="flex items-center gap-2">
                                     {prodId?.isTopSelling && (
                                         <>
@@ -130,18 +131,18 @@ return <>
                                     {prodId?.variations && (
                                     <>
                                         <div className="flex flex-col gap-3 ">
-                                        {prodId.variations.map((item: { id: React.Key | null | undefined; name: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | Iterable<React.ReactNode> | null | undefined; choices: (string | number | bigint | boolean | React.ReactPortal | Promise<React.AwaitedReactNode> | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined)[]; }) => (
+                                        {prodId.variations.map((item: { id: React.Key | null | undefined; name: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | Iterable<React.ReactNode> | null | undefined; choices: any[]; }) => (
                                             <div key={item.id} className="flex items-start justify-between p-4">
                                             <div className="flex flex-col gap-1">
                                                 <strong>Your choice of:</strong>
                                                 <span className='text-black/75'>{item.name}</span>
-                                                {/* عرض الخيارات إذا كانت موجودة */}
                                                 {item.choices && item.choices.length > 0 ? (
-                                                <ul className="list-disc pl-5">
-                                                    {item.choices.map((choice: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | Iterable<React.ReactNode> | null | undefined, index: React.Key | null | undefined) => (
-                                                    <li key={index} className="text-black/75">
-                                                        {choice} {/* استبدل choice بالاسم أو الخاصية المناسبة حسب ما تحتويه */}
-                                                    </li>
+                                                <ul className=" ">
+                                                    {item.choices.map((choice: { name: string }, index: React.Key | null | undefined) => (
+                                                        <li key={index} className="text-black/75 ">
+                                                            <input type='radio' />{" "}
+                                                            {choice?.name}
+                                                        </li>
                                                     ))}
                                                 </ul>
                                                 ) : (
@@ -240,7 +241,6 @@ return <>
                     <Image src={prodId.imageUrl} width={900} height={600} alt="s" className="w-full h-60" />
                     <X onClick={handleClose} className="bg-white rounded-full p-2 absolute top-2 start-2" size={36} />
                 </div>
-                {/* cart content */}
                 <div className="overflow-y-auto flex-1 p-4">
                     <div className="flex items-center gap-2">
                         {data?.isTopRated && <Badge Icon={Star} title="Top rated" className="-ms-1" />}
@@ -253,18 +253,18 @@ return <>
                     {prodId?.variations && (
                     <>
                         <div className="flex flex-col gap-3 ">
-                        {prodId.variations.map((item: { id: React.Key | null | undefined; name: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | Iterable<React.ReactNode> | null | undefined; choices: (string | number | bigint | boolean | React.ReactPortal | Promise<React.AwaitedReactNode> | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined)[]; }) => (
-                            <div key={item.id} className="flex items-start justify-between ">
+                        {prodId.variations.map((item: { id: React.Key | null | undefined; name: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | Iterable<React.ReactNode> | null | undefined; choices: any[]; }) => (
+                            <div key={item.id} className="flex items-start justify-between p-4">
                             <div className="flex flex-col gap-1">
                                 <strong>Your choice of:</strong>
                                 <span className='text-black/75'>{item.name}</span>
-                                {/* عرض الخيارات إذا كانت موجودة */}
                                 {item.choices && item.choices.length > 0 ? (
-                                <ul className="list-disc pl-5">
-                                    {item.choices.map((choice: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | Iterable<React.ReactNode> | null | undefined, index: React.Key | null | undefined) => (
-                                    <li key={index} className="text-black/75">
-                                        {choice} {/* استبدل choice بالاسم أو الخاصية المناسبة حسب ما تحتويه */}
-                                    </li>
+                                <ul className=" ">
+                                    {item.choices.map((choice: { name: string }, index: React.Key | null | undefined) => (
+                                        <li key={index} className="text-black/75 ">
+                                            <input type='radio' />{" "}
+                                            {choice?.name}
+                                        </li>
                                     ))}
                                 </ul>
                                 ) : (
@@ -303,7 +303,6 @@ return <>
                         </div>
                     )}
                     
-                    {/* عرض المراجعات */}
                     {prodId?.reviews && prodId.reviews.length > 0 && (
                         <div>
                             <h3 className="font-bold">Reviews:</h3>
@@ -317,31 +316,28 @@ return <>
                         </div>
                     )}
                 </div>
+
                 <div className=' items-center col-span-full w-full grid grid-cols-3 gap-0 bg-white rounded-b-lg'>
                     <div className={cn('bg-white rounded-bl-lg rtl:rounded-br-lg h-full', { 'rtl:rounded-bl-none': hasMoreDetails })}>
-                        <QuantityHandler
-                            quantity={quantity}
-                            setQuantity={setQuantity}
-                            className="shadow-none w-full h-full rounded-none "
-                        />
+                        <QuantityHandler quantity={quantity} setQuantity={setQuantity} className='shadow-none w-full h-full rounded-none' />
                     </div>
                     <div className={'col-span-2'}>
                         <ItemPrice
                             type={type}
                             action={handleUpdateCart}
-                            price={`EGP ${prodId?.price! * quantity}`}
-                            oldPrice={data?.oldPrice ? `EGP ${prodId.oldPrice * quantity}` : undefined}
-                            className={cn(
-                                'rounded-none rounded-br-lg rtl:rounded-bl-lg rtl:rounded-br-none',
-                                { 'rounded-br-none rtl:rounded-bl-none': hasMoreDetails }
-                            )}
+                            price={`EGP ${data?.price! * quantity}`}
+                            oldPrice={data?.oldPrice ? `EGP ${data.oldPrice * quantity}` : undefined}
+                            className={cn('rounded-none rounded-br-lg rtl:rounded-bl-lg rtl:rounded-br-none', { 'rounded-br-none rtl:rounded-bl-none': hasMoreDetails })}
                         />
                     </div>
                 </div>
-            </div>        
+            </div>
+            
         </motion.div>
     </>
     }   
 </>
+ 
 }
+
 export default Modal;

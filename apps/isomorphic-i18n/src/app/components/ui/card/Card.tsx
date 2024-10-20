@@ -35,28 +35,28 @@ const Card = (data: Props) => {
           <div className="relative w-full h-[100px] xs:h-[200px] md:h-[200px] lg:h-[220px] xl:h-[270px] 2xl:h-[300px]">
             <Image
               alt="card food"
-              src={data.imageUrl}
+              src={data?.imageUrl}
               layout="fill"
               objectFit="cover"
               quality={90}
               className="rounded-lg"
             />
+          </div>
             {data?.isTopRated || data.isTopSelling ? (
-              <span className="  text-[8px] font-bold text-center min-w-10 rounded-lg bg-[#FECACA] text-[#EF4444]">
-                {data?.isTopRated ? 
-                  <>
-                    <Badge Icon={Star} title="Top Rated" className="-ms-1 mt-2" />
-                  </>
-                  :
-                  <>
-                    <Badge Icon={Flame} title="Top Sell" className="-ms-1 mt-2" />
-                  </>
-                }
-              </span>
+               <span className="  text-[8px] font-bold text-center min-w-10 rounded-lg bg-[#FECACA] text-[#EF4444]">
+               {data?.isTopRated ? 
+                 <>
+                   <Badge Icon={Star} title="Top Rated" className="-ms-1 mt-2" />
+                 </>
+                 :
+                 <>
+                   <Badge Icon={Flame} title="Top Sell" className="-ms-1 mt-2" />
+                 </>
+               }
+             </span>
             ) : (
               ""
             )}
-          </div>
           <Title as="h6" className="my-1 truncate font-semibold transition-colors group-hover:text-mainColor">
             {data.name}
           </Title>

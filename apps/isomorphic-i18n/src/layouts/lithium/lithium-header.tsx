@@ -28,6 +28,9 @@ import { AlignCenter, ShoppingCart,User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import  {SideNav}  from "@/app/components/sideNav/SideNav";
+import path from "path";
+import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 function HeaderMenuRight() {
   return (
@@ -81,6 +84,9 @@ export default function Header({ lang }: { lang?: string }) {
   const [scrollY, setScrollY] = useState(0);
   const [isStickyVisible, setStickyVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false); // حالة التحكم في ظهور الـ SideNav
+  const pathname = usePathname(); // استخدام usePathname للحصول على المسار الحالي
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -153,7 +159,7 @@ export default function Header({ lang }: { lang?: string }) {
                     prefix={<PiMagnifyingGlassBold className="h-4 w-4" />}
                   />
           </Link>
-          <Link href={`/${lang!}/card`}>
+          <Link href={`/${lang!}/cart`}>
             <ShoppingCart className={`transition duration-150  ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`} />
 
           </Link>
@@ -187,14 +193,21 @@ export default function Header({ lang }: { lang?: string }) {
                     variant="text"
                     />
                     <div className="flex gap-5">
-                        <PiMagnifyingGlassBold size={20} />    
-                        <User size={20} />    
-                    </div>
+                        <Link href={`/${lang!}/search`}>
+                              <PiMagnifyingGlassBold size={20} />    
+                        </Link>
+                        <button
+                          onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر
+                          className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
+                        >
+                          <AlignCenter />
+                        </button>
+                </div>
               </div>
             </div>
     </div>
   </nav>
-<div className={`imgBg  lg:hidden `}>
+{/* <div className={`imgBg  lg:hidden `}>
   <div className={`w-10/12 mx-auto mt-5 flex justify-between items-center ${isStickyVisible ? "hidden  " : " "}`}>
     <LanguageSwitcher
       lang={lang!}
@@ -210,7 +223,65 @@ export default function Header({ lang }: { lang?: string }) {
       </div>
     </div>
   </div>
-</div>
+</div> */}
+{!pathname || pathname === "/en" || pathname === "/ar" ? (
+        <div className={`imgBg lg:hidden`}>
+          <div
+            className={`w-10/12 mx-auto mt-5 flex justify-between items-center ${
+              isStickyVisible ? "hidden" : ""
+            }`}
+          >
+            <LanguageSwitcher
+              lang={lang!}
+              className="ms-3 rounded-none shadow-none"
+              variant="text"
+            />
+            <div className="flex gap-5">
+              <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
+                <Link href={`/${lang!}/search`}>
+                  <PiMagnifyingGlassBold size={20} />    
+                </Link>
+              </div>
+              <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
+                <button
+                  onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر
+                  className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
+                >
+                  <AlignCenter />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <nav>
+          <div  className={`flex lg:hidden fixed top-0 z-[999] w-full bg-white   `}>
+                  <div className="w-5/6 mx-auto flex justify-between h-16 items-center">
+                    <h1 className='text-base'>karam El Sham</h1>
+                    <div className="  flex justify-between items-center">
+                          <LanguageSwitcher
+                          lang={lang!}
+                          className="ms-3 rounded-none shadow-none"
+                          variant="text"
+                          />
+                          <div className="flex gap-5">
+                            <Link href={`/${lang!}/search`}>
+                              <PiMagnifyingGlassBold size={20} />    
+                            </Link>
+                            <button
+                              onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر
+                              className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
+                            >
+                              <AlignCenter />
+                            </button>
+                          </div>
+                    </div>
+                  </div>
+          </div>
+        </nav>
+      )}
+
+
   </>
   
 }
