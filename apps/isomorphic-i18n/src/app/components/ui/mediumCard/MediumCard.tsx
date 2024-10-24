@@ -59,7 +59,7 @@ function MediumCard(data:Props) {
           </del>
         </div>
       </div>
-      <Image src={data.imageUrl} width={300} height={100} className='w-[130px]  h-[130px]  sm:w-4/12 sm:h-full rounded-lg sm:rounded-s-lg' alt='' />
+      <Image src={data?.imageUrl} width={300} height={100} className='w-[130px] h-[130px] sm:w-4/12 sm:h-full rounded-lg sm:rounded-s-lg' alt='' />
     </div>
   </div>
   )}
@@ -69,9 +69,7 @@ function MediumCard(data:Props) {
         throw new Error('Function not implemented.');
       } } handleUpdateCart={function (): void {
         throw new Error('Function not implemented.');
-      } } setShowItem={function (val: boolean): void {
-        throw new Error('Function not implemented.');
-      } } />}
+      } }  />}
 
 {/* <hr className='mt-3 sm:hidden flex'/> */}
 

@@ -20,46 +20,45 @@ import { formatDate } from '@utils/format-date';
 import usePrice from '@hooks/use-price';
 import { useEffect, useState } from 'react';
 import { Order } from '@/types';
+import { BadgeCent } from 'lucide-react';
 
 const orderStatus = [
+  { id: 0, label: 'Order cancel' },
   { id: 1, label: 'Order Pending' },
-  { id: 2, label: 'Order Processing' },
-  { id: 3, label: 'Order At Local Facility' },
-  { id: 4, label: 'Order Out For Delivery' },
-  { id: 5, label: 'Order Completed' },
+  { id: 2, label: 'Order Being Prepared' },
+  { id: 3, label: 'Order Being Delivered' },
+  { id: 4, label: 'Order Delivered' },
 ];
 
 const transitions = [
   {
     id: 1,
     paymentMethod: {
-      name: 'MasterCard',
-      image:
-        'https://isomorphic-furyroad.s3.amazonaws.com/public/payment/master.png',
+      name: 'Cash on delivery',
+      image:<BadgeCent className="text-orange-500" />
     },
-    price: '$1575.00',
+    // price: '$1575.00',
   },
-  {
-    id: 2,
-    paymentMethod: {
-      name: 'PayPal',
-      image:
-        'https://isomorphic-furyroad.s3.amazonaws.com/public/payment/paypal.png',
-    },
-    price: '$75.00',
-  },
-  {
-    id: 2,
-    paymentMethod: {
-      name: 'Stripe',
-      image:
-        'https://isomorphic-furyroad.s3.amazonaws.com/public/payment/stripe.png',
-    },
-    price: '$375.00',
-  },
+  // {
+  //   id: 2,
+  //   paymentMethod: {
+  //     name: 'PayPal',
+  //     image:
+  //       'https://isomorphic-furyroad.s3.amazonaws.com/public/payment/paypal.png',
+  //   },
+  //   price: '$75.00',
+  // },
+  // {
+  //   id: 2,
+  //   paymentMethod: {
+  //     name: 'Stripe',
+  //     image:
+  //       'https://isomorphic-furyroad.s3.amazonaws.com/public/payment/stripe.png',
+  //   },
+  //   price: '$375.00',
+  // },
 ];
 
-const currentOrderStatus = 3;
 
 function WidgetCard({
   title,
@@ -77,7 +76,7 @@ function WidgetCard({
       <Title
         as="h3"
         className="mb-3.5 text-base font-semibold @5xl:mb-5 4xl:text-lg"
-      >
+        >
         {title}
       </Title>
       <div
@@ -85,7 +84,7 @@ function WidgetCard({
           'rounded-lg border border-muted px-5 @sm:px-7 @5xl:rounded-xl',
           childrenWrapperClass
         )}
-      >
+        >
         {children}
       </div>
     </div>
@@ -106,6 +105,8 @@ export default function OrderView() {
   const billingAddress = useAtomValue(billingAddressAtom);
   const shippingAddress = useAtomValue(shippingAddressAtom);
   const [order, setOrder] = useState<Order | null>(null);
+  const [currentOrderStatus, setCurrentOrderStatus] = useState<number>();
+  // const currentOrderStatus = order?.status;
   const { id } = useParams();
   const phone=localStorage.getItem('phoneNumber')
 
@@ -126,6 +127,8 @@ export default function OrderView() {
           throw new Error('Failed to fetch order');
         }
         const data: Order = await response.json();
+        setCurrentOrderStatus(data?.status); 
+
         setOrder(data);
       } catch (error) {
         console.error('Error fetching order:', error);
@@ -208,37 +211,37 @@ export default function OrderView() {
                 >
                   <div className="flex w-1/3 items-center">
                     <div className="shrink-0">
-                      <Image
+                      {/* <Image
                         src={item.paymentMethod.image}
                         alt={item.paymentMethod.name}
                         height={60}
                         width={60}
                         className="object-contain"
-                      />
+                      /> */}{item.paymentMethod.image}
                     </div>
                     <div className="flex flex-col ps-4">
                       <Text as="span" className="font-lexend text-gray-700">
                         Payment
                       </Text>
                       <span className="pt-1 text-[13px] font-normal text-gray-500">
-                        Via {item.paymentMethod.name}
+                        {item.paymentMethod.name}
                       </span>
                     </div>
                   </div>
 
-                  <div className="w-1/3 text-end">{item.price}</div>
+                  {/* <div className="w-1/3 text-end">{item.price}</div> */}
                 </div>
               ))}
             </div>
           </div>
 
           <div className="">
-            <div className="mb-3.5 @5xl:mb-5">
+            {/* <div className="mb-3.5 @5xl:mb-5">
               <Title as="h3" className="text-base font-semibold @7xl:text-lg">
                 Balance
               </Title>
-            </div>
-            <div className="space-y-6 rounded-xl border border-muted px-5 py-6 @5xl:space-y-7 @5xl:p-7">
+            </div> */}
+            {/* <div className="space-y-6 rounded-xl border border-muted px-5 py-6 @5xl:space-y-7 @5xl:p-7">
               <div className="flex justify-between font-medium">
                 Total Order <span>$5275.00</span>
               </div>
@@ -254,7 +257,7 @@ export default function OrderView() {
               <div className="flex justify-between font-medium">
                 Balance <span>$4975.00</span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="space-y-7 pt-8 @container @5xl:col-span-4 @5xl:space-y-10 @5xl:pt-0 @6xl:col-span-3">
@@ -263,32 +266,34 @@ export default function OrderView() {
             childrenWrapperClass="py-5 @5xl:py-8 flex"
           >
             <div className="ms-2 w-full space-y-7 border-s-2 border-gray-100">
-              {orderStatus.map((item) => (
-                <div
-                  key={item.id}
-                  className={cn(
-                    "relative ps-6 text-sm font-medium before:absolute before:-start-[9px] before:top-px before:h-5 before:w-5 before:-translate-x-px before:rounded-full before:bg-gray-100 before:content-[''] after:absolute after:-start-px after:top-5  after:h-10 after:w-0.5  after:content-[''] last:after:hidden",
-                    currentOrderStatus > item.id
-                      ? 'before:bg-primary after:bg-primary'
-                      : 'after:hidden',
-                    currentOrderStatus === item.id && 'before:bg-primary'
-                  )}
-                >
-                  {currentOrderStatus >= item.id ? (
-                    <span className="absolute -start-1.5 top-1 text-white">
-                      <PiCheckBold className="h-auto w-3" />
-                    </span>
-                  ) : null}
+              {orderStatus
+                .filter((item) => currentOrderStatus === 0 ? item.id === 0 : item.id !== 0) // إذا كانت الحالة تساوي 1، اعرض فقط العنصر الذي لديه id 1، وإلا اعرض كل العناصر ماعدا 1
+                .map((item) => (
+                  <div
+                    key={item.id}
+                    className={cn(
+                      "relative ps-6 text-sm font-medium before:absolute before:-start-[9px] before:top-px before:h-5 before:w-5 before:-translate-x-px before:rounded-full before:bg-gray-100 before:content-[''] after:absolute after:-start-px after:top-5  after:h-10 after:w-0.5  after:content-[''] last:after:hidden",
+                      (currentOrderStatus ?? 0) >= item.id
+                        ? 'before:bg-primary after:bg-primary'
+                        : 'after:hidden',
+                      currentOrderStatus === item.id && 'before:bg-teal-400'
+                    )}
+                  >
+                    {(currentOrderStatus ?? 0) >= item.id ? (
+                      <span className="absolute -start-1.5 top-1 text-white">
+                        <PiCheckBold className="h-auto w-3" />
+                      </span>
+                    ) : null}
 
-                  {item.label}
-                </div>
-              ))}
+                    {item.label}
+                  </div>
+                ))}
             </div>
           </WidgetCard>
 
           <WidgetCard
             title="Customer Details"
-            childrenWrapperClass="py-5 @5xl:py-8 flex"
+            childrenWrapperClass="py-5 @5xl:py-8 flex items-center"
           >
             <div className="relative aspect-square h-16 w-16 shrink-0 @5xl:h-20 @5xl:w-20">
               <Image
@@ -300,16 +305,19 @@ export default function OrderView() {
               />
             </div>
             <div className="ps-4 @5xl:ps-6">
-              <Title
+              {/* <Title
                 as="h3"
                 className="mb-2.5 text-base font-semibold @7xl:text-lg"
               >
                 Leslie Alexander
-              </Title>
+              </Title> */}
               {/* <Text as="p" className="mb-2 break-all last:mb-0">
                 nevaeh.simmons@example.com
               </Text> */}
-              <Text as="p" className="mb-2 last:mb-0">
+              <Text as="p" className="mb-2 last:mb-0 font-semibold">
+                Phone:
+              </Text>
+              <Text as="p" className="mb-2 last:mb-0 font-semibold">
                 {phone}
               </Text>
             </div>
@@ -319,17 +327,20 @@ export default function OrderView() {
             title="Shipping Address"
             childrenWrapperClass="@5xl:py-6 py-5"
           >
-            <Title
-              as="h3"
-              className="mb-2.5 text-base font-semibold @7xl:text-lg"
-            >
-              {billingAddress?.customerName}
-            </Title>
-            <Text as="p" className="mb-2 leading-loose last:mb-0">
-              {billingAddress?.street}, {billingAddress?.city},{' '}
-              {billingAddress?.state}, {billingAddress?.zip},{' '}
-              {billingAddress?.country}
-            </Text>
+           {order?.address && (
+              <div key={order.address.id}>
+                <Title as="h3" className="mb-2.5 text-base font-semibold @7xl:text-lg">
+                  Apartment: {order.address.apartmentNumber}
+                  <br/>
+                  Floor: {order.address.floor}
+                  <br/>
+                   Street: {order.address.street}, 
+                </Title>
+                <Text as="p" className="mb-2 leading-loose last:mb-0">
+                  {order.address.additionalDirections}
+                </Text>
+              </div>
+            )}
           </WidgetCard>
           {!isEmpty(shippingAddress) && (
             <WidgetCard

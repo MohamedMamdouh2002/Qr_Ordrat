@@ -28,6 +28,8 @@ type UserContextType = {
   setFaqs: React.Dispatch<React.SetStateAction<FaqType[]>>;
   order: Order[];
   setOrder: React.Dispatch<React.SetStateAction<Order[]>>;
+  product: string[];
+  setProduct: React.Dispatch<React.SetStateAction<string[]>>;
 
 };
 
@@ -39,6 +41,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [token, setToken] = useState<string | null>(null);
   const [userData, setUserData] = useState<boolean>(false);
   const [order, setOrder] = useState<Order[]>([]);
+  const [product, setProduct] = useState<string[]>([]);
   const [faqs, setFaqs] = useState<FaqType[]>([]);
     
   async function GetHome() {
@@ -52,7 +55,12 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      const data: AllCategories = await response.json();
+      
+      // استرجاع البيانات
+      const data: AllCategories[] = await response.json();
+  
+      // const ids = data.map(category => category.id);
+      // setProduct(ids); // تخزين البيانات في setProduct
       return data;
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -88,7 +96,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
   
   return (
-    <UserContext.Provider value={{order,setOrder,token,setToken,accessToken,setAccessToken, userData, setUserData, faqs, setFaqs, page, setPage, GetHome, GetProduct ,GetRewiew }}>
+    <UserContext.Provider value={{product,setProduct,order,setOrder,token,setToken,accessToken,setAccessToken, userData, setUserData, faqs, setFaqs, page, setPage, GetHome, GetProduct ,GetRewiew }}>
       {children}
     </UserContext.Provider>
   );

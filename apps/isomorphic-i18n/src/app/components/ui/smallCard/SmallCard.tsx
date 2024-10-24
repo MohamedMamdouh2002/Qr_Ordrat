@@ -89,9 +89,7 @@ function SmallCard(data:Props) {
             throw new Error('Function not implemented.');
         } } handleUpdateCart={function (): void {
             throw new Error('Function not implemented.');
-        } } setShowItem={function (val: boolean): void {
-            throw new Error('Function not implemented.');
-    } } />
+        } }  />
     }
 
   </>
