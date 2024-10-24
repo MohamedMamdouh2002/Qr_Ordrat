@@ -16,6 +16,7 @@ import ProductCarousel from '@/app/shared/product-carousel';
 import cardImage from '../../../../../public/assets/card.png'
 import sandwitsh from '../../../../../public/assets/sandwitsh.jpg'
 import SpecialNotes from '@/app/components/ui/SpecialNotes';
+import { toCurrency } from '@utils/to-currency';
 
 
 type FormValues = {
@@ -72,11 +73,12 @@ function CheckCoupon() {
 // cart product card
 
 // total cart balance calculation
-function CartCalculations() {
+function CartCalculations({fees, Tax}:{fees:number; Tax:number}) {
   const router = useRouter();
   const { total } = useCart();
+  const totalWithFees = total + Tax + fees;
   const { price: totalPrice } = usePrice({
-    amount: total,
+    amount: totalWithFees,
   });
   return (
     <div>
@@ -86,22 +88,22 @@ function CartCalculations() {
       <div className="mt-6 grid grid-cols-1 gap-4 @md:gap-6">
         <div className="flex items-center justify-between">
           Subtotal
-          <span className="font-medium text-gray-1000">$140.00</span>
+          <span className="font-medium text-gray-1000">{toCurrency(total)}</span>
         </div>
         <div className="flex items-center justify-between">
           Tax
-          <span className="font-medium text-gray-1000">$0.18</span>
+          <span className="font-medium text-gray-1000">{toCurrency(Tax)}</span>
         </div>
         <div className="flex items-center justify-between">
           Shipping
-          <span className="font-medium text-gray-1000">$50.00</span>
+          <span className="font-medium text-gray-1000">{toCurrency(fees)}</span>
         </div>
         <CheckCoupon />
         <div className="mt-3 flex items-center justify-between border-t border-muted py-4 font-semibold text-gray-1000">
           Total
           <span className="font-medium text-gray-1000">{totalPrice}</span>
         </div>
-        <Link href={routes.eCommerce.checkout}>
+        <Link href={`/en/checkout`}>
           <Button
             size="xl"
             rounded="pill"
@@ -112,7 +114,7 @@ function CartCalculations() {
             Proceed To Checkout
           </Button>
         </Link>
-        <Button
+        {/* <Button
           size="xl"
           variant="outline"
           rounded="pill"
@@ -126,7 +128,7 @@ function CartCalculations() {
             height={10}
             className="object-contain"
           />
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
@@ -226,12 +228,12 @@ export default function CartPageWrapper() {
   //   },
   // ];
 
-  const { items } = useCart();
+  const { items } = useCart();  
   const [notes, setNotes] = useState('');
   return (
     <div className="@container">
       <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
-        <div className="@5xl:col-span-8 @6xl:col-span-7">
+        <div className="@5xl:col-span-8 mt-12 @5xl:mt-0 @6xl:col-span-7">
           {items.length ? (
             items.map((item) => <CartProduct key={item.id} product={item} />)
           ) : (
@@ -254,7 +256,7 @@ export default function CartPageWrapper() {
                 setNotes={setNotes}
               />
             </div>
-            <CartCalculations />
+            <CartCalculations fees={0} Tax={0} />
           </div>
         </div>
       </div>

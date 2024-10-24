@@ -24,6 +24,7 @@ import { useLayout } from "@/layouts/use-layout";
 import { useBerylliumSidebars } from "@/layouts/beryllium/beryllium-utils";
 import { LAYOUT_OPTIONS } from "@/config/enums";
 import { useTranslation } from "@/app/i18n/client";
+import { useUserContext } from "@/app/components/context/UserContext";
 const QuillEditor = dynamic(() => import("@ui/quill-editor"), {
   ssr: false,
 });
@@ -214,7 +215,8 @@ export function ProfileHeader({
 }: React.PropsWithChildren<{ title: string; description?: string }>) {
   const { layout } = useLayout();
   const { expandedLeft } = useBerylliumSidebars();
-
+  const phoneNumber = localStorage.getItem('phoneNumber');
+  const { profileUserName } = useUserContext();
   return (
     <div
       className={cn(
@@ -239,11 +241,11 @@ export function ProfileHeader({
             as="h2"
             className="mb-2 inline-flex items-center gap-3 text-xl font-bold text-gray-900"
           >
-            {title}
+            {profileUserName}
             <PiSealCheckFill className="h-5 w-5 text-mainColor md:h-6 md:w-6" />
           </Title>
           {description ? (
-            <Text className="text-sm text-gray-500">{description}</Text>
+            <Text className="text-sm text-gray-500">{phoneNumber}</Text>
           ) : null}
         </div>
         {children}

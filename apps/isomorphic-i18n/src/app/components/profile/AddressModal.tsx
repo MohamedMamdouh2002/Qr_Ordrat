@@ -7,6 +7,9 @@ import useAddressValidation from '../ui/forms/AddressSchema';
 import Text from '../ui/inputs/Text';
 import Phone from '../ui/inputs/phone';
 import LocationPicker from '../ui/inputs/map/LocationPicker';
+import { API_BASE_URL } from '@/config/base-url';
+import toast from 'react-hot-toast';
+import { useUserContext } from '../context/UserContext';
 
 export default function AddressModal({
 	isOpen,
@@ -18,20 +21,124 @@ export default function AddressModal({
 	address?: Partial<any>;
 }) {
 	const [schema, initialValues] = useAddressValidation();
+	const { updateAddresses, setUpdateAddresses } = useUserContext();
+	console.log("address: ",address);
+
+	const initialLocation = {
+		lat: address?.lat || 30.023173855111207,
+		lng: address?.lng || 31.185028997638923,
+	};
+	
+	const mergedInitialValues = {
+		...initialValues,
+		...address,
+		type: address?.type ?? 0,
+	};
+	
 	const addressTypes = [
 		{
 			name: 'apartment',
-			icon: Building
+			icon: Building,
+			value: 0
 		},
 		{
 			name: 'home',
-			icon: Home
+			icon: Home,
+			value: 1
 		},
 		{
 			name: 'office',
-			icon: BriefcaseBusiness
+			icon: BriefcaseBusiness,
+			value: 2
 		}
 	];
+
+	const updateAddress = async (vals: any) => {
+		const token = localStorage.getItem('accessToken');
+		if (!token) {
+			toast.error('No token found, please log in again.');
+			return;
+		}
+
+		try {
+			const response = await fetch(
+				`${API_BASE_URL}/api/Address/UpdateEndUserAddress?id=${vals.id}`,
+				{
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({
+						additionalDirections: vals.additionalDirections,
+						apartmentNumber: vals.aptNo,
+						floor: vals.floor,
+						street: vals.street,
+						latitude: vals.lat,
+						longtude: vals.lng,
+						buildingType: vals.type
+					}),
+				}
+			);
+
+			const result = await response.json();
+
+			if (response.ok) {
+				toast.success(result.message || 'Address updated successfully!');
+				setUpdateAddresses(true);
+				setIsOpen(false);
+			} else {
+				toast.error(result.message || 'Failed to update the address');
+			}
+		} catch (error) {
+			console.error('Error updating address:', error);
+			toast.error('An error occurred while updating the address.');
+		}
+	};
+
+	const addAddress = async (vals: any) => {
+		const token = localStorage.getItem('accessToken');
+		if (!token) {
+			toast.error('No token found, please log in again.');
+			return;
+		}
+
+		try {
+			const response = await fetch(
+				`${API_BASE_URL}/api/Address/CreateEndUserAddress`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({
+						additionalDirections: vals.additionalDirections,
+						apartmentNumber: vals.aptNo,
+						floor: vals.floor,
+						street: vals.street,
+						latitude: vals.lat,
+						longtude: vals.lng,
+						buildingType: vals.type
+					}),
+				}
+			);
+
+			const result = await response.json();
+
+			if (response.ok) {
+				toast.success(result.message || 'Address created successfully!');
+				setUpdateAddresses(true);
+				setIsOpen(false);
+			} else {
+				toast.error(result.message || 'Failed to create the address');
+			}
+		} catch (error) {
+			console.error('Error creating address:', error);
+			toast.error('An error occurred while creating the address.');
+		}
+	};
+
 	return (
 		<Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-[999]">
 			<div
@@ -43,13 +150,13 @@ export default function AddressModal({
 						initial={{ y: 25, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
 						exit={{ y: 25, opacity: 0 }}
-						className="inset-0 flex w-screen items-center justify-center p-4"
+						className="inset-0 flex w-screen items-center justify-center p-0 sm:p-4"
 					>
-						<Dialog.Panel className="bg-stone-100  border rounded-lg p-4 pr-1 md:pr-4">
+						<Dialog.Panel className="bg-stone-100  border rounded-lg p-4 pr-1 md:pr-4 w-full sm:w-auto">
 							<Dialog.Title
 								className={`text-2xl font-bold text-heaader pb-4 border-b font-header flex items-center gap-3`}
 							>
-								{address ? (
+								{address?.id ? (
 									<>
 										<PenBox className="text-mainColor mt-1" />
 										Edit Address
@@ -62,18 +169,16 @@ export default function AddressModal({
 								)}
 							</Dialog.Title>
 							<Formik<any>
-								initialValues={initialValues}
+								initialValues={mergedInitialValues}
 								enableReinitialize
 								validationSchema={schema}
-								onSubmit={vals => {
-									// if(address){
-									//   updateAddress.mutate({id:address.id!, vals:vals})
-									// }else{
-									//   postAddress.mutate({vals:vals})
-									// }
-									console.log("vals: ",vals);
-
-									setIsOpen(false);
+								onSubmit={async (vals) => {
+									console.log('vals: ', vals);
+									if (address?.id) {
+										await updateAddress(vals);
+									} else {
+										await addAddress(vals);
+									}
 								}}
 							>
 								{({ errors, touched, values, setFieldValue, initialValues, isValid }) => {
@@ -88,22 +193,22 @@ export default function AddressModal({
 															setFieldValue('lat', vals?.lat);
 															setFieldValue('lng', vals?.lng);
 														}}
-														initialLocation = {{ lat: 30.023173855111207, lng: 31.185028997638923 }}
+														initialLocation={initialLocation}
 													/>
 													<RadioGroup
 													value={values['type']}
-													onChange={(val) => setFieldValue('type', val.name)}
-													className={'flex mobile:flex-col gap-2 col-span-full'}
+													onChange={(val) => setFieldValue('type', val)}
+													className={'grid md:flex grid-cols-3 gap-1 sm:gap-2 col-span-full'}
 													>
 													{addressTypes.map((a, i) => (
-														<RadioGroup.Option key={i} value={a} className="flex gap-3">
+														<RadioGroup.Option key={i} value={a.value} className="flex gap-3">
 														{({ checked }) => (
 															<span
-															className={`px-3 py-2 flex items-center gap-2 w-full capitalize cursor-pointer rounded-lg transition duration-150 ${
+															className={`px-1 sm:px-3 py-2 flex items-center gap-1 sm:gap-2 w-full capitalize cursor-pointer rounded-lg transition duration-150 ${
 																checked ? 'bg-mainColor text-white' : 'hover:bg-mainColor/20'
 															}`}
 															>
-															<a.icon />
+															<a.icon className='w-4 xs:w-auto'/>
 															{a.name}
 															</span>
 														)}
@@ -113,9 +218,9 @@ export default function AddressModal({
 												</div>
 												<div className="grid sm:grid-cols-2 grid-cols-1 gap-x-3  mr-1 md:mr-0">
 													<Text name="aptNo" label="apt no." placeholder='apt no.' required={true} />
-													<Text name="floor" label="floor" placeholder='Floor Number' type="number" min="1" />
+													<Text name="floor" label="floor" placeholder='Floor'required={true}/>
 													<Text name="street" label="street" placeholder='Street' required={true} />
-													<Phone name="phoneNumber" label="Phone Number" placeholder='Phone Number' required={true} />
+													<Phone disabled={true} name="phoneNumber" label="Phone Number" placeholder='Phone Number' required={true} />
 													<div className="col-span-full">
 														<Text
 															name="additionalDirections"

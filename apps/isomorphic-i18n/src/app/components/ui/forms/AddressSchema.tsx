@@ -8,17 +8,17 @@ const useAddressValidation = () => {
 		lat: yup.number().required('latRequired'),
 		lng: yup.number().required('longRequired'),
 		type: yup.string().required('typeRequired'),
-		aptNo: yup.string().required('aptNoRequired'),
-		floor: yup.number().optional(),
+		aptNo: yup.number().required('aptNoRequired'),
+		floor: yup.string().required('floorRequired'),
 		street: yup.string().required('streetRequired'),
 		additionalDirections: yup.string().optional(),
-		phoneNumber: yup
-			.string()
-			.required('phoneRequired')
-			.test('validate phone number', 'phoneInvalid', value => {
-				if (value && value !== '') return isValidPhoneNumber(value);
-				return value === undefined;
-			})
+		// phoneNumber: yup
+		// 	.string()
+		// 	.required('phoneRequired')
+		// 	.test('validate phone number', 'phoneInvalid', value => {
+		// 		if (value && value !== '') return isValidPhoneNumber(value);
+		// 		return value === undefined;
+		// 	})
 	});
 	const result = [
 		AdressValidation,
@@ -27,7 +27,7 @@ const useAddressValidation = () => {
 			lng: undefined,
 			type: '',
 			aptNo: '',
-			floor: undefined,
+			floor: '',
 			street: '',
 			additionalDirections: undefined,
 			phoneNumber: ''

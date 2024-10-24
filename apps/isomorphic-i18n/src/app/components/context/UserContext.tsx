@@ -17,6 +17,8 @@ type UserContextType = {
   setAccessToken: React.Dispatch<React.SetStateAction<string | null>>; 
   token: string | null;
   setToken: React.Dispatch<React.SetStateAction<string | null>>; 
+  profileUserName: string;
+  setProfileUserName: React.Dispatch<React.SetStateAction<string>>; 
   setPage: React.Dispatch<React.SetStateAction<number>>;
   GetHome: () => Promise<AllCategories | any>; 
   GetProduct: (id: string) => Promise<FoodId | any>; 
@@ -24,8 +26,12 @@ type UserContextType = {
   
   userData: boolean;
   setUserData: React.Dispatch<React.SetStateAction<boolean>>;
+  updateAddresses: boolean;
+  setUpdateAddresses: React.Dispatch<React.SetStateAction<boolean>>;
   faqs: FaqType[];
   setFaqs: React.Dispatch<React.SetStateAction<FaqType[]>>;
+  updatefaqs: boolean;
+  setUpdateFaqs: React.Dispatch<React.SetStateAction<boolean>>;
   order: Order[];
   setOrder: React.Dispatch<React.SetStateAction<Order[]>>;
   product: string[];
@@ -39,10 +45,13 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [page, setPage] = useState<number>(0);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [profileUserName, setProfileUserName] = useState<string>('User Name');
   const [userData, setUserData] = useState<boolean>(false);
+  const [updateAddresses, setUpdateAddresses] = useState<boolean>(false);
   const [order, setOrder] = useState<Order[]>([]);
   const [product, setProduct] = useState<string[]>([]);
   const [faqs, setFaqs] = useState<FaqType[]>([]);
+  const [updatefaqs, setUpdateFaqs] = useState<boolean>(false);
     
   async function GetHome() {
     try {
@@ -70,7 +79,11 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   async function GetProduct(id: string) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/Products/GetById/${shopId}/${id}`);
+      const response = await fetch(`${API_BASE_URL}/api/Products/GetById/${shopId}/${id}`,{
+        headers: {
+          'Accept-Language': `en`,
+          },
+      });
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
@@ -83,7 +96,12 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
   async function GetRewiew() {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/Review/GetShopReviews/${shopId}?pageNumber=1&pageSize=50`);
+      const response = await fetch(`${API_BASE_URL}/api/Review/GetShopReviews/${shopId}?pageNumber=1&pageSize=50`, {
+        method: 'GET',
+        headers: {
+          'Accept-Language': 'en',
+        },
+      });
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
@@ -96,7 +114,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
   
   return (
-    <UserContext.Provider value={{product,setProduct,order,setOrder,token,setToken,accessToken,setAccessToken, userData, setUserData, faqs, setFaqs, page, setPage, GetHome, GetProduct ,GetRewiew }}>
+    <UserContext.Provider value={{product,setProduct,order,setOrder,token,setToken, profileUserName, setProfileUserName, accessToken,setAccessToken, userData, setUserData, updateAddresses, setUpdateAddresses, faqs, setFaqs, updatefaqs, setUpdateFaqs, page, setPage, GetHome, GetProduct ,GetRewiew }}>
       {children}
     </UserContext.Provider>
   );

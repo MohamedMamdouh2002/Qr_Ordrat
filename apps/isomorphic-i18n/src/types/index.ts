@@ -40,7 +40,7 @@ export interface ProductColor {
 }
 
 export interface CartItem {
-  id: number;
+  id: number | string;
   name: string;
   slug?: string;
   description?: string;

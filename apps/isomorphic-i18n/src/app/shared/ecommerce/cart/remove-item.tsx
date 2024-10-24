@@ -7,7 +7,7 @@ import cn from '@utils/class-names';
 import { useCart } from '@/store/quick-cart/cart.context';
 
 interface RemoveItemProps {
-  productID: number;
+  productID: number | string;
   className?: string;
   placement: Placement;
 }

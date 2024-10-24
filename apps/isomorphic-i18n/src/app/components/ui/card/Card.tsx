@@ -84,12 +84,9 @@ const Card = (data: Props) => {
           setNotes={function (val: string): void {
             throw new Error('Function not implemented.');
           }}
-          handleUpdateCart={function (): void {
+          setShowItem={function (val: boolean): void {
             throw new Error('Function not implemented.');
-          }}
-          // setShowItem={function (val: boolean): void {
-          //   throw new Error('Function not implemented.');
-          // } }
+          } }
         />
       )}
     </>
