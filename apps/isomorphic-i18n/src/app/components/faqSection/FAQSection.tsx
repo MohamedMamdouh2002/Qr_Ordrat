@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react';
 import { useUserContext } from '../context/UserContext';
 import { shopId } from '@/config/shopId';
 
-function FAQSection({ lang }: { lang?: string }) {
+function FAQSection({ lang }: { lang: string }) {
   // const faq = [
   //   {
   //     id:'1',
@@ -135,11 +135,11 @@ function FAQSection({ lang }: { lang?: string }) {
   // ]; 
   
   const [faqData, setFaqData] = useState<FaqType[]>([]);
-  const { setFaqs } = useUserContext(); 
+  const { setFaqs,updatefaqs,setUpdateFaqs } = useUserContext(); 
   // Define images for different categories
   const images = [
-    registration,
     general,
+    registration,
     deposit,
     vehicles,
     etisalat,
@@ -147,23 +147,30 @@ function FAQSection({ lang }: { lang?: string }) {
     directSale,
   ];
   
-  useEffect(() => {
-    async function getFAQs() {
-      const { data, message } = await fetchData<FaqType[]>({
-        link: `api/FAQCategory/GetShopFAQs/${shopId}`,
-        lang: "en"
-      });
-      console.log('faq data: ', data);
-      console.log('massage: ',message);
-      if (data) {
-        setFaqData(data);
-      } else {
-        setFaqData([]);
-      }
+  async function getFAQs() {
+    const { data, message } = await fetchData<FaqType[]>({
+      link: `api/FAQCategory/GetShopFAQs/${shopId}`,
+      lang: lang
+    });
+    console.log('faq data: ', data);
+    console.log('massage: ',message);
+    console.log("lang: ",lang);
+    
+    if (data) {
+      setFaqData(data);
+      console.log("data: ",data);
+      
+    } else {
+      setFaqData([]);
     }
-
+  }
+  useEffect(() => {
     getFAQs();
-  }, [lang]);
+    if (updatefaqs === true) {
+			getFAQs();
+			setUpdateFaqs(false);	
+		}
+  }, [lang, updatefaqs]);
   
   return <>
     <div className={style.faqContainer}>
@@ -179,7 +186,7 @@ function FAQSection({ lang }: { lang?: string }) {
                   <div className={style.faqCardHead} style={{ alignItems: 'center' }}>
                     <div className={style.iconWrapper} style={{ width: '50px', marginInlineEnd: '5px' }}>
                       <Image
-                        src={images[index] || directSale}
+                        src={images[index] || Findmore}
                         width="50"
                         height="50"
                         alt={item.name}

@@ -30,8 +30,8 @@ export function defaultValues(order?: CreateOrderInput) {
       expireMonth: order?.cardPayment?.expireMonth,
       expireYear: order?.cardPayment?.expireYear,
       cardCVC: order?.cardPayment?.cardCVC,
-      cardUserName: order?.cardPayment?.cardUserName,
-      isSaveCard: order?.cardPayment?.isSaveCard,
+      // cardUserName: order?.cardPayment?.cardUserName,
+      // isSaveCard: order?.cardPayment?.isSaveCard,
     },
   };
 }

@@ -111,7 +111,7 @@ type Address = {
   id: string,
   lat: number,
 	lng: number,
-	type: 'apartment' | 'home' | 'office',
+	type: number,
 	aptNo: string,
 	floor?: number,
 	street: string,

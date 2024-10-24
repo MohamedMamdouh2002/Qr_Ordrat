@@ -48,6 +48,7 @@ type Props = {
 	choicename?: string;
 	placeholder?: string;
 	props?: any[];
+	disabled?:boolean;
 };
 export default function FormikInput({
 	name,
@@ -63,6 +64,7 @@ export default function FormikInput({
 	labelClasses,
 	required,
 	placeholder,
+	disabled,
 	...props
 }: Props) {
 	const [inputProps, { value, error, touched, initialValue }, { setTouched, setValue }] =
@@ -104,6 +106,7 @@ export default function FormikInput({
 					values={props.multiple && !file ? value : undefined}
 					initialvalue={initialValue ? initialValue : ''}
 					placeholder={placeholder}
+					disabled={disabled}
 					{...props}
 				/>
 				{firstOpt && (

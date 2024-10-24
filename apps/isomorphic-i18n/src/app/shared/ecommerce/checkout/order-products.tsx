@@ -22,9 +22,9 @@ export default function OrderProducts({
   className?: string;
   itemClassName?: string;
   showControls?: boolean;
-  clearItemFromCart: (id: number) => void;
+  clearItemFromCart: (id: number | string) => void;
   addItemToCart: (item: CartItem, quantity: number) => void;
-  removeItemFromCart: (id: number) => void;
+  removeItemFromCart: (id: number | string) => void;
 }) {
   if (!items.length) {
     return (
@@ -35,7 +35,7 @@ export default function OrderProducts({
   }
 
   return (
-    <SimpleBar className={cn('h-[calc(100vh_-_170px)] pb-3', className)}>
+    <SimpleBar className={cn('h-auto pb-3')}>
       <div className={cn('grid gap-3.5', className)}>
         {items.map((item) => (
           <div
@@ -109,7 +109,7 @@ function QuantityControl({
 }: {
   product: CartItem;
   addItemToCart: (item: CartItem, quantity: number) => void;
-  removeItemFromCart: (id: number) => void;
+  removeItemFromCart: (id: number | string) => void;
 }) {
   return (
     <div className="mt-2 inline-flex items-center rounded bg-gray-100 p-0.5 text-xs">
@@ -139,7 +139,7 @@ function RemoveItem({
 }: {
   product: CartItem;
   className?: string;
-  clearItemFromCart: (id: number) => void;
+  clearItemFromCart: (id: number | string) => void;
 }) {
   return (
     <button

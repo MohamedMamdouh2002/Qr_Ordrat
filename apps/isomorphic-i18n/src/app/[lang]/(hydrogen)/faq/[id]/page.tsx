@@ -1,9 +1,15 @@
 import FAQSectionContent from '@/app/components/faqSectionContent/FAQSectionContent';
 
-export default function OrderDetailsPage({ params }: any) {
+export default function Id({
+  params: { lang },
+}: {
+  params: {
+    lang?: string;
+  };
+}) {
   return (
     <>
-      <FAQSectionContent />
+      <FAQSectionContent lang={lang?lang:'en'}/>
     </>
   );
 }

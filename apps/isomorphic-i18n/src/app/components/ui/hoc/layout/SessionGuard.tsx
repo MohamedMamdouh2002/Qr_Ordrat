@@ -11,10 +11,10 @@ const SessionGuard = ({ children }: Props) => {
 	const router = useRouter();
 
 	useEffect(() => {
-		const token = localStorage.getItem('token');
+		const token = localStorage.getItem('Token');
 		if (!token) {
-			// router.push('/');
-			setLoading(false);
+			router.push('/');
+			// setLoading(false);
 		} else {
 			setLoading(false);
 		}

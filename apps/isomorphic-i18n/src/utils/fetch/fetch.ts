@@ -3,7 +3,7 @@ import { API_BASE_URL } from '../../config/base-url';
 type Fetchtype = {
 	link: string,
 	section?: string,
-	lang: 'ar' | 'en',
+	lang: string,
 	revalidate?: number,
 	method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
 	headers?: Record<string, any>,
