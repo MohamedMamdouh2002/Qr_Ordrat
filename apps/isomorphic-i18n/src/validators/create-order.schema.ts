@@ -34,16 +34,12 @@ export const orderFormSchema = z.object({
   paymentMethod: z.string().optional(),
   shippingMethod: z.string().optional(),
   shippingSpeed: z.string().optional(),
-  cardPayment: z
-    .object({
-      cardNumber: z.string().optional(),
-      expireMonth: z.string().optional(),
-      expireYear: z.string().optional(),
-      cardCVC: z.string().optional(),
-      cardUserName: z.string().optional(),
-      isSaveCard: z.boolean().optional(),
-    })
-    .optional(),
+  cardPayment: z.object({
+    cardNumber: z.string().nonempty('Card number is required'),
+    expireMonth: z.string().nonempty('Expiration month is required'),
+    expireYear: z.string().nonempty('Expiration year is required'),
+    cardCVC: z.string().nonempty('Card CVC is required'),
+  }),
 });
 
 // generate form types from zod validation schema

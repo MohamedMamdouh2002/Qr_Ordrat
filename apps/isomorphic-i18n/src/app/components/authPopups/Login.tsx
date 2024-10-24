@@ -70,6 +70,14 @@ function Login({ onLogin, setCurrentModal }: Props) {
 			localStorage.setItem('phoneNumber', result?.phoneNumber);
 			// console.log("result?.refreshToken",result?.refreshToken);
 			setToken(result.refreshToken)
+
+			const userData = {
+				phoneNumber: result.phoneNumber,
+				firstName: result.firstName || '',
+				lastName: result.lastName || '',
+				email: result.email || '',
+			};
+			localStorage.setItem('userData', JSON.stringify(userData));
 		  } else {
 			console.log('Access Token not found.');
 		  }

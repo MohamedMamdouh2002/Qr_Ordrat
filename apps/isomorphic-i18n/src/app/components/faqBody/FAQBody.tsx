@@ -7,7 +7,7 @@ import FAQSection from '../faqSection/FAQSection';
 function FAQBody( { lang }: { lang?: string }) {
   return <>
   <div className='w-[90%] mx-auto mt-8'>
-    <FAQSection />
+    <FAQSection lang={lang?lang:'en'}/>
   </div>
   </>
 }

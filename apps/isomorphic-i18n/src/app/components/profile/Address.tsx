@@ -8,9 +8,9 @@ function Address({ address, className }: Props) {
 	return (
 		<div className={cn('flex flex-col gap-2', className)}>
 			<span className={`px-3 py-2 rounded-lg transition duration-150 flex items-center gap-2`}>
-				{address.type === 'apartment' ? (
+				{address.type === 0 ? (
 					<Building className="pt-1 text-orange-500" />
-				) : address.type === 'home' ? (
+				) : address.type === 1 ? (
 					<Home className="pt-1 text-orange-500" />
 				) : (
 					<BriefcaseBusiness className="pt-1 text-orange-500" />

@@ -13,9 +13,11 @@ import { useCart } from '@/store/quick-cart/cart.context';
 export default function OrderSummery({
   isLoading,
   className,
+  lang,
 }: {
   className?: string;
   isLoading?: boolean;
+  lang?: string;
 }) {
   const params = useParams();
   const { items, total, addItemToCart, removeItemFromCart, clearItemFromCart } =
@@ -36,13 +38,13 @@ export default function OrderSummery({
         className
       )}
     >
-      <Title as="h4" className="mb-3 font-semibold">
+      <Title as="h4" className="font-semibold">
         Your Order
       </Title>
-      <div className="rounded-lg border border-muted p-4 @xs:p-6 @5xl:rounded-none @5xl:border-none @5xl:px-0">
-        <div className="flex justify-between rounded-tl-lg rounded-tr-lg border-b border-muted pb-4 @xs:pb-6">
-          Ordered items
-          <Link href={routes.eCommerce.cart}>
+      <div className="rounded-lg border border-muted p-4 @xs:p-6 pt-0 @xs:pt-0 @5xl:rounded-none @5xl:border-none @5xl:px-0">
+        <div className="flex justify-between rounded-tl-lg rounded-tr-lg border-b border-muted pb-4 @xs:pb-4">
+          {/* Ordered items
+          <Link href={`/${lang}/cart`}>
             <Button
               as="span"
               variant="text"
@@ -50,7 +52,7 @@ export default function OrderSummery({
             >
               Edit Cart
             </Button>
-          </Link>
+          </Link> */}
         </div>
         <div className="pt-4 @xl:pt-6">
           <OrderProducts
@@ -87,7 +89,7 @@ export default function OrderSummery({
             <Button
               type="submit"
               isLoading={isLoading}
-              className="mt-3 w-full text-base @md:h-12"
+              className="mt-3 w-full text-base @md:h-12 bg-mainColor hover:bg-mainColorHover"
             >
               {params?.id ? 'Update Order' : 'Place Order'}
             </Button>
@@ -95,7 +97,7 @@ export default function OrderSummery({
             <Link href={routes.eCommerce.shop}>
               <Button
                 as="span"
-                className="mt-3 w-full text-base @md:h-12"
+                className="mt-3 w-full text-base @md:h-12 bg-mainColor hover:bg-mainColorHover"
               >{`Back to Store`}</Button>
             </Link>
           )}

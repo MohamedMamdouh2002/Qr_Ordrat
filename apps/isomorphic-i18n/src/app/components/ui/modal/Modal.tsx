@@ -13,10 +13,11 @@ import Badge from '../Badge';
 import img from "@public/assets/kfc-background.jpg";
 import Image from 'next/image';
 import sliderPhoto from '@public/assets/landing-poster.png';
-import { FullProduct, FoodId } from '@/types';
+import { FullProduct, FoodId, CartItem } from '@/types';
 import { useUserContext } from '../../context/UserContext';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import { Input } from 'rizzui';
+import { useCart } from '@/store/quick-cart/cart.context';
 // type Props = {
 
 // };
@@ -28,7 +29,7 @@ type ModalProps = {
     notes: string;
     
     setNotes: (val: string) => void;
-    handleUpdateCart: () => void;
+    handleUpdateCart?: () => void;
     itemId?: string;
     setShowItem: (val: boolean) => void;
     type?: string;
@@ -51,7 +52,10 @@ function Modal({
 }: ModalProps ) {
 
   const [prodId, setProdId] = useState<FoodId | any>(null)
+  const [prodCartItem, setProdCartItem] = useState<CartItem | any>(null)
   const { GetProduct } = useUserContext();
+
+  const { addItemToCart } = useCart();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,11 +63,46 @@ function Modal({
       setProdId(data);
       
       console.log('Fetched Data prod:', data);
+
+      setProdCartItem({
+        id: data.id,
+        name: data.name,
+        slug: data.name,
+        description: data.description,
+        imageUrl: data.imageUrl,
+        price: data.price,
+        quantity: 1,
+        sizeFood: "small",
+        color: {
+          name: "Purple Heart",
+          code: "#5D30DD",
+        },
+      });
     };
     console.log("prodId",modalId);
 
     fetchData();
   }, [GetProduct, modalId]); 
+
+  const handleAddToCart = () => {
+    if (!prodCartItem) return;
+
+    const cartItem: CartItem = {
+      id: prodCartItem.id,
+      name: prodCartItem.name || "Default Item",
+      slug: prodCartItem.slug || "",
+      description: prodCartItem.description || "Default Description",
+      image: prodCartItem.imageUrl,
+      price: prodCartItem.price || 100,
+      quantity,
+      sizeFood: "small",
+      discount: prodCartItem.discount,
+      stock: 10,
+    };
+
+    addItemToCart(cartItem,quantity);
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'; 
@@ -213,7 +252,7 @@ return <>
                                 <div className="col-span-2">
                                     <ItemPrice
                                         type={type}
-                                        action={handleUpdateCart}
+                                        action={handleAddToCart}
                                         price={`EGP ${prodId?.price! * quantity}`}
                                         oldPrice={data?.oldPrice ? `EGP ${prodId.oldPrice * quantity}` : undefined}
                                         className={cn(
@@ -324,7 +363,7 @@ return <>
                     <div className={'col-span-2'}>
                         <ItemPrice
                             type={type}
-                            action={handleUpdateCart}
+                            action={handleAddToCart}
                             price={`EGP ${data?.price! * quantity}`}
                             oldPrice={data?.oldPrice ? `EGP ${data.oldPrice * quantity}` : undefined}
                             className={cn('rounded-none rounded-br-lg rtl:rounded-bl-lg rtl:rounded-br-none', { 'rounded-br-none rtl:rounded-bl-none': hasMoreDetails })}

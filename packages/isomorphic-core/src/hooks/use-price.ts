@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 // import { useRouter } from 'next/router';
 
-export const CURRENCY_CODE = 'USD';
+export const CURRENCY_CODE = 'EGP';
 export const CURRENCY_OPTIONS = {
   formation: 'en-US',
   fractions: 2,

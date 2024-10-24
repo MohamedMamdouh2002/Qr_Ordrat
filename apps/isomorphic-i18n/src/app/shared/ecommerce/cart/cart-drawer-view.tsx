@@ -9,13 +9,14 @@ import cn from '@utils/class-names';
 import { routes } from '@/config/routes';
 import { CartItem } from '@/types';
 import DrawerHeader from '@/app/shared/drawer-header';
+import { string } from 'zod';
 
 type CartDrawerViewProps = {
   items: CartItem[];
   total: number;
   addItemToCart: (item: CartItem, quantity: number) => void;
-  removeItemFromCart: (id: number) => void;
-  clearItemFromCart: (id: number) => void;
+  removeItemFromCart: (id: number | string) => void;
+  clearItemFromCart: (id: number | string) => void;
   setOpenDrawer: (id: boolean) => void;
 };
 
