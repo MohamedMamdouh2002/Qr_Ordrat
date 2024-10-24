@@ -1,17 +1,13 @@
-'use client';
-import { DialogPanelProps } from '@headlessui/react';
+import React, { useEffect, useState } from 'react';
 import { Flame, Star, X } from 'lucide-react';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import ReactDOM from 'react-dom';
 import SpecialNotes from '../item/SpecialNotes';
 import QuantityHandler from '../item/QuantityHandler';
 import ItemPrice from '../ItemPrice';
-import OftenOrderedWith from '../item/OftenOrderedWith';
-import { motion } from 'framer-motion';
-import cn from '../../../../../../../packages/isomorphic-core/src/utils/class-names';
 import Badge from '../Badge';
-// import Choices from '../item/Choices';
-import img from "@public/assets/kfc-background.jpg";
 import Image from 'next/image';
+import cn from '../../../../../../../packages/isomorphic-core/src/utils/class-names';
 import sliderPhoto from '@public/assets/landing-poster.png';
 import { FullProduct, FoodId, CartItem } from '@/types';
 import { useUserContext } from '../../context/UserContext';
@@ -20,7 +16,6 @@ import { Input } from 'rizzui';
 import { useCart } from '@/store/quick-cart/cart.context';
 // type Props = {
 
-// };
 type ModalProps = {
     data?: FullProduct;
     quantity: number;
@@ -36,6 +31,7 @@ type ModalProps = {
     setIsModalOpen: (isOpen: boolean) => void;
     modalId: string;
 };
+
 function Modal({
   setIsModalOpen,
   modalId,
@@ -46,6 +42,7 @@ function Modal({
   notes,
   setNotes,
   handleUpdateCart,
+
   itemId,
   setShowItem,
   type,
@@ -53,6 +50,7 @@ function Modal({
 
   const [prodId, setProdId] = useState<FoodId | any>(null)
   const [prodCartItem, setProdCartItem] = useState<CartItem | any>(null)
+
   const { GetProduct } = useUserContext();
 
   const { addItemToCart } = useCart();
@@ -61,6 +59,7 @@ function Modal({
     const fetchData = async () => {
       const data = await GetProduct(modalId);
       setProdId(data);
+
       
       console.log('Fetched Data prod:', data);
 
@@ -79,10 +78,8 @@ function Modal({
         },
       });
     };
-    console.log("prodId",modalId);
-
     fetchData();
-  }, [GetProduct, modalId]); 
+  }, [GetProduct, modalId]);
 
   const handleAddToCart = () => {
     if (!prodCartItem) return;
@@ -105,9 +102,9 @@ function Modal({
   };
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden'; 
+    document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'auto'; 
+      document.body.style.overflow = 'auto';
     };
   }, []);
 
@@ -115,13 +112,17 @@ function Modal({
     setIsModalOpen(false);
   };
 
-  const handleOutsideClick = (e: { target: any; currentTarget: any }) => {
+  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       handleClose();
     }
   };
 
-return <>
+  if (typeof window === 'undefined') return null;
+
+
+  return ReactDOM.createPortal(
+ <>
     {prodId&&<>
         <div className="hidden md:flex items-center justify-center">
             <div onClick={handleOutsideClick}
@@ -375,8 +376,9 @@ return <>
         </motion.div>
     </>
     }   
-</>
- 
+</>,
+    document.body
+  );
 }
 
 export default Modal;

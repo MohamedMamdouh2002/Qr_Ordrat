@@ -182,17 +182,17 @@ export interface Product {
   colors?: ProductColor[];
   sizes?: number[];
 }
-export type AllCategories = Array<{
-  id: string
-  imageUrl: string
-  priority: number
-  isActive: boolean
-  numberOfProducts: number
-  bannerUrl?:string
-  numberOfColumns: '1' | '2' | 'full'
-  products: Array<Food>
-  name: string
-}>
+export type AllCategories = {
+  id: string;
+  imageUrl: string;
+  priority: number;
+  isActive: boolean;
+  numberOfProducts: number;
+  bannerUrl?: string;
+  numberOfColumns: '1' | '2' | 'full';
+  products: Food[];
+  name: string;
+};
 
 export type Food = {
     id: string
@@ -255,6 +255,17 @@ export type OrderItem = {
   };
 };
 
+export type orderAdress = {
+  id: string;
+  additionalDirections?: string;
+  apartmentNumber?: number;
+  floor?: string;
+  street?: string;
+  latitude?: number;
+  longtude?: number;
+  buildingType?: number;
+};
+
 export type Order = {
   id: string;
   totalPrice: number;
@@ -263,5 +274,6 @@ export type Order = {
   createdAt: string;
   status: number;
   totalChoicePrices: number;
+  address:orderAdress;
   items: OrderItem[];
 };

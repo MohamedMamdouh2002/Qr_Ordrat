@@ -34,6 +34,8 @@ type UserContextType = {
   setUpdateFaqs: React.Dispatch<React.SetStateAction<boolean>>;
   order: Order[];
   setOrder: React.Dispatch<React.SetStateAction<Order[]>>;
+  product: string[];
+  setProduct: React.Dispatch<React.SetStateAction<string[]>>;
 
 };
 
@@ -47,6 +49,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [userData, setUserData] = useState<boolean>(false);
   const [updateAddresses, setUpdateAddresses] = useState<boolean>(false);
   const [order, setOrder] = useState<Order[]>([]);
+  const [product, setProduct] = useState<string[]>([]);
   const [faqs, setFaqs] = useState<FaqType[]>([]);
   const [updatefaqs, setUpdateFaqs] = useState<boolean>(false);
     
@@ -61,7 +64,12 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      const data: AllCategories = await response.json();
+      
+      // استرجاع البيانات
+      const data: AllCategories[] = await response.json();
+  
+      // const ids = data.map(category => category.id);
+      // setProduct(ids); // تخزين البيانات في setProduct
       return data;
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -106,7 +114,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
   
   return (
-    <UserContext.Provider value={{order,setOrder,token,setToken, profileUserName, setProfileUserName, accessToken,setAccessToken, userData, setUserData, updateAddresses, setUpdateAddresses, faqs, setFaqs, updatefaqs, setUpdateFaqs, page, setPage, GetHome, GetProduct ,GetRewiew }}>
+    <UserContext.Provider value={{product,setProduct,order,setOrder,token,setToken, profileUserName, setProfileUserName, accessToken,setAccessToken, userData, setUserData, updateAddresses, setUpdateAddresses, faqs, setFaqs, updatefaqs, setUpdateFaqs, page, setPage, GetHome, GetProduct ,GetRewiew }}>
       {children}
     </UserContext.Provider>
   );
