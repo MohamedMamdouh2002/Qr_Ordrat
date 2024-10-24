@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+'use client';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Flame, Star, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ReactDOM from 'react-dom';
