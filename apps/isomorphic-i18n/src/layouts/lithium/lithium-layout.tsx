@@ -13,7 +13,7 @@ export default function LithiumLayout({
         <Header lang={lang} />
         <div className="">
           {children}
-          <Footer/>
+          <Footer lang={lang!}/>
 
         </div>
       </div>

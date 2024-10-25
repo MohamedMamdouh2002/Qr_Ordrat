@@ -69,6 +69,7 @@ function AllProduct() {
             isMobile ? 
             <div className="col-span-full" key={prod.id}>
               <MediumCard setCurrentItem={() => {}} {...prod} /> 
+                <hr/>
             </div>
             :
              <Card setCurrentItem={() => {}} key={prod.id} {...prod} />

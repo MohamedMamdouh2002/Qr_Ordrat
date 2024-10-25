@@ -2,15 +2,16 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
-// تعريف واجهة الخصائص
 interface PrevArrowProps {
-    onClick: () => void; // دالة للإشارة عند النقر
+    onClick: () => void;
+    lang: string; // إضافة خاصية اللغة
 }
 
-const PrevArrow: React.FC<PrevArrowProps> = ({ onClick }) => {
+const PrevArrow: React.FC<PrevArrowProps> = ({ onClick, lang }) => {    
     return (
-        <div className="absolute -right-4 top-[44%] shadow-lg text-mainColor bg-white w-10 h-10 hidden lg:flex justify-center items-center rounded-full z-10 cursor-pointer" onClick={onClick}>
-            <FontAwesomeIcon icon={faAngleRight} />
+        <div className="absolute -end-4 top-[44%] shadow-lg text-mainColor bg-white w-10 h-10 hidden lg:flex justify-center items-center rounded-full z-10 cursor-pointer" onClick={onClick}>
+                    <FontAwesomeIcon icon={lang === 'ar' ? faAngleRight : faAngleLeft} />
+
         </div>
     );
 };

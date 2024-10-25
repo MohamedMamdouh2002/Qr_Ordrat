@@ -17,6 +17,7 @@ import { shopId } from '@/config/shopId';
 import { API_BASE_URL } from '@/config/base-url';
 import { method } from 'lodash';
 import { useUserContext } from '../context/UserContext';
+import { useTranslation } from '@/app/i18n/client';
 // import { SessionContext } from '@/utils/contexts';
 
 type Props = {
@@ -24,7 +25,9 @@ type Props = {
 	setCurrentModal: (val: 'login' | 'register' | 'resetPassword') => void;
 };
 
-function Login({ onLogin, setCurrentModal }: Props) {
+function Login({ onLogin, setCurrentModal }: Props,{ lang }: { lang?: string }) {
+	const { t } = useTranslation(lang!, 'nav');
+
 	const{accessToken ,setAccessToken ,token ,setToken}=useUserContext()
 	const [loading, setLoading] = useState(false);
 	// const { setSession } = useContext(SessionContext);
@@ -106,7 +109,7 @@ onSubmit:sendData
 				<p className="text-sm font-light">Fried chicken, Sandwiches, Fast Food...</p>
 			</div>
 			<div className="flex flex-col items-center">
-				<h3 className="font-bold text-lg">Login</h3>
+				<h3 className="font-bold text-lg">{t('login')}</h3>
 				{/* <button
 					// onClick={() => setCurrentModal('register')}
 					className="text-xs font-bold text-black/50 hover:underline"
@@ -133,19 +136,21 @@ onSubmit:sendData
 				</Formik> */}
 				<form className='flex flex-col' onSubmit={formik.handleSubmit}>
 					
-					<label htmlFor="phone" className='font-bold mb-1'>Phone</label>
+					<label htmlFor="phone" className='font-bold mb-1'>{t('phone')}</label>
 					<Input
 						type='tel'
 						autoComplete='tel'
-						placeholder='Enter Your Phone Number'
+						placeholder={t('phone-ph')}
 						autoFocus
 						id='phoneNumber'
 						name='phoneNumber'
-						className="rounded-md focus:border-2 focus:border-mainColor focus:outline-none "
+						className="rounded-md placeholder:text-start focus:border-2 focus:border-mainColor focus:outline-none "
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
 						value={formik.values.phoneNumber}
-					/>
+						
+						// style={{ textAlign: 'right', direction: 'rtl' }}  
+						/>
 					 {formik.errors.phoneNumber&& formik.touched.phoneNumber ?
 					 <p className="text-red-500 text-xs">{formik.errors.phoneNumber}</p>:"" }
 					  <button

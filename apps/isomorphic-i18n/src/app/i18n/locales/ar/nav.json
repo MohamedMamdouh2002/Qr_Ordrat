@@ -124,5 +124,17 @@
   "sidebar-menu-support-description": "مساعدة سهلة في متناول يدك!",
   "sidebar-menu-invoice-description": "فواتير ذات مظهر احترافي لكل طلب عميل",
   "sidebar-menu-logistics-description": "تبسيط الشحنات: اكتشف الكفاءة مع خدماتنا اللوجستية!",
-  "sidebar-menu-file-manager-description": "التنظيم والوصول والمشاركة: قم بتبسيط عالمك الرقمي معنا!"
+  "sidebar-menu-file-manager-description": "التنظيم والوصول والمشاركة: قم بتبسيط عالمك الرقمي معنا!",
+  "login-now":"من فضلك سجل الدخول الان",
+  "login":"تسجيل الدخول",
+  "logout":"تسجيل الخروج",
+  "phone":"رقم الهاتف",
+  "phone-ph":" ادخل رقم الهاتف",
+  "faq":"الاسئله الشائعة",
+  "review":"التقييمات",
+  "search":"البحث",
+  "profile":"الصفحة الشخصية",
+  "cart":"السله",
+  "orders":"الطلبات",
+  "welcome-to":"اهلا بكم في مطعم كرم الشام"
 }

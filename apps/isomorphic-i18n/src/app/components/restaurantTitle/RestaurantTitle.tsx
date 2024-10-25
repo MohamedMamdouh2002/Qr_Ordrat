@@ -8,7 +8,7 @@ import { PiMagnifyingGlassBold } from 'react-icons/pi'
 function RestaurantTitle({lang} :{lang? :string}) {
   return <>
 
-  	<div className={'flex lg:hidden -mt-20 rounded-xl flex-col  bg-slate-50 w-5/6 mx-auto z-50 text-black relative'}>
+  	<div className={'flex lg:hidden -mt-20 rounded-xl flex-col  bg-slate-50 w-5/6 mx-auto z-10 text-black relative'}>
         <div className="flex items-start mt-6 justify-between">
             <div className="flex gap-6 items-start">
                 <Image src={logo} width={100} height={100} className='-mt-5 w-[80px] h-[80px] sm:w-[100px] sm:h-[100px]' alt='logo'/>

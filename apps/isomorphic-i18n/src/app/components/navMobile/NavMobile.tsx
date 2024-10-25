@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-scroll";
 import { useUserContext } from "../context/UserContext";
 
-const NavMobile = () => {
+const NavMobile = ({lang}:{lang:string}) => {
   const [active, setActive] = useState(""); // تعيين الحالة النشطة
   const { GetHome } = useUserContext();
   const [home, setHome] = useState<any[]>([]);
@@ -12,7 +12,7 @@ const NavMobile = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await GetHome();
+      const data = await GetHome({lang});
       setHome(data);
       setActive(data[0]?.id || ""); // تعيين أول رابط كحالة نشطة بشكل افتراضي
       console.log('Fetched Data:', data);
@@ -22,9 +22,9 @@ const NavMobile = () => {
   }, [GetHome]);
 
   useEffect(() => {
-    const sections = home.map(item => document.getElementById(item.id));
+    const sections = home?.map(item => document.getElementById(item.id));
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries?.forEach(entry => {
         if (entry.isIntersecting) {
           setActive(entry.target.id);
           const index = home.findIndex(item => item.id === entry.target.id);
@@ -33,14 +33,14 @@ const NavMobile = () => {
       });
     }, { rootMargin: '0px', threshold: 0.5 });
 
-    sections.forEach(section => {
+    sections?.forEach(section => {
       if (section) {
         observer.observe(section);
       }
     });
 
     return () => {
-      sections.forEach(section => {
+      sections?.forEach(section => {
         if (section) {
           observer.unobserve(section);
         }

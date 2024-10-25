@@ -22,10 +22,10 @@ export default function FileDashboardPage({
   return<>
 
     <RestaurantTitle/>
-    <NavMobile/>
+    <NavMobile lang={lang}/>
     <Header/>
     <MainSlider/>
-    <Grills/>
+    <Grills lang={lang}/>
     {/* <PopularMeals/> */}
     {/* <SyrianFood/> */}
     {/* <Offers/> */}

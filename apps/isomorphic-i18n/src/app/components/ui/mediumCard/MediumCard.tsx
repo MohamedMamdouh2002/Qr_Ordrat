@@ -29,8 +29,8 @@ function MediumCard(data:Props) {
   return <>
   {!isModalOpen && (
 
-  <div onClick={handleOpenModal} className="flex flex-wrap justify-between mt-5 gap-5 hover:cursor-pointer">
-    <div className="flex  sm:flex-row w-full sm:gap-0 gap-3    h-[135px]  rounded-lg mb-4">
+  <div onClick={handleOpenModal} className="flex flex-wrap sm:border sm:border-dashed sm:border-mainColor p-4 rounded-lg justify-between mt-5 gap-5 hover:cursor-pointer">
+    <div className="flex  sm:flex-row w-full sm:gap-0 gap-3  h-[135px]  rounded-lg ">
       <div className="  relative w-full sm:w-8/12">
         <div className="  sm:pe-2">
           {data?.isTopRated || data.isTopSelling ? (
