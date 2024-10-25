@@ -8,7 +8,7 @@ import { DEFlag } from "@components/icons/language/DEFlag";
 import { ESFlag } from "@components/icons/language/ESFlag";
 import { usePathname, useRouter } from "next/navigation";
 import useQueryParams from "@hooks/use-query-params";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import cn from "@utils/class-names";
 import { PiCaretDownBold } from "react-icons/pi";
@@ -74,6 +74,12 @@ export default function LanguageSwitcher({
   const currentSelectedItem = lang ? options.find((o) => o.value === lang)! : options[0];
   const [selectedItem, setSelectedItem] = useState(currentSelectedItem);
 
+  // تحديث selectedItem عند تغيير اللغة
+  useEffect(() => {
+    const updatedItem = options.find((option) => option.value === lang) || options[0];
+    setSelectedItem(updatedItem);
+  }, [lang]);
+
   function handleItemClick(values: any) {
     setSelectedItem(values);
     const pushPathname: string = `/${values.value}/${newPathname}${query}`;
@@ -85,17 +91,18 @@ export default function LanguageSwitcher({
       <Listbox
         value={selectedItem}
         onChange={handleItemClick}
+      
       >
         {({ open }) => (
-          <div className="relative z-[99999] lg:top-[1px] ">
+          <div className="relative z-50 lg:top-[1px] ">
             <Listbox.Button
               className={cn(
-                "relative flex h-[34px] w-14 items-center justify-center rounded-md p-1 shadow backdrop-blur-md transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900/30 focus-visible:ring-opacity-50 bg-transparent dark:bg-transparent dark:text-white hover:enabled:text-zinc-100 active:enabled:translate-y-px ",
+                "relative flex h-[34px] w-10 items-center justify-center rounded-md p-1  transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900/30 focus-visible:ring-opacity-50 bg-transparent dark:bg-transparent dark:text-white active:enabled:translate-y-px ",
                 className
               )}
             >
               {variant === "text" ? (
-                <span className="block w-full truncate text-left uppercase underline dark:text-white underline-offset-4 rtl:text-right">
+                <span className="block w-full truncate text-left uppercase  dark:text-white underline-offset-4 rtl:text-right">
                   {t(selectedItem?.value)}
                 </span>
               ) : (
@@ -113,13 +120,13 @@ export default function LanguageSwitcher({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute end-0 z-40 mt-1 max-h-[260px] w-full min-w-[165px] max-w-[165px] overflow-auto rounded-md border  text-black  bg-white  border-white dark:bg-black dark:border-black p-2 outline-none ring-0 drop-shadow-lg focus:outline-none ">
+              <Listbox.Options className="absolute end-0 z-[999] mt-1 max-h-[260px] w-full min-w-[165px] max-w-[165px] overflow-auto rounded-md border text-black bg-white border-white dark:bg-black dark:border-black p-2 outline-none ring-0 drop-shadow-lg focus:outline-none ">
                 {options?.map((option) => (
                   <Listbox.Option
                     key={option.id}
                     className={({ active }) =>
-                      `${active ? "text-brand-dark bg-gray-100 " : "bg-brand-light"}
-												peer relative flex h-10 w-full cursor-pointer select-none items-center rounded-md px-3 py-2 text-sm leading-[40px] text-black bg-white dark:bg-black dark:text-white transition duration-200 dark:hover:bg-greenColor hover:bg-greenColor`
+                      `${active ? "text-brand-dark bg-gray-100" : "bg-brand-light"}
+                        peer relative flex h-10 w-full cursor-pointer select-none items-center rounded-md px-3 py-2 text-sm leading-[40px] text-black bg-white dark:bg-black dark:text-white transition duration-200 dark:hover:bg-greenColor hover:bg-greenColor`
                     }
                     value={option}
                   >
@@ -133,12 +140,6 @@ export default function LanguageSwitcher({
                         >
                           {t(option?.name)}
                         </span>
-                        {selected ? (
-                          <span
-                            className={`${active && "text-amber-600"}
-                                 absolute inset-y-0 flex items-center ltr:left-0 ltr:pl-3 rtl:right-0 rtl:pr-3`}
-                          />
-                        ) : null}
                       </span>
                     )}
                   </Listbox.Option>
@@ -148,17 +149,6 @@ export default function LanguageSwitcher({
           </div>
         )}
       </Listbox>
-
-      {/* <SelectBox
-        selectClassName="w-full shadow backdrop-blur-md dark:bg-gray-100 border-transparent"
-        options={options}
-        value={selectedItem}
-        onChange={handleItemClick}
-        getOptionValue={(option) => option}
-        displayValue={(selected: any) =>
-          options?.find((option) => option.value === selected?.value)?.name
-        }
-      /> */}
     </>
   );
 }

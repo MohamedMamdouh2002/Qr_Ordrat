@@ -207,7 +207,7 @@ export default function OrderView() {
               {transitions.map((item) => (
                 <div
                   key={item.paymentMethod.name}
-                  className="flex items-center justify-between rounded-lg border border-gray-100 px-5 py-5 font-medium shadow-sm transition-shadow @5xl:px-7"
+                  className="flex items-center border-dashed border-mainColor justify-between rounded-lg border px-5 py-5 font-medium shadow-sm transition-shadow @5xl:px-7"
                 >
                   <div className="flex w-1/3 items-center">
                     <div className="shrink-0">
@@ -266,29 +266,56 @@ export default function OrderView() {
             childrenWrapperClass="py-5 @5xl:py-8 flex"
           >
             <div className="ms-2 w-full space-y-7 border-s-2 border-gray-100">
-              {orderStatus
-                .filter((item) => currentOrderStatus === 0 ? item.id === 0 : item.id !== 0) // إذا كانت الحالة تساوي 1، اعرض فقط العنصر الذي لديه id 1، وإلا اعرض كل العناصر ماعدا 1
-                .map((item) => (
-                  <div
-                    key={item.id}
-                    className={cn(
-                      "relative ps-6 text-sm font-medium before:absolute before:-start-[9px] before:top-px before:h-5 before:w-5 before:-translate-x-px before:rounded-full before:bg-gray-100 before:content-[''] after:absolute after:-start-px after:top-5  after:h-10 after:w-0.5  after:content-[''] last:after:hidden",
-                      (currentOrderStatus ?? 0) >= item.id
-                        ? 'before:bg-primary after:bg-primary'
-                        : 'after:hidden',
-                      currentOrderStatus === item.id && 'before:bg-teal-400'
-                    )}
-                  >
-                    {(currentOrderStatus ?? 0) >= item.id ? (
-                      <span className="absolute -start-1.5 top-1 text-white">
-                        <PiCheckBold className="h-auto w-3" />
-                      </span>
-                    ) : null}
+  {/* عرض حالة الـ id === 0 فقط إذا كان currentOrderStatus === 0 */}
+  {currentOrderStatus === 0 &&
+    orderStatus
+      .filter((item) => item.id === 0)
+      .map((item) => (
+        <div
+          key={item.id}
+          className={cn(
+            "relative ps-6 text-sm font-medium before:absolute before:-start-[9px] before:top-px before:h-5 before:w-5 before:-translate-x-px before:rounded-full before:bg-gray-100 before:content-[''] after:absolute after:-start-px after:top-5 after:h-10 after:w-0.5 after:bg-gray-100 last:after:hidden",
+            'text-red-500 before:bg-red-500' // تنسيق مخصص لـ id === 0
+          )}
+        >
+            
+            <span className="absolute -start-1.5 top-1 text-white">
+              <PiCheckBold className="h-auto w-3" />
+            </span>
+        
+          {item.label}
+        </div>
+      ))}
 
-                    {item.label}
-                  </div>
-                ))}
-            </div>
+  {/* عرض الحالات من id === 1 إلى id === 4 فقط إذا كان currentOrderStatus !== 0 */}
+  {currentOrderStatus !== 0 &&
+    orderStatus
+      .filter((item) => item.id !== 0)
+      .map((item) => (
+        <div
+          key={item.id}
+          className={cn(
+            "relative ps-6 text-sm font-medium before:absolute before:-start-[9px] before:top-px before:h-5 before:w-5 before:-translate-x-px before:rounded-full before:bg-gray-100 before:content-[''] after:absolute after:-start-px after:top-5 after:h-10 after:w-0.5 after:bg-gray-100 last:after:hidden",
+            (currentOrderStatus ?? 1) >= item.id
+              ? 'before:bg-teal-500 after:bg-teal-500' // باقي الحالات
+              : 'after:hidden', // إخفاء after للحالات الأخرى
+            currentOrderStatus === item.id && 'before:bg-teal-500 after:hidden' // الحالة الحالية
+          )}
+        >
+          {(currentOrderStatus ?? 0) >= item.id && item.id !== 0 ? (
+            <span className="absolute -start-1.5 top-1 text-white">
+              <PiCheckBold className="h-auto w-3" />
+            </span>
+          ) : null}
+
+          {item.label}
+        </div>
+      ))}
+</div>
+
+
+
+
           </WidgetCard>
 
           <WidgetCard

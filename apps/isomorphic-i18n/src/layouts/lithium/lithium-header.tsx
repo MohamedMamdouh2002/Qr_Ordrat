@@ -113,12 +113,12 @@ export default function Header({ lang }: { lang?: string }) {
 
 <StickyHeader
 
-  className={`hidden lg:flex  w-full z-[990]   ${
-    isStickyVisible ? "bg-orange-500/75    backdrop-blur-lg *:text-white" : "bg-white border-b-2"
+  className={`hidden lg:flex  w-full z-40  ${
+    isStickyVisible ? "bg-orange-500/75  backdrop-blur-lg *:text-white" : "bg-white border-b-2"
 
   }`}
 >
-  <div className=" w-[91%] mx-auto z-[990] flex  justify-between 2xl:py-1 3xl:px-8">
+  <div className=" w-[91%] mx-auto z-[40] flex  justify-between 2xl:py-1 3xl:px-8">
     <div className="hidden items-center gap-3 lg:flex">
       <Link
         aria-label="Site Logo"
@@ -171,7 +171,7 @@ export default function Header({ lang }: { lang?: string }) {
           </button>
 
           <AnimatePresence mode="wait">
-            {isOpen && <SideNav isOpen={isOpen} setIsOpen={setIsOpen} />} {/* تمرير الحالة ودالة الإغلاق */}
+            {isOpen && <SideNav lang={lang!} isOpen={isOpen} setIsOpen={setIsOpen} />} {/* تمرير الحالة ودالة الإغلاق */}
           </AnimatePresence>
 
       </div>
@@ -231,16 +231,20 @@ export default function Header({ lang }: { lang?: string }) {
               isStickyVisible ? "hidden" : ""
             }`}
           >
-            <LanguageSwitcher
-              lang={lang!}
-              className="ms-3 rounded-none shadow-none"
-              variant="text"
-            />
-            <div className="flex gap-5">
+            
               <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
                 <Link href={`/${lang!}/search`}>
                   <PiMagnifyingGlassBold size={20} />    
                 </Link>
+              </div>
+            
+            <div className="flex gap-5">
+              <div className="w-10 h-10  bg-white rounded-full flex justify-center items-center">
+                  <LanguageSwitcher
+                  lang={lang!}
+                  className="ms-3 rounded-none shadow-none"
+                  variant="text"
+                />
               </div>
               <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
                 <button
