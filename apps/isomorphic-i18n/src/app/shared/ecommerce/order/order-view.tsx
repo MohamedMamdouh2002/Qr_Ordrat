@@ -22,6 +22,7 @@ import { useEffect, useState } from 'react';
 import { Order } from '@/types';
 import { BadgeCent } from 'lucide-react';
 import { useTranslation } from '@/app/i18n/client';
+import { API_BASE_URL } from '@/config/base-url';
 
 
 
@@ -86,7 +87,7 @@ function WidgetCard({
   );
 }
 
-export default function OrderView({lang}:{lang?:string}) {
+export default function OrderView({lang}:{lang:string}) {
   const { items, total, totalItems } = useCart();
   const { price: subtotal } = usePrice(
     items && {
@@ -118,11 +119,11 @@ export default function OrderView({lang}:{lang?:string}) {
     const fetchOrder = async () => {
       try {
         const response = await fetch(
-          `https://testapi.ordrat.com/api/Order/GetById/${id}`,
+          `${API_BASE_URL}/api/Order/GetById/${id}`,
           {
             method: 'GET',
             headers: {
-              'Accept-Language': lang!,
+              'Accept-Language': lang,
               'Accept': 'application/json',
             },
           }
@@ -180,7 +181,7 @@ export default function OrderView({lang}:{lang?:string}) {
           )}
 
           <div className="pb-5">
-            <OrderViewProducts lang={lang!} />
+            <OrderViewProducts lang={lang} />
             <div className="border-t border-muted pt-7 @5xl:mt-3">
             <div className="ms-auto max-w-lg space-y-6">
                 <div className="flex justify-between font-medium">

@@ -204,7 +204,7 @@ export default function Header({ lang }: { lang?: string }) {
                         <PiMagnifyingGlassBold size={20} />    
                   </Link>
                   <button
-                    onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر
+                    onClick={() => setIsOpen(true)} 
                     className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
                   >
                     <AlignCenter />

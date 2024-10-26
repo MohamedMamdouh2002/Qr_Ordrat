@@ -9,6 +9,7 @@ import { CartItem ,Order,OrderItem } from '@/types';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation'; 
 import { useTranslation } from '@/app/i18n/client';
+import { API_BASE_URL } from '@/config/base-url';
 
 // const cartItems: CartItem[] = [
 //   {
@@ -101,11 +102,11 @@ export default function OrderViewProducts({lang}:{lang:string}) {
   const { id } = useParams();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
-	const { t } = useTranslation(lang! ,'order');
+	const { t } = useTranslation(lang ,'order');
   const columns = [
     {
       title: <HeaderCell title={t('product')} />,
-      dataIndex: 'product', // تغيير إلى 'product'
+      dataIndex: 'product', 
       key: 'product',
       width: 250,
       render: (product: any) => (
@@ -179,11 +180,11 @@ export default function OrderViewProducts({lang}:{lang:string}) {
     const fetchOrder = async () => {
       try {
         const response = await fetch(
-          `https://testapi.ordrat.com/api/Order/GetById/${id}`,
+          `${API_BASE_URL}/api/Order/GetById/${id}`,
           {
             method: 'GET',
             headers: {
-              'Accept': 'application/json',
+              'Accept-Language': lang,
             },
           }
         );
@@ -200,7 +201,7 @@ export default function OrderViewProducts({lang}:{lang:string}) {
     };
 
     fetchOrder();
-  }, []);
+  }, [lang]);
 
   if (loading) {
     return <div>Loading...</div>;

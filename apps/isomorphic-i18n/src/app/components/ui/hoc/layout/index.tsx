@@ -7,7 +7,7 @@ type Props = {
 	fullLayout?: string;
 	currentPage?: string;
 	FooterComp?: React.ReactNode;
-	locale: 'ar' | 'en';
+	locale: string;
 	backButtonClassName?: string;
 };
 
