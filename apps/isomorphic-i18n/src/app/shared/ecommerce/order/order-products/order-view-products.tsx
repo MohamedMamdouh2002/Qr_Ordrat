@@ -8,6 +8,8 @@ import { toCurrency } from '@utils/to-currency';
 import { CartItem ,Order,OrderItem } from '@/types';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation'; 
+import { useTranslation } from '@/app/i18n/client';
+
 // const cartItems: CartItem[] = [
 //   {
 //     id: 1,
@@ -93,83 +95,84 @@ import { useParams } from 'next/navigation';
 //       ),
 //   },
 // ];
-const columns = [
-  {
-    title: <HeaderCell title="Product" />,
-    dataIndex: 'product', // تغيير إلى 'product'
-    key: 'product',
-    width: 250,
-    render: (product: any) => (
-      <div className="flex items-center">
-        <div className="relative aspect-square w-12 overflow-hidden rounded-lg">
-          <Image
-            alt={product.name}
-            src={product.imageUrl}
-            fill
-            sizes="(max-width: 768px) 100vw"
-            className="object-cover"
-          />
-        </div>
-        <div className="ms-4">
-          <Title as="h6" className="!text-sm font-medium">
-            {product.name}
-          </Title>
-        </div>
-      </div>
-    ),
-  },
-  {
-    title: <HeaderCell title="item Price" align="right" />,
-    dataIndex: 'itemPrice', 
-    key: 'itemPrice',
-    width: 200,
-    render: (itemPrice: number) => (
-      <Text className="text-end text-sm">{toCurrency(itemPrice)}</Text>
-    ),
-  },
-  {
-    title: <HeaderCell title="shippingFees" align="right" />,
-    dataIndex: 'shippingFees', 
-    key: 'shippingFees',
-    width: 200,
-    render: (shippingFees: number) => (
-      <Text className="text-end text-sm">{toCurrency(shippingFees)}</Text>
-    ),
-  },
-  {
-    title: <HeaderCell title="Quantity" align="center" />,
-    dataIndex: 'quantity',
-    key: 'quantity',
-    width: 150,
-    render: (quantity: number) => (
-      <Text className="text-center text-sm font-semibold">{quantity}</Text>
-    ),
-  },
-  {
-    title: <HeaderCell title="totalChoicePrices" align="right" />,
-    dataIndex: 'totalChoicePrices',
-    key: 'totalChoicePrices',
-    width: 200,
-    render: (totalChoicePrices: number) => (
-      <Text className="text-end text-sm">{toCurrency(totalChoicePrices)}</Text>
-    ),
-  },
-  {
-    title: <HeaderCell title="Total Price" align="right" />,
-    dataIndex: 'totalPrice',
-    key: 'totalPrice',
-    width: 200,
-    render: (totalPrice: number) => (
-      <Text className="text-end text-sm">{toCurrency(totalPrice)}</Text>
-    ),
-  },
-];
 
-export default function OrderViewProducts() {
+export default function OrderViewProducts({lang}:{lang:string}) {
   const { items } = useCart();
   const { id } = useParams();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
+	const { t } = useTranslation(lang! ,'order');
+  const columns = [
+    {
+      title: <HeaderCell title={t('product')} />,
+      dataIndex: 'product', // تغيير إلى 'product'
+      key: 'product',
+      width: 250,
+      render: (product: any) => (
+        <div className="flex items-center">
+          <div className="relative aspect-square w-12 overflow-hidden rounded-lg">
+            <Image
+              alt={product.name}
+              src={product.imageUrl}
+              fill
+              sizes="(max-width: 768px) 100vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="ms-4">
+            <Title as="h6" className="!text-sm font-medium">
+              {product.name}
+            </Title>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: <HeaderCell title={t('item-Price')} align="right" />,
+      dataIndex: 'itemPrice', 
+      key: 'itemPrice',
+      width: 200,
+      render: (itemPrice: number) => (
+        <Text className="text-end text-sm">{toCurrency(itemPrice)}</Text>
+      ),
+    },
+    {
+      title: <HeaderCell title={t('Shipping-Fees')} align="right" />,
+      dataIndex: 'shippingFees', 
+      key: 'shippingFees',
+      width: 200,
+      render: (shippingFees: number) => (
+        <Text className="text-end text-sm">{toCurrency(shippingFees)}</Text>
+      ),
+    },
+    {
+      title: <HeaderCell title={t('Quantity')} align="center" />,
+      dataIndex: 'quantity',
+      key: 'quantity',
+      width: 150,
+      render: (quantity: number) => (
+        <Text className="text-center text-sm font-semibold">{quantity}</Text>
+      ),
+    },
+    {
+      title: <HeaderCell title={t('totalChoicePrices')} align="right" />,
+      dataIndex: 'totalChoicePrices',
+      key: 'totalChoicePrices',
+      width: 200,
+      render: (totalChoicePrices: number) => (
+        <Text className="text-end text-sm">{toCurrency(totalChoicePrices)}</Text>
+      ),
+    },
+    {
+      title: <HeaderCell title={t('Total-Price')} align="right" />,
+      dataIndex: 'totalPrice',
+      key: 'totalPrice',
+      width: 200,
+      render: (totalPrice: number) => (
+        <Text className="text-end text-sm">{toCurrency(totalPrice)}</Text>
+      ),
+    },
+  ];
 
 
   useEffect(() => {

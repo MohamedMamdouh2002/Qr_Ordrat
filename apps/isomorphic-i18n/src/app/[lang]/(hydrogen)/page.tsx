@@ -23,7 +23,7 @@ export default function FileDashboardPage({
 
     <RestaurantTitle/>
     <NavMobile lang={lang}/>
-    <Header/>
+    <Header lang={lang}/>
     <MainSlider/>
     <Grills lang={lang}/>
     {/* <PopularMeals/> */}

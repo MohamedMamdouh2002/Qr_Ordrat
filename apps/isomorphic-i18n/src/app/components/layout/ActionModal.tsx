@@ -9,11 +9,13 @@ import {
 import React from 'react';
 import { motion } from 'framer-motion';
 import { AlertCircleIcon, XCircleIcon } from 'lucide-react';
+import { useTranslation } from '@/app/i18n/client';
 
 type Props = {
 	isOpen: boolean;
 	setIsOpen: (val: boolean) => void;
 	title: string;
+	lang: string;
 	description: string;
 	action: () => void;
 	deleteAction?: boolean;
@@ -25,8 +27,11 @@ function ActionModal({
 	title,
 	description,
 	action,
+	lang,
 	deleteAction = true
 }: Props) {
+	const { t } = useTranslation(lang!, 'profile');
+
 	return (
 		<Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-[999]">
 			<div className="fixed inset-0 bg-black/30 backdrop-blur-md" aria-hidden="true" />
@@ -51,7 +56,7 @@ function ActionModal({
 							onClick={() => setIsOpen(false)}
 							className="flex gap-1 items-center px-4 py-2 bg-zinc-500 text-white font-bold text-sm rounded-lg transition duration-150 hover:bg-zinc-600"
 						>
-							الغاء
+							{t('cancel')}
 						</button>
 						<button
 							onClick={() => {
@@ -66,11 +71,13 @@ function ActionModal({
 						>
 							{deleteAction ? (
 								<>
-									حذف
+									{t('deleteId')}
 									<XCircleIcon size={18} />
 								</>
 							) : (
-								'تأكيد'
+								<>
+									{t('ok')}
+								</>
 							)}
 						</button>
 					</div>

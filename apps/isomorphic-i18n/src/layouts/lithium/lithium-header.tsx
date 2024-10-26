@@ -159,12 +159,17 @@ export default function Header({ lang }: { lang?: string }) {
                     prefix={<PiMagnifyingGlassBold className="h-4 w-4" />}
                   />
           </Link>
+          <LanguageSwitcher
+            lang={lang!}
+            className="ms-3 rounded-none shadow-none"
+            variant="icon"
+            />
           <Link href={`/${lang!}/cart`}>
             <ShoppingCart className={`transition duration-150  ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`} />
 
           </Link>
           <button
-            onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر
+            onClick={() => setIsOpen(true)} 
             className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
           >
             <AlignCenter />
@@ -185,23 +190,25 @@ export default function Header({ lang }: { lang?: string }) {
           ? "fixed top-0 z-[999] w-full bg-white  "
           : "hidden"}`}>
             <div className="w-5/6 mx-auto flex justify-between h-16  items-center">
-              <h1 className='text-base'>karam El Sham</h1>
+              <Link href={'/'}>
+                <h1 className='text-base'>karam El Sham</h1>
+              </Link>
               <div className="  flex justify-between items-center">
-                    <LanguageSwitcher
-                    lang={lang!}
-                    className="ms-3 rounded-none shadow-none"
-                    variant="text"
-                    />
-                    <div className="flex gap-5">
-                        <Link href={`/${lang!}/search`}>
-                              <PiMagnifyingGlassBold size={20} />    
-                        </Link>
-                        <button
-                          onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر
-                          className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
-                        >
-                          <AlignCenter />
-                        </button>
+                <LanguageSwitcher
+                lang={lang!}
+                className="ms-3 rounded-none shadow-none"
+                variant="icon"
+                />
+                <div className="flex gap-5">
+                  <Link href={`/${lang!}/search`}>
+                        <PiMagnifyingGlassBold size={20} />    
+                  </Link>
+                  <button
+                    onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر
+                    className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
+                  >
+                    <AlignCenter />
+                  </button>
                 </div>
               </div>
             </div>
@@ -242,8 +249,8 @@ export default function Header({ lang }: { lang?: string }) {
               <div className="w-10 h-10  bg-white rounded-full flex justify-center items-center">
                   <LanguageSwitcher
                   lang={lang!}
-                  className="ms-3 rounded-none shadow-none"
-                  variant="text"
+                  className=" rounded-none shadow-none"
+                  variant="icon"
                 />
               </div>
               <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
@@ -261,12 +268,14 @@ export default function Header({ lang }: { lang?: string }) {
         <nav>
           <div  className={`flex lg:hidden fixed top-0 z-[999] w-full bg-white   `}>
                   <div className="w-5/6 mx-auto flex justify-between h-16 items-center">
+                  <Link href={'/'}>
                     <h1 className='text-base'>karam El Sham</h1>
+                  </Link>
                     <div className="  flex justify-between items-center">
                           <LanguageSwitcher
                           lang={lang!}
                           className="ms-3 rounded-none shadow-none"
-                          variant="text"
+                          variant="icon"
                           />
                           <div className="flex gap-5">
                             <Link href={`/${lang!}/search`}>

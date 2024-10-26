@@ -10,7 +10,7 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useState, useRef } from 'react';
 import { useMediaQuery } from 'react-responsive'; 
 
-function AllProduct() {
+const AllProduct: React.FC =({lang}: { lang?: string }) => {
   const [products, setProducts] = useState<Food[]>([]);
   const [loading, setLoading] = useState(false); 
   const [page, setPage] = useState(1);
@@ -79,11 +79,11 @@ function AllProduct() {
           {products.map((prod: Food,index) => (
             isMobile ? 
             <div className="col-span-full" key={prod.id}>
-              <MediumCard setCurrentItem={() => {}} {...prod} /> 
+              <MediumCard lang={lang!} setCurrentItem={() => {}} {...prod} /> 
               {index !== products.length - 1 && <hr />}
             </div>
             :
-             <Card setCurrentItem={() => {}} key={prod.id} {...prod} />
+             <Card lang={lang!} setCurrentItem={() => {}} key={prod.id} {...prod} />
           ))}
         </div>
         <div className="flex justify-center">

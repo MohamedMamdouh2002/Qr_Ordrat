@@ -17,14 +17,16 @@ import cardImage from '../../../../../public/assets/card.png'
 import sandwitsh from '../../../../../public/assets/sandwitsh.jpg'
 import SpecialNotes from '@/app/components/ui/SpecialNotes';
 import { toCurrency } from '@utils/to-currency';
+import { useTranslation } from '@/app/i18n/client';
 
 
 type FormValues = {
   couponCode: string;
 };
 
-function CheckCoupon() {
+function CheckCoupon({lang}:{lang?:string}) {
   const [reset, setReset] = useState({});
+  const { t } = useTranslation(lang!, 'order');
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
@@ -49,7 +51,7 @@ function CheckCoupon() {
 
               inputClassName="text-sm [&.is-hover]:border-mainColor [&.is-focus]:border-mainColor [&.is-focus]:ring-mainColor"
               className="w-full"
-              label={<Text>Do you have a promo code?</Text>}
+              label={<Text>{t('promo-code')}</Text>}
               {...register('couponCode')}
               error={errors.couponCode?.message}
             />
@@ -59,7 +61,7 @@ function CheckCoupon() {
               className={`ms-3 ${watch('couponCode') ? 'bg-mainColor hover:bg-mainColorHover dark:hover:bg-mainColor/90' : 'bg-muted/70'}`}
               disabled={watch('couponCode') ? false : true}
             >
-              Apply
+              {t('Apply')}
             </Button>
           </div>
         </>
@@ -73,7 +75,9 @@ function CheckCoupon() {
 // cart product card
 
 // total cart balance calculation
-function CartCalculations({fees, Tax}:{fees:number; Tax:number}) {
+function CartCalculations({fees, Tax ,lang}:{fees:number; Tax:number ,lang?:string}) {
+  const { t } = useTranslation(lang!, 'order');
+
   const router = useRouter();
   const { total } = useCart();
   const totalWithFees = total + Tax + fees;
@@ -83,24 +87,24 @@ function CartCalculations({fees, Tax}:{fees:number; Tax:number}) {
   return (
     <div>
       <Title as="h2" className="border-b border-muted pb-4 text-lg font-medium">
-        Cart Totals
+        {t('Cart-Totals')}
       </Title>
       <div className="mt-6 grid grid-cols-1 gap-4 @md:gap-6">
         <div className="flex items-center justify-between">
-          Subtotal
+          {t('Subtotal')}
           <span className="font-medium text-gray-1000">{toCurrency(total)}</span>
         </div>
         <div className="flex items-center justify-between">
-          Tax
+          {t('Vat')}
           <span className="font-medium text-gray-1000">{toCurrency(Tax)}</span>
         </div>
         <div className="flex items-center justify-between">
-          Shipping
+          {t('Shipping-Fees')}
           <span className="font-medium text-gray-1000">{toCurrency(fees)}</span>
         </div>
-        <CheckCoupon />
+        <CheckCoupon lang={lang} />
         <div className="mt-3 flex items-center justify-between border-t border-muted py-4 font-semibold text-gray-1000">
-          Total
+          {t('Total')}
           <span className="font-medium text-gray-1000">{totalPrice}</span>
         </div>
         <Link href={`/en/checkout`}>
@@ -111,7 +115,7 @@ function CartCalculations({fees, Tax}:{fees:number; Tax:number}) {
 
             className="w-full bg-mainColor hover:bg-mainColorHover"
           >
-            Proceed To Checkout
+            {t('Proceed-To-Checkout')}
           </Button>
         </Link>
         {/* <Button
@@ -134,7 +138,9 @@ function CartCalculations({fees, Tax}:{fees:number; Tax:number}) {
   );
 }
 
-export default function CartPageWrapper() {
+export default function CartPageWrapper({lang}:{lang?:string}) {
+  const { t } = useTranslation(lang!, 'order');
+
   // const items = [
   //   {
   //       "id": 1,
@@ -239,7 +245,7 @@ export default function CartPageWrapper() {
           ) : (
             <Empty
               image={<EmptyProductBoxIcon />}
-              text="No Product in the Cart"
+              text={t('cart-empty')}
             />
           )}
         </div>
@@ -247,16 +253,17 @@ export default function CartPageWrapper() {
           <div className="flex flex-col gap-3">
             <div>
               <Title as="h2" className="border-b border-muted pb-4 mb-6 text-lg font-medium">
-                Special request
+                {t('Special-request')}
               </Title>
               <SpecialNotes
-                des="Anything else we need to know?"
+                lang={lang!}
+                des=""
                 className="py-0 col-span-full"
                 notes={notes}
                 setNotes={setNotes}
               />
             </div>
-            <CartCalculations fees={0} Tax={0} />
+            <CartCalculations lang={lang!} fees={0} Tax={0} />
           </div>
         </div>
       </div>

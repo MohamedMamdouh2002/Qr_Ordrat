@@ -23,7 +23,7 @@ type ModalProps = {
     setQuantity: Dispatch<SetStateAction<number>>;
     hasMoreDetails?: boolean;
     notes: string;
-    
+    lang:string;
     setNotes: (val: string) => void;
     handleUpdateCart?: () => void;
     itemId?: string;
@@ -39,6 +39,7 @@ function Modal({
   data,
   quantity,
   setQuantity,
+  lang,
   hasMoreDetails,
   notes,
   setNotes,
@@ -58,8 +59,8 @@ function Modal({
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await GetProduct(modalId);
-      setProdId(data);
+        const data = await GetProduct({ lang, id:modalId });
+        setProdId(data);
 
       
       console.log('Fetched Data prod:', data);
@@ -129,7 +130,7 @@ function Modal({
             <div onClick={handleOutsideClick}
                 className="fixed inset-0 flex z-[999] bg-black/20 items-center justify-center p-4"
             >
-                <div className="bg-stone-100 rounded-lg b-4 w-[400px] min-h-auto max-h-[650px]  overflow-y-auto scrollbar-hide">
+                <div className="bg-stone-100 rounded-lg b-4 w-[400px] min-h-auto max-h-[650px]  overflow-y-auto ">
                     <div
                         className={cn('grid grid-cols-3  gap-2 relative', {
                         'grid-cols-1': !hasMoreDetails,

@@ -112,7 +112,6 @@
     "slick-carousel": "^1.8.1",
     "swiper": "^11.1.3",
     "tailwind-merge": "^2.3.0",
-    "tailwind-scrollbar-hide": "^1.1.7",
     "typescript": "5.4.5",
     "uploadthing": "^6.10.1",
     "yup": "^1.4.0",

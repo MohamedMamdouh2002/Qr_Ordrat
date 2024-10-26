@@ -1,13 +1,11 @@
-import OrderTimeLine from '@/app/components/orderTimeLine/OrderTimeLine'
 import OrderView from '@/app/shared/ecommerce/order/order-view'
 import React from 'react'
 
 
-function OrderId() {
+const OrderId: React.FC =({lang}: { lang?: string }) => {
   return <>
-  {/* <OrderTimeLine statusDate={''} /> */}
   <div className="w-5/6 mx-auto">
-    <OrderView/>
+    <OrderView lang={lang}/>
   </div>
   </>
 }

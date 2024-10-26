@@ -20,6 +20,7 @@ import { fetchData } from '@/utils/fetch/fetch';
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../context/UserContext';
 import { shopId } from '@/config/shopId';
+import { useTranslation } from '@/app/i18n/client';
 
 function FAQSection({ lang }: { lang: string }) {
   // const faq = [
@@ -136,6 +137,8 @@ function FAQSection({ lang }: { lang: string }) {
   
   const [faqData, setFaqData] = useState<FaqType[]>([]);
   const { setFaqs,updatefaqs,setUpdateFaqs } = useUserContext(); 
+  const { t } = useTranslation(lang!, 'nav');
+
   // Define images for different categories
   const images = [
     general,
@@ -176,7 +179,7 @@ function FAQSection({ lang }: { lang: string }) {
     <div className={style.faqContainer}>
       <div className={style.faqWrapper}>
         <h3 className={`${style.faqTitle} pb-3`} style={{ textAlign: 'center' }}>
-          Frequently Asked Questions <span className='text-mainColor' style={{ fontWeight: 'bold' }}>FAQ</span>
+          {t('frequently-asked-questions')} <span className='text-mainColor' style={{ fontWeight: 'bold' }}>FAQ</span>
         </h3>
         <div className={style.faqCardsContainer}>
           {faqData.map((item, index) => (
@@ -202,7 +205,7 @@ function FAQSection({ lang }: { lang: string }) {
                 </div>
                 <Link href={routes.faq.details(`${index}`)} onClick={() => setFaqs([item])}>
                   <button className={style.faqCardBtn}>
-                    <p className='text-[#828e99] group-hover:text-mainColor'>View all questions</p>
+                    <p className='text-[#828e99] group-hover:text-mainColor'>{t('view-all')}</p>
                     <Image className={style.arrow} src={arrow} alt="arrow icon" />
                     <Image className={style.arrowHover} src={arrowHover} alt="hover arrow icon" />
                   </button>
@@ -215,16 +218,16 @@ function FAQSection({ lang }: { lang: string }) {
             <div className={style.FindMoreTopContainer}>
               <div className={style.FindMoreTop}>
                 <Image src={Findmore} alt="Find more icon" />
-                <h2>Find more answers..</h2>
+                <h2>{t('find-more')}</h2>
               </div>
               <div className={style.FindMoreCenter}>
-                <p>You can also browse the topics below to find what you are looking for.</p>
+                <p>{t('browse')}</p>
               </div>
             </div>
             <div className={style.FindMoreFooter}>
               <Link href="/">
                 <button className={style.findmoreArrowBtn}>
-                  <p>View all FAQs</p>
+                  <p>{t('view-all-faq')}</p>
                   <Image
                     className={style.FindmoreArrow}
                     src={FindmoreArrow}

@@ -1,14 +1,17 @@
 'use client';
+import { useTranslation } from '@/app/i18n/client';
 import cn from '@utils/class-names';
 import { AnimatePresence } from 'framer-motion';
 import { NotepadText } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { Sheet } from 'react-modal-sheet';
 
-type Props = { des?: string; className?: string; notes: string; setNotes: (val: string) => void };
+type Props = { lang:string, des?: string; className?: string; notes: string; setNotes: (val: string) => void };
 
-function SpecialNotes({ des, className, notes, setNotes }: Props) {
+function SpecialNotes({ lang ,des, className, notes, setNotes }: Props) {
 	const [showNoteInput, setShowNoteInput] = useState(false);
+	const { t } = useTranslation(lang!, 'order');
+
 	const ref = useRef<HTMLTextAreaElement>(null);
 	useEffect(() => {
 		if (showNoteInput) {
@@ -22,7 +25,7 @@ function SpecialNotes({ des, className, notes, setNotes }: Props) {
 					<div className="flex items-center gap-2">
 						<NotepadText size={des ? 24 : 16} />
 						<div className="flex flex-col">
-							Any Special Requests?
+							{t('Any-SpecialRequests')}
 							{(des || notes) && (
 								<p className="text-sm text-black/75">{notes != '' ? notes : des}</p>
 							)}
@@ -30,7 +33,7 @@ function SpecialNotes({ des, className, notes, setNotes }: Props) {
 					</div>
 				</div>
 				<button onClick={() => setShowNoteInput(true)} className="text-mainColor font-bold">
-					{notes ? 'Edit' : 'Add'} notes
+					{notes ? `${t('Edit-notes')}` : `${t('Add-notes')}`} 
 				</button>
 			</div>
 			<Sheet
@@ -44,7 +47,7 @@ function SpecialNotes({ des, className, notes, setNotes }: Props) {
 					<Sheet.Content className="container">
 						<div className=" flex flex-col gap-2 pb-5">
 							<label htmlFor="notes" className="text-black/75 font-bold">
-								Special request
+								{t('Special-request')}
 							</label>
 							<textarea
 								ref={ref}

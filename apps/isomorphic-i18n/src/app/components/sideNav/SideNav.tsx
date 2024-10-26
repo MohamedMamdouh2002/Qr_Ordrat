@@ -48,11 +48,11 @@ export const SideNav = ({ isOpen, setIsOpen, lang }: Props) => {
 	];
 
 	const links = [
-		{ icon: <User />, href: '/profile', title: t('profile') },
-		{ icon: <ShoppingCart />, href: '/cart', title: t('cart') },
-		{ icon: <ReceiptText />, href: '/orders', title: t('orders') },
-		{ icon: <FontAwesomeIcon icon={faPersonCircleQuestion} className='text-2xl' />, href: '/faq', title: t('faq') },
-		{ icon: <FontAwesomeIcon icon={faStar} className='text-xl' />, href: '/reviews', title: t('review') },
+		{ icon: <User />, href: `/${lang}/profile`, title: t('profile') },
+		{ icon: <ShoppingCart />, href: `/${lang}/cart`, title: t('cart') },
+		{ icon: <ReceiptText />, href: `/${lang}/orders`, title: t('orders') },
+		{ icon: <FontAwesomeIcon icon={faPersonCircleQuestion} className='text-2xl' />, href: `/${lang}/faq`, title: t('faq') },
+		{ icon: <FontAwesomeIcon icon={faStar} className='text-xl' />, href: `/${lang}/reviews`, title: t('review') },
 		{ icon: <LogOut />, onClick: handleLog, title: t('logout') }
 	];
 
@@ -61,7 +61,7 @@ export const SideNav = ({ isOpen, setIsOpen, lang }: Props) => {
 			<Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-[999] ">
 				<div className="fixed inset-0 dark:bg-stone-950/30 bg-black/30 backdrop-blur-md" aria-hidden="true" />
 				<motion.div
-					initial={{ x: lang === 'ar' ? 0 : -25, opacity: 0 }} // استخدام شرط اللغة
+					initial={{ x: lang === 'ar' ? 0 : -25, opacity: 0 }}
 					animate={{ x: 0, opacity: 1 }}
 					exit={{ x: lang === 'ar' ? 25 : -25, opacity: 0 }}
 					className="fixed start-0 top-0 p-4 min-h-screen flex w-64 items-start justify-start bg-stone-100 border-start"

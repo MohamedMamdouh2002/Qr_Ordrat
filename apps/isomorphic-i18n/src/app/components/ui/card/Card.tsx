@@ -8,6 +8,7 @@ import Badge from '../Badge';
 import { Star, Flame } from 'lucide-react';
 
 type Props = Food & {
+  lang:string;
   setCurrentItem: Dispatch<
     SetStateAction<{
       type?: string;
@@ -16,7 +17,7 @@ type Props = Food & {
   >;
 };
 
-const Card = (data: Props) => {
+const Card = (data:Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
   
@@ -43,7 +44,7 @@ const Card = (data: Props) => {
             />
           </div>
             {data?.isTopRated || data.isTopSelling ? (
-               <span className="  text-[8px] font-bold text-center min-w-10 rounded-lg bg-[#FECACA] text-[#EF4444]">
+               <span className="text-[8px] font-bold text-center min-w-10 rounded-lg bg-[#FECACA] text-[#EF4444]">
                {data?.isTopRated ? 
                  <>
                    <Badge Icon={Star} title="Top Rated" className="-ms-1 mt-2" />
@@ -64,29 +65,25 @@ const Card = (data: Props) => {
             {data.description}
           </Text>
           <div className="mt-2 flex items-center font-semibold text-mainColor">
-            EGP{data.price} {/* toCurrency(Number(price)) */}
+            EGP{data.price}
             {data.oldPrice && (
               <del className="ps-1.5 text-[13px] font-normal text-gray-500">
-              EGP  {data.oldPrice} {/* toCurrency(Number(sale_price)) */}
+              EGP {data.oldPrice}
               </del>
             )}
           </div>
-
         </div>
       )}
       {isModalOpen && (
         <Modal
+          lang={data.lang} 
           modalId={data.id}
           setIsModalOpen={handleCloseModal}
           quantity={quantity}
           setQuantity={setQuantity}
           notes={''}
-          setNotes={function (val: string): void {
-            throw new Error('Function not implemented.');
-          }}
-          setShowItem={function (val: boolean): void {
-            throw new Error('Function not implemented.');
-          } }
+          setNotes={() => {}}
+          setShowItem={() => {}}
         />
       )}
     </>

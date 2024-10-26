@@ -35,13 +35,13 @@ function Grills({lang} : {lang:string}) {
   }, [GetHome]);
   
   return (
-    <div className="">
+    <div className="mb-10">
       {home?.map((sec) => (
         <div key={sec.id} id={sec.id} className="w-5/6 sm:w-[90%] mx-auto mt-20">
           <div className="flex justify-between items-center">
-          <Title title={sec.name} />
+          <Title title={sec.name}  />
           <Link href={`/product/${sec.id}`}>
-            <p className='hover:text-mainColor text-black text-base'>{t('view-all')}</p>
+            <p className='hover:text-mainColor mb-5 text-black font-medium text-lg underline'>{t('view-all')}</p>
           </Link>
           </div>
           {sec.numberOfColumns !== 0 && sec.numberOfColumns !== 2 && sec.numberOfColumns !== 1 && (
@@ -117,7 +117,7 @@ function Grills({lang} : {lang:string}) {
                   {sec.products.map((prod: React.JSX.IntrinsicAttributes & Food & { setCurrentItem: React.Dispatch<React.SetStateAction<{ type?: string; id: string } | null>> }) =>
 
                     <SwiperSlide key={prod.id}>
-                      <SmallCard  {...prod} />
+                      <SmallCard  lang={lang} {...prod} />
                     </SwiperSlide>
                   )}
                 </Swiper>
@@ -127,11 +127,11 @@ function Grills({lang} : {lang:string}) {
               sec.products.map((prod: React.JSX.IntrinsicAttributes & Food & { setCurrentItem: React.Dispatch<React.SetStateAction<{ type?: string; id: string } | null>> }) =>
                 sec.numberOfColumns === 1 ? (
                   <>
-                    <MediumCard key={prod.id} {...prod} />
+                    <MediumCard lang={lang} key={prod.id} {...prod} />
                     <hr className='mt-1 sm:hidden'/>
                   </>
                 ) : (
-                  <Card key={prod.id} {...prod} />
+                  <Card  lang={lang} key={prod.id} {...prod} />
                 )
               )
             )}

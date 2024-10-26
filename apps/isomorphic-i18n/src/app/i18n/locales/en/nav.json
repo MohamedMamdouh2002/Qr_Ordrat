@@ -134,6 +134,12 @@
   "review":"Review",
   "search":"Search",
   "faq":"Faq",
+  "dear-client":"Client",
+  "view-all":"View all questions",
+  "view-all-faq":"View all FAQs",
+  "find-more":"Find more answers..",
+  "browse":"You can also browse the topics below to find what you are looking for.",
+  "frequently-asked-questions":"Frequently Asked Questions",
   "phone-ph":"Enter Phone Number",
   "welcome-to":"welcome to Karam Elsham"
 }

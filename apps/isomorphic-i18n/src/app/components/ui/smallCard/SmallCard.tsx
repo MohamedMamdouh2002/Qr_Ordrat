@@ -9,14 +9,16 @@ import hamburger from '@public/assets/hamburger.png'
 import potato from '@public/assets/شاورما-عراقي-لحمة-مع-بطاطا.png'
 import Modal from '../modal/Modal';
 type Props = Food & {
-	setCurrentItem: Dispatch<
-		SetStateAction<{
-			type?: string;
-			id: string;
-		} | null>
-	>;
-};
-function SmallCard(data:Props) {
+    lang:string;
+    setCurrentItem: Dispatch<
+      SetStateAction<{
+        type?: string;
+        id: string;
+      } | null>
+    >;
+  };
+  
+  function SmallCard(data: Props) {
     const [isModalOpen, setIsModalOpen] = useState(false); 
     const [quantity, setQuantity] = useState(1);
 
@@ -35,13 +37,13 @@ function SmallCard(data:Props) {
         className="w-[115px] hover:cursor-pointer  sm:w-[120px] md:w-[150px] lg:w-[200px]  overflow-x-auto">
             <div className="relative">
                 <Image 
-                src={data.imageUrl} 
+                src={data?.imageUrl} 
                 width={200} 
                 height={180} 
                 className="md:w-[200px] p-2 sm:p-10 bg-[#E8E8E8]  h-[115px] md:h-40 rounded-2xl" 
                 alt="" 
                 />
-                {data?.isTopRated || data.isTopSelling ? (
+                {data?.isTopRated || data?.isTopSelling ? (
                 <span className="absolute start-1.5 top-1.5 text-[8px] font-bold text-center min-w-10   rounded-md   ">
                     {data?.isTopRated ? 
                     <>
@@ -65,18 +67,18 @@ function SmallCard(data:Props) {
                 as="h6"
                 className="mt-1 text-sm truncate font-semibold transition-colors group-hover:text-mainColor"
                 >
-                {data.name}
+                {data?.name}
                 </Title>
                 <Text as="p" className="truncate text-sm pe-6">
-                {data.description}
+                {data?.description}
                 </Text>
                 <div className="mt-2 flex  items-center font-semibold text-mainColor">
                 <div className='text-[10px] sm:pt-0 pt-0.5 font-normal sm:text-[13px]'>
-                    <span>EGP {data.price}</span>
+                    <span>EGP {data?.price}</span>
                 </div>
                 <div>
                     <del className="ps-1.5  text-[10px] sm:text-[13px] font-normal text-gray-500">
-                    EGP {data.oldPrice}
+                    EGP {data?.oldPrice}
                     </del>
                 </div>
                 </div>
@@ -86,6 +88,7 @@ function SmallCard(data:Props) {
     }
     {isModalOpen && (
         <Modal
+            lang={data.lang}
             modalId={data.id}
             setIsModalOpen={handleCloseModal}
             quantity={quantity}
