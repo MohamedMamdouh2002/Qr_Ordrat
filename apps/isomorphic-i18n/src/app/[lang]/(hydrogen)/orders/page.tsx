@@ -1,16 +1,16 @@
-'use client'
-import React from 'react';
 import Order from '@/app/components/order/MyOrder';
-type OrdersProps = {
-  id: string;
+import { metaObject } from '@/config/site.config';
+
+export const metadata = {
+  ...metaObject('orders'),
 };
 
-const Orders: React.FC =({lang}: { lang?: string }) => {
-
-  return (
-  <Order lang={lang!}/>
-
-  );
+export default function Orders({
+  params: { lang },
+}: {
+  params: {
+    lang: string;
+  };
+}) {
+  return <Order lang={lang}/>;
 }
-
-export default Orders;

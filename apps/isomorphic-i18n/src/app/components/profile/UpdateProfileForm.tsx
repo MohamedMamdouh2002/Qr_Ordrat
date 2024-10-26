@@ -4,10 +4,8 @@ import Phone from '../ui/inputs/phone';
 import Text from '../ui/inputs/Text';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
-
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import * as yup from 'yup';
-
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useUserContext } from '../context/UserContext';
@@ -129,7 +127,7 @@ function UpdateProfileForm({lang}:{lang:string}) {
 						<Text name="firstName" label={t('fName')} placeholder={t('fName')} />
 						<Text name="lastName" label={t('lName')} placeholder={t('lName')} />
 						<Text name="email" label={t('email')} placeholder={t('email')} />
-						<Phone  disabled={!true}  name="phoneNumber" label={t('phone')} placeholder={t('phone')} />
+						<Phone  disabled={true}  name="phoneNumber" label={t('phone')} placeholder={t('phone')} />
 						{/* <span className="mobile:hidden"></span> */}
 						<button
 							disabled={

@@ -16,7 +16,7 @@ type OrdersProps = {
   id: string;
 };
 
-const MyOrder: React.FC<{ lang: string }> = ({lang}) => { // تعيين 'en' كقيمة افتراضية
+const MyOrder: React.FC<{ lang: string }> = ({lang}) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const token = localStorage.getItem('Token');
   
@@ -49,7 +49,7 @@ const MyOrder: React.FC<{ lang: string }> = ({lang}) => { // تعيين 'en' ك�
           <div className="w-5/6 mx-auto my-10">
             <Title title={t('Orders')} />
             {orders.map((order) => (
-            <Link key={order.id} href={`/orders/${order.id}`} >
+            <Link key={order.id} href={`/${lang}/orders/${order.id}`} >
                 <div className="relative bg-slate-100 hover:bg-orange-50 transition-all duration-100 px-4 py-4 border rounded-lg mb-4">
                   <div className="flex justify-between">
                     <div className="flex items-center gap-1">

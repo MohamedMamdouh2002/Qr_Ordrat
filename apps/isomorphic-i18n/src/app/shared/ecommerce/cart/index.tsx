@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { SubmitHandler } from 'react-hook-form';
@@ -139,7 +139,7 @@ function CartCalculations({fees, Tax ,lang}:{fees:number; Tax:number ,lang?:stri
 }
 
 export default function CartPageWrapper({lang}:{lang?:string}) {
-  const { t } = useTranslation(lang!, 'order');
+  const { t ,i18n} = useTranslation(lang!, 'order');
 
   // const items = [
   //   {
@@ -236,6 +236,10 @@ export default function CartPageWrapper({lang}:{lang?:string}) {
 
   const { items } = useCart();  
   const [notes, setNotes] = useState('');
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [lang, i18n]);
+
   return (
     <div className="@container">
       <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">

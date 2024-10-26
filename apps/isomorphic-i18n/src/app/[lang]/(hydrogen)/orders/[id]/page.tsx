@@ -2,7 +2,13 @@ import OrderView from '@/app/shared/ecommerce/order/order-view'
 import React from 'react'
 
 
-const OrderId: React.FC =({lang}: { lang?: string }) => {
+function OrderId({
+  params: { lang },
+}: {
+  params: {
+    lang: string;
+  };
+})  {
   return <>
   <div className="w-5/6 mx-auto">
     <OrderView lang={lang}/>

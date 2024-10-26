@@ -53,7 +53,6 @@ const AllProduct: React.FC =({lang}: { lang?: string }) => {
     }
   }, [page]);
 
-  // إعداد Intersection Observer لمراقبة العنصر الوهمي
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && hasMore && !loading) {
@@ -74,7 +73,7 @@ const AllProduct: React.FC =({lang}: { lang?: string }) => {
 
   return (
     <>
-      <div className="w-5/6 sm:w-[90%] mx-auto mt-20">
+      <div className="w-5/6 sm:w-[90%] mx-auto mt-20 mb-10">
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5">
           {products.map((prod: Food,index) => (
             isMobile ? 
