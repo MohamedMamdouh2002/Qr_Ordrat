@@ -52,12 +52,6 @@ function Navbar( {className, lang }: {className?:string, lang?: string }) {
                         size={21}
                         className="cursor-pointer"
                     />
-                       <LanguageSwitcher
-                        lang={lang!}
-                        className="ms-3 rounded-none shadow-none"
-                        variant="text"
-                        />
-                    {/* <LangChanger isTop={true} className="outline-0  bg-transparent" /> */}
                 </div>
         </div>
     

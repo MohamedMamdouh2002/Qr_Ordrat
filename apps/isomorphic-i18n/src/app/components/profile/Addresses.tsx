@@ -8,6 +8,7 @@ import NotFound from '../ui/NotFound';
 import toast from 'react-hot-toast';
 import { API_BASE_URL } from '@/config/base-url';
 import { useUserContext } from '../context/UserContext';
+import { useTranslation } from '@/app/i18n/client';
 
 type Address = {
   id: string;
@@ -23,12 +24,13 @@ type Address = {
 
 type Props = {};
 
-function Addresses({}: Props) {
+function Addresses({lang}:{lang:string}) {
 	const [addresses, setAddresses] = useState<Address[]>([]);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [selectedAddress, setSelectedAddress] = useState<any>();
 	const { updateAddresses, setUpdateAddresses } = useUserContext();
+	const { t } = useTranslation(lang!, 'profile');
 	console.log("selectedAddress: ",selectedAddress);
 	
 	const fetchAddresses = async () => {
@@ -117,6 +119,7 @@ function Addresses({}: Props) {
 					{addresses.length > 0 ? (
 						addresses.map((address, i) => (
 						<AddressItem
+							lang={lang}
 							key={address.id}
 							address={address}
 							i={i}
@@ -126,7 +129,7 @@ function Addresses({}: Props) {
 						))
 					) : isLoading ? (
 						<span className="w-full flex flex-col items-center justify-center gap-3 dark:text-stone-400 text-lighterText">
-							جاري التحميل ...
+							{t('loading')}
 							<Loader2 className="text-mainColor  animate-spin" />
 						</span>
 					) : (
@@ -138,7 +141,7 @@ function Addresses({}: Props) {
 					className="self-center col-span-full w-40 mx-auto large:self-start flex gap-1 items-center px-3 py-2 rounded-lg text-white border border-transparent hover:border-mainColor bg-mainColor hover:bg-transparent hover:text-mainColor  transition duation-150"
 				>
 					<Plus />
-					New Address
+					{t('New-Address')}
 				</button>
 			</div>
 			<AnimatePresence mode="wait">

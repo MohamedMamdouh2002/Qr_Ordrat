@@ -63,7 +63,7 @@ const NavMobile = ({lang}:{lang:string}) => {
   };
 
   return (
-    <nav className="lg:hidden m-auto border-b border-t mt-5 border-gray-200 gap-4 pt-5 bg-white sticky top-12 z-50 overflow-x-auto">
+    <nav className="lg:hidden w-full m-auto border-b border-t mt-5 border-gray-200 gap-4 pt-5 bg-white sticky top-12 z-50 overflow-x-auto">
       <div className="w-5/6 mx-auto flex">
         <button className={`transition duration-150 `}>
           <AlignCenter className="" />

@@ -21,8 +21,8 @@ type UserContextType = {
   setProfileUserName: React.Dispatch<React.SetStateAction<string>>; 
   setPage: React.Dispatch<React.SetStateAction<number>>;
   GetHome: ({ lang }: { lang: string }) => Promise<AllCategories | any>; 
-  GetProduct: (id: string) => Promise<FoodId | any>; 
-  GetRewiew:()=>  Promise<Review | any>;
+  GetProduct:  ({ lang,id }: { lang: string ,id:string}) => Promise<FoodId | any>; 
+  GetRewiew: ({ lang }: { lang: string })=>  Promise<Review | any>;
   
   userData: boolean;
   setUserData: React.Dispatch<React.SetStateAction<boolean>>;
@@ -77,11 +77,11 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children  }) =
     }
   }
 
-  async function GetProduct(id: string) {
+  async function GetProduct({lang ,id}:{lang:string ,id:string}) {
     try {
       const response = await fetch(`${API_BASE_URL}/api/Products/GetById/${shopId}/${id}`,{
         headers: {
-          'Accept-Language': `en`,
+          'Accept-Language': lang,
           },
       });
       if (!response.ok) {
@@ -94,12 +94,12 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children  }) =
       return null; 
     }
   }
-  async function GetRewiew() {
+  async function GetRewiew({lang}:{lang:string}) {
     try {
       const response = await fetch(`${API_BASE_URL}/api/Review/GetShopReviews/${shopId}?pageNumber=1&pageSize=50`, {
         method: 'GET',
         headers: {
-          'Accept-Language': 'en',
+          'Accept-Language': lang,
         },
       });
       if (!response.ok) {

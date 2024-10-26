@@ -21,14 +21,9 @@ import usePrice from '@hooks/use-price';
 import { useEffect, useState } from 'react';
 import { Order } from '@/types';
 import { BadgeCent } from 'lucide-react';
+import { useTranslation } from '@/app/i18n/client';
 
-const orderStatus = [
-  { id: 0, label: 'Order cancel' },
-  { id: 1, label: 'Order Pending' },
-  { id: 2, label: 'Order Being Prepared' },
-  { id: 3, label: 'Order Being Delivered' },
-  { id: 4, label: 'Order Delivered' },
-];
+
 
 const transitions = [
   {
@@ -91,7 +86,7 @@ function WidgetCard({
   );
 }
 
-export default function OrderView() {
+export default function OrderView({lang}:{lang?:string}) {
   const { items, total, totalItems } = useCart();
   const { price: subtotal } = usePrice(
     items && {
@@ -105,11 +100,19 @@ export default function OrderView() {
   const billingAddress = useAtomValue(billingAddressAtom);
   const shippingAddress = useAtomValue(shippingAddressAtom);
   const [order, setOrder] = useState<Order | null>(null);
+	const { t } = useTranslation(lang! ,'order');
+  
   const [currentOrderStatus, setCurrentOrderStatus] = useState<number>();
   // const currentOrderStatus = order?.status;
   const { id } = useParams();
   const phone=localStorage.getItem('phoneNumber')
-
+  const orderStatus = [
+    { id: 0, label: `${t('cancel')}` },
+    { id: 1, label: `${t('Pending')}` },
+    { id: 2, label: `${t('being-prepared')}` },
+    { id: 3, label: `${t('being-delivered')}` },
+    { id: 4, label: `${t('delivered')}` },
+  ];
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchOrder = async () => {
@@ -119,6 +122,7 @@ export default function OrderView() {
           {
             method: 'GET',
             headers: {
+              'Accept-Language': lang!,
               'Accept': 'application/json',
             },
           }
@@ -140,12 +144,12 @@ export default function OrderView() {
     fetchOrder();
   }, []);
   return (
-    <div className="@container">
+    <div className="@container mb-5">
       <div className="flex flex-wrap justify-center border-b border-t border-gray-300 py-4 font-medium text-gray-700 @5xl:justify-start">
         <span className="my-2 border-r border-muted px-5 py-0.5 first:ps-0 last:border-r-0">
           {/* October 22, 2022 at 10:30 pm */}
           <div>
-            ordered At: {order?.createdAt ? new Date(order.createdAt).toLocaleDateString('en-US', {
+            {t('ordered-At')}: {order?.createdAt ? new Date(order.createdAt).toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
               day: 'numeric',
@@ -176,20 +180,20 @@ export default function OrderView() {
           )}
 
           <div className="pb-5">
-            <OrderViewProducts />
+            <OrderViewProducts lang={lang!} />
             <div className="border-t border-muted pt-7 @5xl:mt-3">
             <div className="ms-auto max-w-lg space-y-6">
                 <div className="flex justify-between font-medium">
-                  Subtotal <span>{order?.totalPrice}</span>
+                  {t('Subtotal')} <span>{order?.totalPrice}</span>
                 </div>
                 <div className="flex justify-between font-medium">
-                  Shipping Fees <span>{order?.shippingFees}</span>
+                  {t('Shipping-Fees')} <span>{order?.shippingFees}</span>
                 </div>
                 <div className="flex justify-between font-medium">
-                  Vat <span>{order?.totalVat}</span>
+                  {t('Vat')} <span>{order?.totalVat}</span>
                 </div>
                 <div className="flex justify-between border-t border-muted pt-5 text-base font-semibold">
-                  Total <span>{toCurrency((order?.totalPrice || 0) + (order?.shippingFees || 0) + (order?.totalVat || 0))}</span>
+                  {t('Total')} <span>{toCurrency((order?.totalPrice || 0) + (order?.shippingFees || 0) + (order?.totalVat || 0))}</span>
                 </div>
               </div>
             </div>
@@ -200,7 +204,7 @@ export default function OrderView() {
               as="h3"
               className="mb-3.5  text-base font-semibold @5xl:mb-5 @7xl:text-lg"
             >
-              Transactions
+              {t('Transactions')}
             </Title>
 
             <div className="space-y-4">
@@ -221,7 +225,7 @@ export default function OrderView() {
                     </div>
                     <div className="flex flex-col ps-4">
                       <Text as="span" className="font-lexend text-gray-700">
-                        Payment
+                        {t('Payment')}
                       </Text>
                       <span className="pt-1 text-[13px] font-normal text-gray-500">
                         {item.paymentMethod.name}
@@ -262,64 +266,60 @@ export default function OrderView() {
         </div>
         <div className="space-y-7 pt-8 @container @5xl:col-span-4 @5xl:space-y-10 @5xl:pt-0 @6xl:col-span-3">
           <WidgetCard
-            title="Order Status"
+            title={t('Order-Status')}
             childrenWrapperClass="py-5 @5xl:py-8 flex"
           >
             <div className="ms-2 w-full space-y-7 border-s-2 border-gray-100">
   {/* عرض حالة الـ id === 0 فقط إذا كان currentOrderStatus === 0 */}
-  {currentOrderStatus === 0 &&
-    orderStatus
-      .filter((item) => item.id === 0)
-      .map((item) => (
-        <div
-          key={item.id}
-          className={cn(
-            "relative ps-6 text-sm font-medium before:absolute before:-start-[9px] before:top-px before:h-5 before:w-5 before:-translate-x-px before:rounded-full before:bg-gray-100 before:content-[''] after:absolute after:-start-px after:top-5 after:h-10 after:w-0.5 after:bg-gray-100 last:after:hidden",
-            'text-red-500 before:bg-red-500' // تنسيق مخصص لـ id === 0
-          )}
-        >
-            
-            <span className="absolute -start-1.5 top-1 text-white">
-              <PiCheckBold className="h-auto w-3" />
-            </span>
-        
-          {item.label}
-        </div>
-      ))}
+              {currentOrderStatus === 0 &&
+                orderStatus
+                  .filter((item) => item.id === 0)
+                  .map((item) => (
+                    <div
+                      key={item.id}
+                      className={cn(
+                        "relative ps-6 text-sm font-medium before:absolute before:-start-[9px] before:top-px before:h-5 before:w-5 before:-translate-x-px before:rounded-full before:bg-gray-100 before:content-[''] after:absolute after:-start-px after:top-5 after:h-10 after:w-0.5 after:bg-gray-100 last:after:hidden",
+                        'text-red-500 before:bg-red-500' // تنسيق مخصص لـ id === 0
+                      )}
+                    >
+                        
+                        <span className="absolute -start-1.5 top-1 text-white">
+                          <PiCheckBold className="h-auto w-3" />
+                        </span>
+                    
+                      {item.label}
+                    </div>
+                  ))}
 
-  {/* عرض الحالات من id === 1 إلى id === 4 فقط إذا كان currentOrderStatus !== 0 */}
-  {currentOrderStatus !== 0 &&
-    orderStatus
-      .filter((item) => item.id !== 0)
-      .map((item) => (
-        <div
-          key={item.id}
-          className={cn(
-            "relative ps-6 text-sm font-medium before:absolute before:-start-[9px] before:top-px before:h-5 before:w-5 before:-translate-x-px before:rounded-full before:bg-gray-100 before:content-[''] after:absolute after:-start-px after:top-5 after:h-10 after:w-0.5 after:bg-gray-100 last:after:hidden",
-            (currentOrderStatus ?? 1) >= item.id
-              ? 'before:bg-teal-500 after:bg-teal-500' // باقي الحالات
-              : 'after:hidden', // إخفاء after للحالات الأخرى
-            currentOrderStatus === item.id && 'before:bg-teal-500 after:hidden' // الحالة الحالية
-          )}
-        >
-          {(currentOrderStatus ?? 0) >= item.id && item.id !== 0 ? (
-            <span className="absolute -start-1.5 top-1 text-white">
-              <PiCheckBold className="h-auto w-3" />
-            </span>
-          ) : null}
+              {/* عرض الحالات من id === 1 إلى id === 4 فقط إذا كان currentOrderStatus !== 0 */}
+              {currentOrderStatus !== 0 &&
+                orderStatus
+                  .filter((item) => item.id !== 0)
+                  .map((item) => (
+                    <div
+                      key={item.id}
+                      className={cn(
+                        "relative ps-6 text-sm font-medium before:absolute before:-start-[9px] before:top-px before:h-5 before:w-5 before:-translate-x-px before:rounded-full before:bg-gray-100 before:content-[''] after:absolute after:-start-px after:top-5 after:h-10 after:w-0.5 after:bg-gray-100 last:after:hidden",
+                        (currentOrderStatus ?? 1) >= item.id
+                          ? 'before:bg-teal-500 after:bg-teal-500' // باقي الحالات
+                          : 'after:hidden', // إخفاء after للحالات الأخرى
+                        currentOrderStatus === item.id && 'before:bg-teal-500 after:hidden' // الحالة الحالية
+                      )}
+                    >
+                      {(currentOrderStatus ?? 0) >= item.id && item.id !== 0 ? (
+                        <span className="absolute -start-1.5 top-1 text-white">
+                          <PiCheckBold className="h-auto w-3" />
+                        </span>
+                      ) : null}
 
-          {item.label}
-        </div>
-      ))}
-</div>
-
-
-
-
+                      {item.label}
+                    </div>
+                  ))}
+            </div>
           </WidgetCard>
 
           <WidgetCard
-            title="Customer Details"
+            title={t('Customer-Details')}
             childrenWrapperClass="py-5 @5xl:py-8 flex items-center"
           >
             <div className="relative aspect-square h-16 w-16 shrink-0 @5xl:h-20 @5xl:w-20">
@@ -342,7 +342,7 @@ export default function OrderView() {
                 nevaeh.simmons@example.com
               </Text> */}
               <Text as="p" className="mb-2 last:mb-0 font-semibold">
-                Phone:
+                {t('Phone')}
               </Text>
               <Text as="p" className="mb-2 last:mb-0 font-semibold">
                 {phone}
@@ -351,17 +351,17 @@ export default function OrderView() {
           </WidgetCard>
 
           <WidgetCard
-            title="Shipping Address"
+            title={t('Shipping-Address')}
             childrenWrapperClass="@5xl:py-6 py-5"
           >
            {order?.address && (
               <div key={order.address.id}>
                 <Title as="h3" className="mb-2.5 text-base font-semibold @7xl:text-lg">
-                  Apartment: {order.address.apartmentNumber}
+                  {t('Apartment')} {order.address.apartmentNumber}
                   <br/>
-                  Floor: {order.address.floor}
+                  {t('Floor')} {order.address.floor}
                   <br/>
-                   Street: {order.address.street}, 
+                   {t('Street')} {order.address.street}, 
                 </Title>
                 <Text as="p" className="mb-2 leading-loose last:mb-0">
                   {order.address.additionalDirections}

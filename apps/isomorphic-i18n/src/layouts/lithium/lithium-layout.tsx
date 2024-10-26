@@ -11,7 +11,7 @@ export default function LithiumLayout({
     <main className="flex min-h-screen flex-grow">
       <div className="flex w-full flex-col ">
         <Header lang={lang} />
-        <div className="">
+        <div className="flex flex-col min-h-screen">
           {children}
           <Footer lang={lang!}/>
 

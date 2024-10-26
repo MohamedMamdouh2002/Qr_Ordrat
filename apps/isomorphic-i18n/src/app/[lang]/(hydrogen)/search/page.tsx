@@ -9,8 +9,8 @@ export default function Card({
   params: { lang },
 }: {
   params: {
-    lang: string;
+    lang?: string;
   };
 }) {
-  return <Content lang={lang}/>;
+  return <Content/>;
 }

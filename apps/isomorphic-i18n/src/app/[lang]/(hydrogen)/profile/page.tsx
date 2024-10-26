@@ -8,11 +8,12 @@ import { ProfileHeader } from '@/app/shared/account-settings/profile-settings';
 
 type Props = {
 	params: {
+		lang:string;
 		locale: 'ar' | 'en';
 	};
 };
 
-async function Profile({ params: { locale } }: Props) {
+async function Profile({ params: { locale ,lang } }: Props) {
 	unstable_setRequestLocale(locale);
 	return (
 		<>
@@ -30,13 +31,13 @@ async function Profile({ params: { locale } }: Props) {
 									<div className="flex justify-between items-center">
 										<h2 className="text-2xl md:text-3xl font-medium">Account Details</h2>
 									</div>
-									<UpdateProfileForm />
+									<UpdateProfileForm lang={lang} />
 								</div>
 								<div className="flex flex-col gap-5">
 									<div className="flex justify-between items-center">
 										<h2 className="text-2xl md:text-3xl font-medium">My addresses</h2>
 									</div>
-									<Addresses />
+									<Addresses lang={lang} />
 								</div>
 							</div>
 						</Layout>

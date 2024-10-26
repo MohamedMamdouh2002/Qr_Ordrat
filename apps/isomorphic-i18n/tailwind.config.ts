@@ -18,10 +18,7 @@ const config: Pick<Config, "prefix" | "presets" | "content" | "theme" |"plugins"
   },
   
   presets: [sharedConfig],
-  plugins: [
-    require('tailwind-scrollbar-hide'),
-    // باقي الإضافات
-  ],
+
 };
 
 export default config;

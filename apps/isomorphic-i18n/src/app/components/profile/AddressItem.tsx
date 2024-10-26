@@ -7,18 +7,21 @@ import ActionModal from '../layout/ActionModal';
 import { useUserContext } from '../context/UserContext';
 import toast from 'react-hot-toast';
 import { API_BASE_URL } from '@/config/base-url';
+import { useTranslation } from '@/app/i18n/client';
 
 type Props = {
 	address: Address;
 	i: number;
+	lang:string;
 	setIsOpen?: (val: boolean) => void;
 	setSelectedAddress: (val: {} | undefined) => void;
 };
 
-function AddressItem({ address, i, setIsOpen, setSelectedAddress }: Props) {
+function AddressItem({ address, i, setIsOpen, lang,setSelectedAddress }: Props) {
 	const [deleteModal, setDeleteModal] = useState(false);
 	console.log("address: ",address);
 	const { setUpdateAddresses } = useUserContext();
+	const { t } = useTranslation(lang!, 'profile');
 
 	const deleteAddress = async () => {
 		const token = localStorage.getItem('accessToken');
@@ -38,10 +41,10 @@ function AddressItem({ address, i, setIsOpen, setSelectedAddress }: Props) {
 			const result = await response.json();
 
 			if (response.ok) {
-				toast.success(result.message || 'Address deleted successfully');
+				toast.success(result.message || `${t('deleted-successfully')}`);
 				setUpdateAddresses(true);
 			} else {
-				toast.error(result.message || 'Failed to delete address.');
+				toast.error(result.message || `${t('Failed-delete')}`);
 			}
 		} catch (error) {
 			console.error('Error deleting address:', error);
@@ -86,11 +89,12 @@ function AddressItem({ address, i, setIsOpen, setSelectedAddress }: Props) {
 			<AnimatePresence mode="wait">
 				{deleteModal && (
 					<ActionModal
+						lang={lang}
 						isOpen={deleteModal}
 						setIsOpen={setDeleteModal}
 						action={deleteAddress}
-						title={`هل انت متأكد من حذف هذا العنوان ؟`}
-						description="لن تتمكن من إعادة هذا العنوان مره اخري في حالة الحذف."
+						title={t('delete')}
+						description={t('delete-desc')}
 					/>
 				)}
 			</AnimatePresence>

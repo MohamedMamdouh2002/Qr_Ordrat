@@ -1548,7 +1548,7 @@ div[style='z-index: 1000001;'],
   background-position: center center;
   background-repeat: no-repeat;
   height: 25vh;
-  /* z-index: 2; */
+  z-index: 2;
 }
 
 .blur1{

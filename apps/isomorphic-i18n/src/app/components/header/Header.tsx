@@ -1,21 +1,24 @@
+'use client'
 import Image from 'next/image'
 import React from 'react'
 import logPhoto from '@public/assets/landing.png'
 import Link from 'next/link'
+import { useTranslation } from '@/app/i18n/client';
 
-function LoginBanner() {
+const LoginBanner: React.FC<{ lang: string }> = ({ lang }) => { 
+  const { t } = useTranslation(lang!, 'home');
+
   return <>
   <div className="bg-mainColor/30 h-[400px] hidden md:flex">
     <div className="w-[90%] mx-auto pt-10 relative  flex justify-between items-center">
       <div className="">
-          <h2 className='text-2xl lg:text-3xl xl:text-5xl font-bold '>Welcome to <br/> Karam Elsham</h2>
+          <h2 className='text-2xl lg:text-3xl xl:text-5xl font-bold '>{t('Welcome-to')}<br/> {t('Karam-Elsham')}</h2>
           <h3 className='text-sm lg:text-lg xl:text-xl font-normal  my-3'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.<br/> Perspiciatis
-            quo doloribus impedit a harum, libero alias suscipit <br/> tempore molestias similique.
+            {t('desc1')}<br/> {t('desc2')}
           </h3>
           <Link href={`/search`}>
             <button className='w-32 h-10 bg-mainColor rounded-md text-white'>
-              View Product
+              {t('View-Product')}
             </button>
           </Link>
       </div>
