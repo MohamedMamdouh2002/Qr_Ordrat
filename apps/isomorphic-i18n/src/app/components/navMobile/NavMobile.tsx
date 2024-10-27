@@ -1,46 +1,53 @@
 'use client';
-import { AlignCenter } from "lucide-react";
+import { AlignCenter, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-scroll";
 import { useUserContext } from "../context/UserContext";
+import { motion } from 'framer-motion';
+import { useTranslation } from "@/app/i18n/client";
 
-const NavMobile = () => {
-  const [active, setActive] = useState(""); // تعيين الحالة النشطة
+const NavMobile = ({ lang }: { lang: string }) => {
+  const [active, setActive] = useState("");
   const { GetHome } = useUserContext();
   const [home, setHome] = useState<any[]>([]);
-  const navRef = useRef<HTMLUListElement>(null); // مرجع للتعامل مع التمرير الأفقي
+  const [isModalOpen, setIsModalOpen] = useState(false); // حالة للمودال
+  const navRef = useRef<HTMLUListElement>(null);
+  const { t ,i18n} = useTranslation(lang!, 'nav');
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await GetHome();
+      const data = await GetHome({ lang });
       setHome(data);
-      setActive(data[0]?.id || ""); // تعيين أول رابط كحالة نشطة بشكل افتراضي
-      console.log('Fetched Data:', data);
+      setActive(data[0]?.id || "");
+      console.log("Fetched Data:", data);
     };
 
     fetchData();
-  }, [GetHome]);
+  }, [GetHome, lang]);
 
   useEffect(() => {
-    const sections = home.map(item => document.getElementById(item.id));
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActive(entry.target.id);
-          const index = home.findIndex(item => item.id === entry.target.id);
-          scrollToItem(index); // تمرير العنصر النشط إلى منتصف الشاشة
-        }
-      });
-    }, { rootMargin: '0px', threshold: 0.5 });
+    const sections = home?.map(item => document.getElementById(item.id));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries?.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+            const index = home.findIndex(item => item.id === entry.target.id);
+            scrollToItem(index);
+          }
+        });
+      },
+      { rootMargin: "0px", threshold: 0.5 }
+    );
 
-    sections.forEach(section => {
+    sections?.forEach(section => {
       if (section) {
         observer.observe(section);
       }
     });
 
     return () => {
-      sections.forEach(section => {
+      sections?.forEach(section => {
         if (section) {
           observer.unobserve(section);
         }
@@ -48,56 +55,128 @@ const NavMobile = () => {
     };
   }, [home]);
 
-  // Function to handle horizontal scrolling and center the active item
   const scrollToItem = (index: number) => {
     if (navRef.current) {
-      const itemWidth = navRef.current.scrollWidth / home.length; // عرض كل عنصر
-      const scrollAmount = index * itemWidth; // المسافة إلى العنصر
-      const centerOffset = (navRef.current.clientWidth - itemWidth) / 2; // تعويض لتوسيط العنصر
+      const itemWidth = navRef.current.scrollWidth / home.length;
+      const scrollAmount = index * itemWidth;
+      const centerOffset = (navRef.current.clientWidth - itemWidth) / 2;
 
       navRef.current.scrollTo({
-        left: scrollAmount - centerOffset, // تمرير العنصر النشط إلى منتصف الشاشة
+        left: scrollAmount - centerOffset,
         behavior: "smooth",
       });
     }
   };
 
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      handleClose();
+    }
+  };
+
+  useEffect(() => {
+    // التحكم بالتمرير بناءً على isModalOpen
+    document.body.style.overflow = isModalOpen ? 'hidden' : 'auto';
+  }, [isModalOpen]);
+
+  if (typeof window === 'undefined') return null;
+
   return (
-    <nav className="lg:hidden m-auto border-b border-t mt-5 border-gray-200 gap-4 pt-5 bg-white sticky top-12 z-50 overflow-x-auto">
+    <nav className="lg:hidden w-full m-auto border-b border-t mt-5 border-gray-200 gap-4 pt-5 bg-white sticky top-12 z-50 overflow-x-auto">
       <div className="w-5/6 mx-auto flex">
-        <button className={`transition duration-150 `}>
-          <AlignCenter className="" />
+        <button
+          onClick={() => setIsModalOpen(true)} // فتح المودال عند الضغط على الأيقونة
+          className={`transition duration-150`}
+        >
+          <AlignCenter />
         </button>
-        <ul ref={navRef} className="flex items-center ps-5 gap-6 whitespace-nowrap overflow-x-auto flex-nowrap w-full h-16"> {/* تأكد أن الـ ul لديها ارتفاع محدد */}
+        <ul ref={navRef} className="flex items-center ps-5 gap-6 whitespace-nowrap overflow-x-auto flex-nowrap w-full h-16">
           {home?.map((item, index) => (
-            <li key={item.id} className="relative w-full h-full  text-left">
+            <li key={item.id} className="relative w-full h-full text-left">
               <Link
                 to={item.id}
                 smooth={true}
                 duration={500}
                 offset={-135}
-                className={`text-sm text-center relative cursor-pointer h-full flex items-center justify-center font-semibold ${active === item.id ? "text-orange-500" : "text-gray-700"}`}  // تأكد أن العنصر يمتد بشكل عمودي بالكامل
+                className={`text-sm text-center relative cursor-pointer h-full flex items-center justify-center font-semibold ${
+                  active === item.id ? "text-orange-500" : "text-gray-700"
+                }`}
                 onClick={() => {
                   setActive(item.id);
-                  scrollToItem(index); // التمرير الأفقي عند الضغط
+                  scrollToItem(index);
                 }}
               >
                 {item.name}
               </Link>
-              {/* <span
-                className={`absolute bottom-0  h-[4px] rounded-t-full transition-all duration-500 transform ${
-                  active === item.id ? "w-full translate-x-0 bg-orange-500" : "w-0 translate-x-full"
-                }`}
-              ></span> */}
-                {active === item.id && (
-                  <span
-                    className={`absolute bottom-0 bg-orange-500 h-[4px] rounded-t-full transition-all duration-700 left-0 right-0`}
-                  ></span>
-                )}
+              {active === item.id && (
+                <span className="absolute bottom-0 bg-orange-500 h-[4px] rounded-t-full transition-all duration-700 left-0 right-0"></span>
+              )}
             </li>
           ))}
         </ul>
       </div>
+
+      {/* مودال */}
+      {isModalOpen && (
+        <>
+        <div className="fixed  z-[9999] inset-0 bg-gray-600 bg-opacity-50 " onClick={handleOutsideClick} />
+          <motion.div
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className="fixed bottom-0 right-0 left-0 lg:hidden flex items-end z-[1000000] "
+            >
+            <div className="bg-white  rounded-t-lg shadow-lg py-6 w-full">
+              <div className="flex items-center gap-3 mx-4 mb-6">
+
+                <X
+                    onClick={() => handleClose()}
+                    className= ""
+                    size={25}
+                />
+                <h2 className="text-lg font-medium">{t('menu')}</h2>
+              </div>
+              <ul className="flex flex-col gap-4"> 
+                {home?.map((item, index) => (
+                  <>
+                    <Link
+                      key={item.id}
+                      to={item.id}
+                      smooth={true}
+                      duration={500}
+                      offset={-135}
+                      className={`text-sm relative cursor-pointer h-full flex justify-between items-center font-semibold ${
+                        active === item.id ? "text-orange-500" : "text-gray-700"
+                      }`}
+                      onClick={() => {
+                        setActive(item.id);
+                        scrollToItem(index);
+                        handleClose();
+                      }}
+                    >
+                      <li className="flex justify-between items-center mx-4 w-full "> {/* استخدام justify-between لتوزيع العناصر */}
+                        <span>{item.name}</span>
+                        <span>{item.numberOfProducts}</span>
+                      </li>
+                      {active === item.id && (
+                        <span className="absolute  bg-orange-500 h-[30px] w-1 rounded-e-full transition-all duration-700 left-0 -top-1 bottom-0 "></span>
+                      )}
+                    </Link>
+                    <hr className=" mx-2"/>
+                  </>
+                ))}
+              </ul>
+            
+            </div>
+          </motion.div>
+
+        </>
+      )}
     </nav>
   );
 };

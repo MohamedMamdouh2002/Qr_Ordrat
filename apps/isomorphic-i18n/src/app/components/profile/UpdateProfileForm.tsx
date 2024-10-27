@@ -4,13 +4,12 @@ import Phone from '../ui/inputs/phone';
 import Text from '../ui/inputs/Text';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
-
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import * as yup from 'yup';
-
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useUserContext } from '../context/UserContext';
+import { useTranslation } from '@/app/i18n/client';
 
 type UserData = {
 	firstName: string;
@@ -33,9 +32,11 @@ const getUserDataFromLocalStorage = (): UserData => {
 
 type Props = {};
 
-function UpdateProfileForm({}: Props) {
+function UpdateProfileForm({lang}:{lang:string}) {
 	const [userData, setUserData] = useState<UserData>(getUserDataFromLocalStorage);
 	const { profileUserName ,setProfileUserName } = useUserContext();
+	const { t } = useTranslation(lang!, 'profile');
+
 	const router = useRouter();
 	useEffect(() => {
 		const username = `${userData.firstName} ${userData.lastName}`
@@ -123,10 +124,10 @@ function UpdateProfileForm({}: Props) {
 			{({ errors, values, initialValues }) => {
 				return (
 					<Form className="grid md:grid-cols-2 grid-cols-1 gap-2">
-						<Text name="firstName" label="First Name" placeholder="First Name" />
-						<Text name="lastName" label="Last Name" placeholder="Last Name" />
-						<Text name="email" label="Email" placeholder="Email" />
-						<Phone disabled={true} name="phoneNumber" label="Phone Number" placeholder="Phone Number" />
+						<Text name="firstName" label={t('fName')} placeholder={t('fName')} />
+						<Text name="lastName" label={t('lName')} placeholder={t('lName')} />
+						<Text name="email" label={t('email')} placeholder={t('email')} />
+						<Phone  disabled={true}  name="phoneNumber" label={t('phone')} placeholder={t('phone')} />
 						{/* <span className="mobile:hidden"></span> */}
 						<button
 							disabled={
@@ -138,7 +139,7 @@ function UpdateProfileForm({}: Props) {
 							className="mt-2 md:mt-5 md:col-span-1 col-span-full w-40 mx-auto md:mx-0 md:ms-auto px-8 py-2 text-slate-50 border border-transparent hover:border-mainColor bg-mainColor hover:text-mainColor hover:bg-transparent transition duration-150 rounded-lg disabled:bg-black/50 disabled:text-white disabled:border-none"
 							type="reset"
 						>
-							Reset
+							{t('reset')}
 						</button>
 						<button
 							disabled={
@@ -154,7 +155,7 @@ function UpdateProfileForm({}: Props) {
 							className="mt-2 md:mt-5 md:col-span-1 col-span-full w-40 mx-auto md:mx-0 px-8 py-2 border border-transparent hover:border-mainColor text-slate-50 bg-mainColor hover:text-mainColor hover:bg-transparent transition duration-150 rounded-lg disabled:bg-black/50 disabled:text-white disabled:border-none"
 							type="submit"
 						>
-							Save
+							{t('Save')}
 						</button>
 					</Form>
 				);

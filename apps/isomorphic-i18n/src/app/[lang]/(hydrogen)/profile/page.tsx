@@ -1,3 +1,4 @@
+// 'use client'
 import Layout from '@/app/components/ui/hoc/layout';
 import SessionGuard from '@/app/components/ui/hoc/layout/SessionGuard';
 import Addresses from '@/app/components/profile/Addresses';
@@ -5,12 +6,19 @@ import UpdateProfileForm from '@/app/components/profile/UpdateProfileForm';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import React from 'react';
 import { ProfileHeader } from '@/app/shared/account-settings/profile-settings';
+import { useTranslation } from '@/app/i18n/client';
 
-type Props = {
+
+
+
+export default function Profile({
+	params: { lang },
+}: {
 	params: {
-		locale: 'ar' | 'en';
+	  lang: string;
 	};
-};
+}) {
+	// const { t } = useTranslation(lang!, 'order');
 
 const translations = {
   accountDetails: { en: 'Account Details', ar: 'معلوماتي' },
@@ -40,16 +48,16 @@ export default function Profile({
 									<div className="flex justify-between items-center">
 										<h2 className="text-2xl md:text-3xl font-medium">{translations.accountDetails[lang=='en'?'en':'ar']}</h2>
 									</div>
-									<UpdateProfileForm />
+									<UpdateProfileForm lang={lang} />
 								</div>
 								<div className="flex flex-col gap-5">
 									<div className="flex justify-between items-center">
 										<h2 className="text-2xl md:text-3xl font-medium">{translations.myAddresses[lang=='en'?'en':'ar']}</h2>
-									</div>
-									<Addresses />
-								</div>
-							</div>
-						</Layout>
+								  </div>
+								  <Addresses lang={lang} />
+							  </div>
+						  </div>
+					  </Layout>
 				</div>
 			</SessionGuard>
 		</>

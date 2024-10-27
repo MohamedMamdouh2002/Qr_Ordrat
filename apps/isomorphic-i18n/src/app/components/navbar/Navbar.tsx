@@ -1,28 +1,35 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import { Banknote, Car, Info, Share2, Star, TicketPercentIcon, Timer } from 'lucide-react';
 import { locale } from 'dayjs';
 import { t } from 'i18next';
 import Link from 'next/link';
 import LanguageSwitcher from '@/app/i18n/language-switcher';
+import { useTranslation } from '@/app/i18n/client';
 function Navbar( {className, lang }: {className?:string, lang?: string }) {
+    const { t ,i18n} = useTranslation(lang!, 'nav');
+    useEffect(() => {
+        i18n.changeLanguage(lang);
+      }, [lang, i18n]);
+    
   return <>
     <div className="hidden lg:block h-14 bg-mainColor text-white text-sm" >
         <div className="w-[90%] mx-auto grid grid-cols-9 *:col-span-3 items-center justify-between py-4">
                 <div className="flex items-center gap-3">
-                    <TicketPercentIcon /><span>EGP 239.5 off on select items</span>
+                    <TicketPercentIcon /><span>{t('select-item')}</span>
                 </div>
                 <div className="flex items-center mx-auto gap-5">
                     <div className="flex items-center gap-3">
-                        <Timer /> 60 {t('mins')}
+                        <Timer /> 24 {t('mins')}
                     </div>
-                    <div className="flex items-center gap-3">
+                    {/* <div className="flex items-center gap-3">
                         <Banknote />  EGP 33.99
 
-                    </div>
+                    </div> */}
                     <div className="flex items-center gap-3">
                         <Car />
                         <div className="flex items-center gap-1">
-                            {t('Restaurant')}
+                            {t('Cash')}
                             <Info className="text-white/75" size={12} />
                         </div>
                     </div>
@@ -52,12 +59,6 @@ function Navbar( {className, lang }: {className?:string, lang?: string }) {
                         size={21}
                         className="cursor-pointer"
                     />
-                       <LanguageSwitcher
-                        lang={lang!}
-                        className="ms-3 rounded-none shadow-none"
-                        variant="text"
-                        />
-                    {/* <LangChanger isTop={true} className="outline-0  bg-transparent" /> */}
                 </div>
         </div>
     

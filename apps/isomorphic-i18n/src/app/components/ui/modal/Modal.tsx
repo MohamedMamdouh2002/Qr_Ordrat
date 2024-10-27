@@ -58,7 +58,7 @@ type ModalProps = {
     quantity: number;
     setQuantity: Dispatch<SetStateAction<number>>;
     hasMoreDetails?: boolean;
-    
+    lang:string;
     handleUpdateCart?: () => void;
     itemId?: string;
     setShowItem: (val: boolean) => void;
@@ -73,6 +73,7 @@ function Modal({
   data,
   quantity,
   setQuantity,
+  lang,
   hasMoreDetails,
   handleUpdateCart,
 
@@ -91,8 +92,8 @@ function Modal({
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await GetProduct(modalId);
-      setProdId(data);
+        const data = await GetProduct({ lang, id:modalId });
+        setProdId(data);
 
       
       console.log('Fetched Data prod:', data);

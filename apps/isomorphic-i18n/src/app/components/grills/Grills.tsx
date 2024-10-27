@@ -13,18 +13,20 @@ import { Swiper as SwiperType } from 'swiper';
 import PrevArrow from '../PrevArrow'
 import NextArrow from '../NextArrow'
 import Link from 'next/link';
+import { useTranslation } from '@/app/i18n/client';
 
 type Props = { data?: AllCategories; initialCategory?: string };
 
-function Grills({ data, initialCategory }: Props) {
+function Grills({lang} : {lang:string}) {
   const { GetHome } = useUserContext();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [home, setHome] = useState<any[]>([])
+	const { t } = useTranslation(lang!, 'home');
   const swiperRef = useRef<SwiperType | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await GetHome();
+      const data = await GetHome({lang});
       setHome(data)
       console.log('Fetched Data:', data);
     };
@@ -33,13 +35,13 @@ function Grills({ data, initialCategory }: Props) {
   }, [GetHome]);
   
   return (
-    <div className="">
+    <div className="mb-10">
       {home?.map((sec) => (
         <div key={sec.id} id={sec.id} className="w-5/6 sm:w-[90%] mx-auto mt-20">
           <div className="flex justify-between items-center">
-          <Title title={sec.name} />
+          <Title title={sec.name}  />
           <Link href={`/product/${sec.id}`}>
-            <p>View All</p>
+            <p className='hover:text-mainColor mb-5 text-black font-medium text-lg underline'>{t('view-all')}</p>
           </Link>
           </div>
           {sec.numberOfColumns !== 0 && sec.numberOfColumns !== 2 && sec.numberOfColumns !== 1 && (
@@ -63,13 +65,13 @@ function Grills({ data, initialCategory }: Props) {
               <>
               <div className="relative">
                 {currentSlide > 0 && (
-                    <div className="absolute top-[50%] right-0 z-10">
-                      <PrevArrow onClick={() => swiperRef.current?.slidePrev()} />
+                    <div className="absolute top-[50%] start-0 z-10">
+                      <PrevArrow  lang={lang} onClick={() => swiperRef.current?.slidePrev()} />
                     </div>
                 )}
-                {currentSlide < sec.products.length - 5 && ( 
-                  <div className="absolute top-[50%] left-0 z-10">
-                    <NextArrow onClick={() => swiperRef.current?.slideNext()} />
+                {currentSlide < sec.products.length - 6 && ( 
+                  <div className="absolute top-[50%] end-4 z-10">
+                    <NextArrow lang={lang} onClick={() => swiperRef.current?.slideNext()} />
                   </div>
                 )}
                 <Swiper 
@@ -115,7 +117,7 @@ function Grills({ data, initialCategory }: Props) {
                   {sec.products.map((prod: React.JSX.IntrinsicAttributes & Food & { setCurrentItem: React.Dispatch<React.SetStateAction<{ type?: string; id: string } | null>> }) =>
 
                     <SwiperSlide key={prod.id}>
-                      <SmallCard  {...prod} />
+                      <SmallCard  lang={lang} {...prod} />
                     </SwiperSlide>
                   )}
                 </Swiper>
@@ -125,11 +127,11 @@ function Grills({ data, initialCategory }: Props) {
               sec.products.map((prod: React.JSX.IntrinsicAttributes & Food & { setCurrentItem: React.Dispatch<React.SetStateAction<{ type?: string; id: string } | null>> }) =>
                 sec.numberOfColumns === 1 ? (
                   <>
-                    <MediumCard key={prod.id} {...prod} />
+                    <MediumCard lang={lang} key={prod.id} {...prod} />
                     <hr className='mt-1 sm:hidden'/>
                   </>
                 ) : (
-                  <Card key={prod.id} {...prod} />
+                  <Card  lang={lang} key={prod.id} {...prod} />
                 )
               )
             )}

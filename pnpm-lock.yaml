@@ -455,10 +455,10 @@ importers:
         version: 0.10.1(typescript@5.4.5)(zod@3.23.8)
       '@tailwindcss/container-queries':
         specifier: ^0.1.1
-        version: 0.1.1(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)))
+        version: 0.1.1(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
       '@uploadthing/react':
         specifier: ^6.5.1
-        version: 6.5.4(@uploadthing/mime-types@0.2.10)(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@6.10.4(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))))
+        version: 6.5.4(@uploadthing/mime-types@0.2.10)(next@14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@6.10.4(next@14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))))
       accept-language:
         specifier: ^3.0.18
         version: 3.0.18
@@ -501,6 +501,9 @@ importers:
       i18next-resources-to-backend:
         specifier: ^1.2.1
         version: 1.2.1
+      intersection-observer:
+        specifier: ^0.12.2
+        version: 0.12.2
       jotai:
         specifier: 2.8.2
         version: 2.8.2(@types/react@18.3.2)(react@18.3.1)
@@ -518,7 +521,7 @@ importers:
         version: 14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-auth:
         specifier: ^4.24.7
-        version: 4.24.7(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nodemailer@6.9.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 4.24.7(next@14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nodemailer@6.9.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-intl:
         specifier: ^3.19.4
         version: 3.19.4(next@14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
@@ -527,7 +530,7 @@ importers:
         version: 0.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       nextjs-toploader:
         specifier: ^1.6.12
-        version: 1.6.12(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 1.6.12(next@14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       nodemailer:
         specifier: ^6.9.13
         version: 6.9.13
@@ -663,15 +666,12 @@ importers:
       tailwind-merge:
         specifier: ^2.3.0
         version: 2.3.0
-      tailwind-scrollbar-hide:
-        specifier: ^1.1.7
-        version: 1.1.7
       typescript:
         specifier: 5.4.5
         version: 5.4.5
       uploadthing:
         specifier: ^6.10.1
-        version: 6.10.4(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
+        version: 6.10.4(next@14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
       yup:
         specifier: ^1.4.0
         version: 1.4.0
@@ -696,7 +696,7 @@ importers:
         version: link:../../packages/config-typescript
       '@tailwindcss/forms':
         specifier: ^0.5.7
-        version: 0.5.7(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)))
+        version: 0.5.7(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
       '@total-typescript/ts-reset':
         specifier: ^0.5.1
         version: 0.5.1
@@ -756,7 +756,7 @@ importers:
         version: 5.0.7
       tailwindcss:
         specifier: ^3.4.3
-        version: 3.4.3(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
+        version: 3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
 
   apps/isomorphic-starter:
     dependencies:
@@ -6341,9 +6341,6 @@ packages:
   tailwind-merge@2.3.0:
     resolution: {integrity: sha512-vkYrLpIP+lgR0tQCG6AP7zZXCTLc1Lnv/CCRT3BqJ9CZ3ui2++GPaGb1x/ILsINIMSYqqvrpqjUFsMNLlW99EA==}
 
-  tailwind-scrollbar-hide@1.1.7:
-    resolution: {integrity: sha512-X324n9OtpTmOMqEgDUEA/RgLrNfBF/jwJdctaPZDzB3mppxJk7TLIDmOreEDm1Bq4R9LSPu4Epf8VSdovNU+iA==}
-
   tailwindcss@3.4.0:
     resolution: {integrity: sha512-VigzymniH77knD1dryXbyxR+ePHihHociZbXnLZHUyzf2MMs2ZVqlUrZ3FvpXP8pno9JzmILt1sZPD19M3IxtA==}
     engines: {node: '>=14.0.0'}
@@ -8316,6 +8313,10 @@ snapshots:
     dependencies:
       tailwindcss: 3.4.3(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
 
+  '@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))':
+    dependencies:
+      tailwindcss: 3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
+
   '@tailwindcss/forms@0.5.7(tailwindcss@3.4.1(ts-node@10.9.2))':
     dependencies:
       mini-svg-data-uri: 1.4.4
@@ -8325,6 +8326,11 @@ snapshots:
     dependencies:
       mini-svg-data-uri: 1.4.4
       tailwindcss: 3.4.3(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
+
+  '@tailwindcss/forms@0.5.7(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))':
+    dependencies:
+      mini-svg-data-uri: 1.4.4
+      tailwindcss: 3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
 
   '@tanstack/match-sorter-utils@8.15.1':
     dependencies:
@@ -8612,6 +8618,22 @@ snapshots:
       react: 18.3.1
 
   '@uploadthing/mime-types@0.2.10': {}
+
+  '@uploadthing/react@6.5.4(@uploadthing/mime-types@0.2.10)(next@14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@6.10.4(next@14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))))':
+    dependencies:
+      '@uploadthing/dropzone': 0.4.1(react@18.3.1)
+      '@uploadthing/shared': 6.7.4(@uploadthing/mime-types@0.2.10)
+      file-selector: 0.6.0
+      react: 18.3.1
+      tailwind-merge: 2.3.0
+      uploadthing: 6.10.4(next@14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
+    optionalDependencies:
+      next: 14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    transitivePeerDependencies:
+      - '@uploadthing/mime-types'
+      - solid-js
+      - svelte
+      - vue
 
   '@uploadthing/react@6.5.4(@uploadthing/mime-types@0.2.10)(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@6.10.4(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))))':
     dependencies:
@@ -10667,6 +10689,23 @@ snapshots:
 
   netmask@2.0.2: {}
 
+  next-auth@4.24.7(next@14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nodemailer@6.9.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@babel/runtime': 7.23.4
+      '@panva/hkdf': 1.1.1
+      cookie: 0.5.0
+      jose: 4.15.5
+      next: 14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      oauth: 0.9.15
+      openid-client: 5.6.5
+      preact: 10.21.0
+      preact-render-to-string: 5.2.6(preact@10.21.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      uuid: 8.3.2
+    optionalDependencies:
+      nodemailer: 6.9.13
+
   next-auth@4.24.7(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nodemailer@6.9.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.23.4
@@ -10746,6 +10785,14 @@ snapshots:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+
+  nextjs-toploader@1.6.12(next@14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      next: 14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      nprogress: 0.2.0
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   nextjs-toploader@1.6.12(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
@@ -11003,6 +11050,14 @@ snapshots:
     optionalDependencies:
       postcss: 8.4.38
       ts-node: 10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)
+
+  postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)):
+    dependencies:
+      lilconfig: 3.0.0
+      yaml: 2.3.4
+    optionalDependencies:
+      postcss: 8.4.38
+      ts-node: 10.9.2(@types/node@20.12.10)(typescript@5.4.5)
 
   postcss-nested@6.0.1(postcss@8.4.38):
     dependencies:
@@ -11336,7 +11391,7 @@ snapshots:
       source-map-js: 1.0.2
       stacktrace-parser: 0.1.10
       tailwind-merge: 2.2.0
-      tailwindcss: 3.4.0(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
+      tailwindcss: 3.4.0(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
       typescript: 5.1.6
     transitivePeerDependencies:
       - '@babel/core'
@@ -12191,8 +12246,6 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.5
 
-  tailwind-scrollbar-hide@1.1.7: {}
-
   tailwindcss@3.4.0(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
@@ -12213,6 +12266,33 @@ snapshots:
       postcss-import: 15.1.0(postcss@8.4.38)
       postcss-js: 4.0.1(postcss@8.4.38)
       postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
+      postcss-nested: 6.0.1(postcss@8.4.38)
+      postcss-selector-parser: 6.0.13
+      resolve: 1.22.8
+      sucrase: 3.34.0
+    transitivePeerDependencies:
+      - ts-node
+
+  tailwindcss@3.4.0(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)):
+    dependencies:
+      '@alloc/quick-lru': 5.2.0
+      arg: 5.0.2
+      chokidar: 3.5.3
+      didyoumean: 1.2.2
+      dlv: 1.1.3
+      fast-glob: 3.3.2
+      glob-parent: 6.0.2
+      is-glob: 4.0.3
+      jiti: 1.21.0
+      lilconfig: 2.1.0
+      micromatch: 4.0.5
+      normalize-path: 3.0.0
+      object-hash: 3.0.0
+      picocolors: 1.0.0
+      postcss: 8.4.38
+      postcss-import: 15.1.0(postcss@8.4.38)
+      postcss-js: 4.0.1(postcss@8.4.38)
+      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
       postcss-nested: 6.0.1(postcss@8.4.38)
       postcss-selector-parser: 6.0.13
       resolve: 1.22.8
@@ -12274,9 +12354,36 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
+  tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)):
+    dependencies:
+      '@alloc/quick-lru': 5.2.0
+      arg: 5.0.2
+      chokidar: 3.5.3
+      didyoumean: 1.2.2
+      dlv: 1.1.3
+      fast-glob: 3.3.2
+      glob-parent: 6.0.2
+      is-glob: 4.0.3
+      jiti: 1.21.0
+      lilconfig: 2.1.0
+      micromatch: 4.0.5
+      normalize-path: 3.0.0
+      object-hash: 3.0.0
+      picocolors: 1.0.0
+      postcss: 8.4.38
+      postcss-import: 15.1.0(postcss@8.4.38)
+      postcss-js: 4.0.1(postcss@8.4.38)
+      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
+      postcss-nested: 6.0.1(postcss@8.4.38)
+      postcss-selector-parser: 6.0.13
+      resolve: 1.22.8
+      sucrase: 3.34.0
+    transitivePeerDependencies:
+      - ts-node
+
   tapable@2.2.1: {}
 
-  terser-webpack-plugin@5.3.10(@swc/core@1.3.101(@swc/helpers@0.5.5))(esbuild@0.19.11)(webpack@5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.5))(esbuild@0.19.11)):
+  terser-webpack-plugin@5.3.10(@swc/core@1.3.101(@swc/helpers@0.5.5))(esbuild@0.19.11)(webpack@5.91.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
@@ -12368,6 +12475,25 @@ snapshots:
       yn: 3.1.1
     optionalDependencies:
       '@swc/core': 1.3.101(@swc/helpers@0.5.5)
+
+  ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5):
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      '@tsconfig/node10': 1.0.11
+      '@tsconfig/node12': 1.0.11
+      '@tsconfig/node14': 1.0.3
+      '@tsconfig/node16': 1.0.4
+      '@types/node': 20.12.10
+      acorn: 8.11.3
+      acorn-walk: 8.3.2
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.2
+      make-error: 1.3.6
+      typescript: 5.4.5
+      v8-compile-cache-lib: 3.0.1
+      yn: 3.1.1
+    optional: true
 
   tsconfig-paths@3.14.2:
     dependencies:
@@ -12486,6 +12612,19 @@ snapshots:
     dependencies:
       registry-auth-token: 3.3.2
       registry-url: 3.1.0
+
+  uploadthing@6.10.4(next@14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))):
+    dependencies:
+      '@effect/schema': 0.66.16(effect@3.1.4)(fast-check@3.18.0)
+      '@uploadthing/mime-types': 0.2.10
+      '@uploadthing/shared': 6.7.4(@uploadthing/mime-types@0.2.10)
+      consola: 3.2.3
+      effect: 3.1.4
+      fast-check: 3.18.0
+      std-env: 3.7.0
+    optionalDependencies:
+      next: 14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      tailwindcss: 3.4.3(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
 
   uploadthing@6.10.4(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))):
     dependencies:
@@ -12634,7 +12773,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(@swc/core@1.3.101(@swc/helpers@0.5.5))(esbuild@0.19.11)(webpack@5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.5))(esbuild@0.19.11))
+      terser-webpack-plugin: 5.3.10(@swc/core@1.3.101(@swc/helpers@0.5.5))(esbuild@0.19.11)(webpack@5.91.0)
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:

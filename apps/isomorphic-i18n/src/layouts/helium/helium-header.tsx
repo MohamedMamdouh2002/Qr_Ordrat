@@ -24,7 +24,7 @@ function HeaderMenuRight({ lang }: { lang?: string }) {
       <LanguageSwitcher
         lang={lang!}
         className="relative h-[34px] w-[34px] overflow-hidden rounded-full shadow backdrop-blur-md before:absolute before:h-full before:w-full before:-rotate-45 before:rounded-full before:bg-gradient-to-l before:from-orange-dark/25 before:via-orange-dark/0 before:to-orange-dark/0 dark:bg-gray-100 md:h-9 md:w-9 3xl:h-10 3xl:w-10"
-        iconClassName="w-5 h-5 rounded-full"
+        // iconClassName="w-5 h-5 rounded-full"
       />
       <div className="grid grid-cols-4 items-center gap-2 text-gray-700 xs:gap-3 xl:gap-4">
         <MessagesDropdown>

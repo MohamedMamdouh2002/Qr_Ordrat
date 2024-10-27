@@ -9,7 +9,7 @@ import { shopId } from '@/config/shopId';
 import { API_BASE_URL } from '@/config/base-url';
 import { Food } from '@/types';
 
-function Content({ lang }: { lang?: string }) {
+const Content: React.FC =({lang}: { lang?: string }) => {
 	const [searchValue, setSearchValue] = useState('');
 	const [products, setProducts] = useState<Food[]>([]);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -117,6 +117,7 @@ function Content({ lang }: { lang?: string }) {
 							<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 sm:gap-8">
 								{products.map((product: any) => (
 									<Card
+										lang={lang!}
 										key={product.id}
 										id={product.id}
 										isTopSelling={product.isTopSelling}

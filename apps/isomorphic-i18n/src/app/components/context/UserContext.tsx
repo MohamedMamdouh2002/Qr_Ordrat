@@ -24,9 +24,9 @@ type UserContextType = {
   profileUserName: string;
   setProfileUserName: React.Dispatch<React.SetStateAction<string>>; 
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  GetHome: () => Promise<AllCategories | any>; 
-  GetProduct: (id: string) => Promise<FoodId | any>; 
-  GetRewiew:()=>  Promise<Review | any>;
+  GetHome: ({ lang }: { lang: string }) => Promise<AllCategories | any>; 
+  GetProduct:  ({ lang,id }: { lang: string ,id:string}) => Promise<FoodId | any>; 
+  GetRewiew: ({ lang }: { lang: string })=>  Promise<Review | any>;
   
   userData: boolean;
   setUserData: React.Dispatch<React.SetStateAction<boolean>>;
@@ -45,7 +45,7 @@ type UserContextType = {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const UserProvider: React.FC<{ children: ReactNode }> = ({ children  }) => {
   const [page, setPage] = useState<number>(0);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
@@ -59,12 +59,12 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [faqs, setFaqs] = useState<FaqType[]>([]);
   const [updatefaqs, setUpdateFaqs] = useState<boolean>(false);
     
-  async function GetHome() {
+  async function GetHome({lang}:{lang:string}) {
     try {
       const response = await fetch(`${API_BASE_URL}/api/Category/GetAll/${shopId}`, {
         method: 'GET',
         headers: {
-          'Accept-Language': 'en',
+          'Accept-Language': lang,
         },
       });
       if (!response.ok) {
@@ -83,11 +83,11 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }
 
-  async function GetProduct(id: string) {
+  async function GetProduct({lang ,id}:{lang:string ,id:string}) {
     try {
       const response = await fetch(`${API_BASE_URL}/api/Products/GetById/${shopId}/${id}`,{
         headers: {
-          'Accept-Language': `en`,
+          'Accept-Language': lang,
           },
       });
       if (!response.ok) {
@@ -100,12 +100,12 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return null; 
     }
   }
-  async function GetRewiew() {
+  async function GetRewiew({lang}:{lang:string}) {
     try {
       const response = await fetch(`${API_BASE_URL}/api/Review/GetShopReviews/${shopId}?pageNumber=1&pageSize=50`, {
         method: 'GET',
         headers: {
-          'Accept-Language': 'en',
+          'Accept-Language': lang,
         },
       });
       if (!response.ok) {

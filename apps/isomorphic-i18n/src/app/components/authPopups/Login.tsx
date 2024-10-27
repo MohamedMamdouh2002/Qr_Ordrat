@@ -20,7 +20,7 @@ import { useUserContext } from '../context/UserContext';
 import Phone from '../ui/inputs/phone';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-
+import { useTranslation } from '@/app/i18n/client';
 // import { SessionContext } from '@/utils/contexts';
 
 type Props = {
@@ -28,7 +28,9 @@ type Props = {
 	setCurrentModal: (val: 'login' | 'register' | 'resetPassword') => void;
 };
 
-function Login({ onLogin, setCurrentModal }: Props) {
+function Login({ onLogin, setCurrentModal }: Props,{ lang }: { lang?: string }) {
+	const { t } = useTranslation(lang!, 'nav');
+
 	const{accessToken ,setAccessToken ,token ,setToken}=useUserContext()
 	const [loading, setLoading] = useState(false);
 	// const { setSession } = useContext(SessionContext);
@@ -157,14 +159,14 @@ function Login({ onLogin, setCurrentModal }: Props) {
 						return (
 							<Form className="flex flex-col w-full">
 
-								{/* <label htmlFor="phone" className='font-bold mb-1'>Phone</label> */}
+								{/* <label htmlFor="phone" className='font-bold mb-1'>{t('phone')}</label> */}
 								<Field name="phoneNumber">
 									{({ field }: any) => (
 									<input
 										{...field}
 										type="tel"
 										autoComplete="tel"
-										placeholder="Enter Your Phone Number"
+										placeholder={t('phone-ph')}
 										id="phoneNumber"
 										className={`rounded-md focus:border-2 focus:border-mainColor focus:outline-none ${
 										errors.phoneNumber && touched.phoneNumber ? 'border-red-800' : 'border-gray-300'
@@ -196,7 +198,6 @@ function Login({ onLogin, setCurrentModal }: Props) {
 						);
 					}}
 				</Formik>
-			
 			</div>
 		</div>
 	);

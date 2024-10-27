@@ -13,7 +13,7 @@ import { shopId } from '@/config/shopId';
 import { useParams } from 'next/navigation';
 
 function FAQSectionContent({ lang }: { lang: string }) {
-  const { t } = useTranslation(lang!, "title");
+  const { t } = useTranslation(lang!, "nav");
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   // const { faqs } = useUserContext(); 
   const [faqData, setFaqData] = useState<FaqType[]>([]);
@@ -61,7 +61,7 @@ function FAQSectionContent({ lang }: { lang: string }) {
     <section className="bg-white dark:bg-mainBg text-[#020710] min-h-screen font-montserrat">
       <div className={style.faqContainer}>
         <h3 className={style.faqTitle} style={{ textAlign: 'center' }}>
-          Frequently Asked Questions <span className='text-mainColor' style={{ fontWeight: 'bold' }}>FAQ</span>
+          {t('frequently-asked-questions')} <span className='text-mainColor' style={{ fontWeight: 'bold' }}>FAQ</span>
         </h3>
         <h3 className={style.faqTitle} style={{ textAlign: 'center' }}>
           {selectedFaqCategory?.name}

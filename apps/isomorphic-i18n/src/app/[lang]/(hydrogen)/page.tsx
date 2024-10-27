@@ -6,6 +6,7 @@ import RestaurantTitle from "@/app/components/restaurantTitle/RestaurantTitle";
 // import SyrianFood from "@/app/components/syrianFood/SyrianFood";
 import { metaObject } from "@/config/site.config";
 import Header from "@/app/components/header/Header";
+import ScrollToTop from "@/app/components/ui/ScrollToTop";
 
 
 export const metadata = {
@@ -16,16 +17,16 @@ export default function FileDashboardPage({
   params: { lang },
 }: {
   params: {
-    lang: string;
+    lang?: string;
   };
 }) {
   return<>
-
+    <ScrollToTop/>
     <RestaurantTitle/>
-    <NavMobile/>
-    <Header/>
+    <NavMobile lang={lang!}/>
+    <Header lang={lang!}/>
     <MainSlider/>
-    <Grills/>
+    <Grills lang={lang!}/>
     {/* <PopularMeals/> */}
     {/* <SyrianFood/> */}
     {/* <Offers/> */}

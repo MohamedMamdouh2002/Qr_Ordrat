@@ -260,7 +260,7 @@ export default function HeaderMenuLeft({ lang }: { lang?: string }) {
       >
         <NavMenu.Item >
           <NavMenu.Trigger  className={`flex items-center text-sm  gap-1 pt-2 ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`}>
-            <Link  lang={lang} href={`/${lang!}/subscriptions`}>
+            <Link  lang={lang} href={`/${lang!}/`}>
             <MenuTriggerButton  name="Home" lang={lang}/>
             </Link>
           </NavMenu.Trigger>
@@ -293,7 +293,7 @@ export default function HeaderMenuLeft({ lang }: { lang?: string }) {
         <NavMenu.Item>
         <NavMenu.Trigger  className={`flex items-center text-sm  gap-1 pt-2 ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`}>
               <Link lang={lang} href={`/${lang!}/faq`}>
-              <MenuTriggerButton name="FAQ" lang={lang!} />
+              <MenuTriggerButton name="FAQ"  />
             </Link>
           </NavMenu.Trigger>
           {/* <NavMenu.Content>
