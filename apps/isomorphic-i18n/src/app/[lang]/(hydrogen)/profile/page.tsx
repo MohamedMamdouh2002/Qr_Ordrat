@@ -6,19 +6,10 @@ import UpdateProfileForm from '@/app/components/profile/UpdateProfileForm';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import React from 'react';
 import { ProfileHeader } from '@/app/shared/account-settings/profile-settings';
-import { useTranslation } from '@/app/i18n/client';
 
 
 
 
-export default function Profile({
-	params: { lang },
-}: {
-	params: {
-	  lang: string;
-	};
-}) {
-	// const { t } = useTranslation(lang!, 'order');
 
 const translations = {
   accountDetails: { en: 'Account Details', ar: 'معلوماتي' },

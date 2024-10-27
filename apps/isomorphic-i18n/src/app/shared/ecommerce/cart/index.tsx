@@ -69,7 +69,7 @@ function CheckCoupon({lang}:{lang?:string}) {
               className={`ms-3 ${isCouponEntered ? 'bg-mainColor hover:bg-mainColorHover dark:hover:bg-mainColor/90' : 'bg-muted/70'}`}
               disabled={!isCouponEntered}
             >
-              {copone ? 'Edit' : {t('Apply')}}
+              {copone ? 'Edit' : `${t('Apply')}`}
               {/* Apply */}
             </Button>
           </div>

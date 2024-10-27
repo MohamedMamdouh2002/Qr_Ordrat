@@ -70,6 +70,7 @@ function MediumCard(data:Props) {
   )}
   {isModalOpen && (
     <Modal
+      lang={data.lang}
       modalId={data.id}
       setIsModalOpen={handleCloseModal}
       quantity={quantity}
@@ -84,6 +85,7 @@ function MediumCard(data:Props) {
 
             
   </>
+  )
 }
 
 export default MediumCard;
