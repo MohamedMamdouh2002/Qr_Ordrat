@@ -61,6 +61,7 @@ export default function OrderSummery({
             clearItemFromCart={clearItemFromCart}
             items={items}
             className="mb-5 border-b border-muted pb-5"
+            lang={lang}
           />
           <div className="mb-4 flex items-center justify-between last:mb-0">
             Subtotal
@@ -71,13 +72,13 @@ export default function OrderSummery({
           <div className="mb-4 flex items-center justify-between last:mb-0">
             Tax
             <Text as="span" className="font-medium text-gray-900">
-              {toCurrency(0)}
+              {toCurrency(0, lang)}
             </Text>
           </div>
           <div className="mb-4 flex items-center justify-between last:mb-0">
             Shipping
             <Text as="span" className="font-medium text-gray-900">
-              {toCurrency(0)}
+              {toCurrency(0, lang)}
             </Text>
           </div>
           <div className="flex items-center justify-between border-t border-muted py-4 text-base font-bold text-gray-1000">

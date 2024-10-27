@@ -241,7 +241,11 @@ export function ProfileHeader({
             as="h2"
             className="mb-2 inline-flex items-center gap-3 text-xl font-bold text-gray-900"
           >
-            {profileUserName}
+            {profileUserName !=' '?
+              profileUserName
+              :
+              title
+            }
             <PiSealCheckFill className="h-5 w-5 text-mainColor md:h-6 md:w-6" />
           </Title>
           {description ? (

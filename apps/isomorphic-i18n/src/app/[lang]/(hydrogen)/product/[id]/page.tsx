@@ -100,5 +100,3 @@ function AllProduct({
     </>
   );
 }
-
-export default AllProduct;

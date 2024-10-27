@@ -27,10 +27,12 @@
     "Street":"شارع:",
     "Subtotal":"المبلغ الجزئي",
     "Shipping-Fees":"قيمة التوصيل",
-    "Vat":"شريبه الثيمه المضافة",
+    "Vat":"ضريبه القيمه المضافة",
     "Total":"الاجمالي",
     "Apply":"تطبيق",
+    "Edit":"تعديل",
     "promo-code":"هل تحتاج الي كود خصم ؟",
+    "promo-placeholder-code":"أدخل كود خصم",
     "Proceed-To-Checkout":"اتمام الدفع",
     "Cart-Totals":"اجمالي السله",
     "product":"المنتج",
@@ -41,8 +43,9 @@
     "ordered-At":"تاريخ الطلب",
     "Customer-Details":"معلومات العميل",
     "Shipping-Address":"عنوان التوصيل",
-    "status":"حاله الطلب"
+    "status":"حاله الطلب",
 
+    "currencyCode":"ج.م"
 
 
 

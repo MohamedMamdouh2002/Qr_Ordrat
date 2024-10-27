@@ -134,7 +134,7 @@ export default function OrderViewProducts({lang}:{lang:string}) {
       key: 'itemPrice',
       width: 200,
       render: (itemPrice: number) => (
-        <Text className="text-end text-sm">{toCurrency(itemPrice)}</Text>
+        <Text className="text-end text-sm">{toCurrency(itemPrice, lang)}</Text>
       ),
     },
     {
@@ -143,7 +143,7 @@ export default function OrderViewProducts({lang}:{lang:string}) {
       key: 'shippingFees',
       width: 200,
       render: (shippingFees: number) => (
-        <Text className="text-end text-sm">{toCurrency(shippingFees)}</Text>
+        <Text className="text-end text-sm">{toCurrency(shippingFees, lang)}</Text>
       ),
     },
     {
@@ -161,7 +161,7 @@ export default function OrderViewProducts({lang}:{lang:string}) {
       key: 'totalChoicePrices',
       width: 200,
       render: (totalChoicePrices: number) => (
-        <Text className="text-end text-sm">{toCurrency(totalChoicePrices)}</Text>
+        <Text className="text-end text-sm">{toCurrency(totalChoicePrices, lang)}</Text>
       ),
     },
     {
@@ -170,7 +170,7 @@ export default function OrderViewProducts({lang}:{lang:string}) {
       key: 'totalPrice',
       width: 200,
       render: (totalPrice: number) => (
-        <Text className="text-end text-sm">{toCurrency(totalPrice)}</Text>
+        <Text className="text-end text-sm">{toCurrency(totalPrice, lang)}</Text>
       ),
     },
   ];

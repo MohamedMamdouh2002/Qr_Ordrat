@@ -86,9 +86,7 @@ export default function Header({ lang }: { lang?: string }) {
   const [isStickyVisible, setStickyVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false); // حالة التحكم في ظهور الـ SideNav
   const pathname = usePathname(); // استخدام usePathname للحصول على المسار الحالي
-
   const { t, i18n } = useTranslation(lang!, 'nav');
-
   useEffect(() => {
     i18n.changeLanguage(lang);
   }, [lang, i18n]);
@@ -152,7 +150,7 @@ export default function Header({ lang }: { lang?: string }) {
           <Link href={`/${lang!}/search`}>
                   <Input
                     type="search"
-                    placeholder="Are you looking for something?"
+                    placeholder={t('placeholder')}
                     value=""
                     
                     inputClassName={` ${isStickyVisible ? 

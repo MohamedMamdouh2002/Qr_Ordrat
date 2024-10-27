@@ -14,6 +14,7 @@ import { ProfileHeader } from '@/app/shared/account-settings/profile-settings';
 const translations = {
   accountDetails: { en: 'Account Details', ar: 'معلوماتي' },
   myAddresses: { en: 'My addresses', ar: 'عناويني' },
+  title: { en: 'Dear User', ar: 'عميلنا العزيز' },
 };
 
 export default function Profile({
@@ -28,7 +29,7 @@ export default function Profile({
 			<SessionGuard>
 				<div className='w-full mx-auto'>
 					<ProfileHeader
-						title="Olivia Rhye"
+						title={translations.title[lang=='en'?'en':'ar']}
 						description="01227375904"
 					/>
 				</div>

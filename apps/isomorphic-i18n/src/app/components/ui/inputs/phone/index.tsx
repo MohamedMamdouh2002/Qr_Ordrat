@@ -61,7 +61,7 @@ const MyPhoneInput = ({
 			value={value}
 			numberInputProps={{
 				className:
-					'w-full bg-transparent border-none rounded-none p-0 text-base leading-normal shadow-none focus-within:outline-none focus:ring-0 focus:border-none placeholder:text-black/50',
+					'w-full bg-transparent border-none rounded-none p-0 text-base leading-normal shadow-none focus-within:outline-none focus:ring-0 focus:border-none placeholder:text-black/50 rtl:text-end',
 				placeholder: placeholder,
 			}}
 			onChange={disabled ? () => {} : handleOnChange} // Provide a no-op function if disabled

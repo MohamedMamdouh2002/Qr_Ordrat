@@ -5,12 +5,6 @@ export const metadata = {
   ...metaObject('search'),
 };
 
-export default function Card({
-  params: { lang },
-}: {
-  params: {
-    lang?: string;
-  };
-}) {
-  return <Content/>;
+export default function Search({params: { lang },}: {params: {lang: string;};}) {
+  return <Content lang={lang}/>;
 }
