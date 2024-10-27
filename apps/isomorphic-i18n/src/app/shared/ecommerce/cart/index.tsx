@@ -117,7 +117,7 @@ function CartCalculations({fees, Tax ,lang}:{fees:number; Tax:number ,lang?:stri
           {t('Total')}
           <span className="font-medium text-gray-1000">{toCurrency(totalWithFees, lang)}</span>
         </div>
-        <Link href={`/en/checkout`}>
+        <Link href={`/${lang}/checkout`}>
           <Button
             size="xl"
             rounded="pill"

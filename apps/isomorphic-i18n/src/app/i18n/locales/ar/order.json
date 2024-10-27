@@ -44,8 +44,10 @@
     "Customer-Details":"معلومات العميل",
     "Shipping-Address":"عنوان التوصيل",
     "status":"حاله الطلب",
-
-    "currencyCode":"ج.م"
+    "currencyCode":"ج.م",
+    "Update-Order":"تعديل الطلب",
+    "Place-Order":"اتمام الدفع",
+    "Your-Order":"طلبك"
 
 
 

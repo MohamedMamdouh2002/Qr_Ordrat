@@ -8,6 +8,7 @@ import photo from '@public/assets/شاورما-عربي-لحمة-768x768.png'
 import hamburger from '@public/assets/hamburger.png'
 import potato from '@public/assets/شاورما-عراقي-لحمة-مع-بطاطا.png'
 import Modal from '../modal/Modal';
+import { toCurrency } from '@utils/to-currency';
 type Props = Food & {
     lang:string;
     setCurrentItem: Dispatch<
@@ -73,11 +74,13 @@ type Props = Food & {
                 </Text>
                 <div className="mt-2 flex  items-center font-semibold text-mainColor">
                 <div className='text-[10px] sm:pt-0 pt-0.5 font-normal sm:text-[13px]'>
-                    <span>EGP {data?.price}</span>
+                    <span>
+                      {toCurrency(data.price, data.lang)}
+                    </span>
                 </div>
                 <div>
                     <del className="ps-1.5  text-[10px] sm:text-[13px] font-normal text-gray-500">
-                    EGP {data?.oldPrice}
+                      {toCurrency(data.oldPrice, data.lang)}
                     </del>
                 </div>
                 </div>

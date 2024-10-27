@@ -6,6 +6,7 @@
   import { Food, Product } from '@/types';
   import Badge from '../Badge';
   import { Star, Flame } from 'lucide-react';
+import { toCurrency } from '@utils/to-currency';
 
   type Props = Food & {
     lang:string;
@@ -64,10 +65,11 @@
               {data.description}
             </Text>
             <div className="mt-2 flex items-center font-semibold text-mainColor">
-              EGP{data.price}
+              {toCurrency(data.price, data.lang)}
+
               {data.oldPrice && (
                 <del className="ps-1.5 text-[13px] font-normal text-gray-500">
-                EGP {data.oldPrice}
+                  {toCurrency(data.oldPrice, data.lang)}
                 </del>
               )}
             </div>
