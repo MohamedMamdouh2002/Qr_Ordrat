@@ -11,6 +11,7 @@ import { useUserContext } from '../context/UserContext';
 import { fetchData } from '@/utils/fetch/fetch';
 import { shopId } from '@/config/shopId';
 import { useParams } from 'next/navigation';
+import { Loader } from 'lucide-react';
 
 function FAQSectionContent({ lang }: { lang: string }) {
   const { t } = useTranslation(lang!, "nav");
@@ -53,7 +54,9 @@ function FAQSectionContent({ lang }: { lang: string }) {
   const categoryIndex = params?.id ? parseInt(params.id as string, 10) : null;
 
   if (categoryIndex === null || isNaN(categoryIndex) || !faqData[categoryIndex]) {
-    return <div>No category found.</div>;
+    return <div className="flex justify-center w-full my-24 lg:mt-10">
+      <Loader className="animate-spin text-mainColor" width={40} height={40} />
+    </div>;
   }
 
   const selectedFaqCategory = faqData[categoryIndex];

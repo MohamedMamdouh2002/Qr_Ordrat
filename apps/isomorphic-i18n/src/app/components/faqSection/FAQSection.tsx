@@ -21,6 +21,7 @@ import { useEffect, useState } from 'react';
 import { useUserContext } from '../context/UserContext';
 import { shopId } from '@/config/shopId';
 import { useTranslation } from '@/app/i18n/client';
+import { Loader } from 'lucide-react';
 
 function FAQSection({ lang }: { lang: string }) {
   // const faq = [
@@ -138,6 +139,7 @@ function FAQSection({ lang }: { lang: string }) {
   const [faqData, setFaqData] = useState<FaqType[]>([]);
   const { setFaqs,updatefaqs,setUpdateFaqs } = useUserContext(); 
   const { t } = useTranslation(lang!, 'nav');
+  const [loading, setLoading] = useState(false); 
 
   // Define images for different categories
   const images = [
@@ -151,6 +153,7 @@ function FAQSection({ lang }: { lang: string }) {
   ];
   
   async function getFAQs() {
+    setLoading(true);
     const { data, message } = await fetchData<FaqType[]>({
       link: `api/FAQCategory/GetShopFAQs/${shopId}`,
       lang: lang
@@ -162,9 +165,10 @@ function FAQSection({ lang }: { lang: string }) {
     if (data) {
       setFaqData(data);
       console.log("data: ",data);
-      
+      setLoading(false);
     } else {
       setFaqData([]);
+      setLoading(false);
     }
   }
   useEffect(() => {
@@ -183,63 +187,69 @@ function FAQSection({ lang }: { lang: string }) {
         <h3 className={`${style.faqTitle} pb-3`} style={{ textAlign: 'center' }}>
           {t('frequently-asked-questions')} <span className='text-mainColor' style={{ fontWeight: 'bold' }}>FAQ</span>
         </h3>
-        <div className={style.faqCardsContainer}>
-          {faqData.map((item, index) => (
-            item.faQs.length > 0 && (
-              <div key={index} className={`${style.faqCardWrapperContainer} group`}>
-                <div className={style.faqCardWrapper}>
-                  <div className={style.faqCardHead} style={{ alignItems: 'center' }}>
-                    <div className={style.iconWrapper} style={{ width: '50px', marginInlineEnd: '5px' }}>
-                      <Image
-                        src={item.imageUrl || images[index]}
-                        width="50"
-                        height="50"
-                        alt={item.name}
-                      />
+        {loading ?
+          <div className="flex justify-center w-full">
+            <Loader className="animate-spin text-mainColor" />
+          </div>
+          :
+          <div className={style.faqCardsContainer}>
+            {faqData.map((item, index) => (
+              item.faQs.length > 0 && (
+                <div key={index} className={`${style.faqCardWrapperContainer} group`}>
+                  <div className={style.faqCardWrapper}>
+                    <div className={style.faqCardHead} style={{ alignItems: 'center' }}>
+                      <div className={style.iconWrapper} style={{ width: '50px', marginInlineEnd: '5px' }}>
+                        <Image
+                          src={item.imageUrl || images[index]}
+                          width="50"
+                          height="50"
+                          alt={item.name}
+                        />
+                      </div>
+                      <h4 className={style.faqCardTitle}>{item.name}</h4>
                     </div>
-                    <h4 className={style.faqCardTitle}>{item.name}</h4>
+                    <div className={style.faqCardBody}>
+                      {item.faQs.slice(0, 3).map((faq, faqIndex) => (
+                        <p key={faqIndex} className={style.faqCardDescription}>{faq.question}</p>
+                      ))}
+                    </div>
                   </div>
-                  <div className={style.faqCardBody}>
-                    {item.faQs.slice(0, 3).map((faq, faqIndex) => (
-                      <p key={faqIndex} className={style.faqCardDescription}>{faq.question}</p>
-                    ))}
-                  </div>
+                  <Link href={routes.faq.details(`${index}`)} onClick={() => setFaqs([item])}>
+                    <button className={style.faqCardBtn}>
+                      <p className='text-[#828e99] group-hover:text-mainColor'>{t('view-all')}</p>
+                      <Image className={style.arrow} src={arrow} alt="arrow icon" />
+                      <Image className={style.arrowHover} src={arrowHover} alt="hover arrow icon" />
+                    </button>
+                  </Link>
                 </div>
-                <Link href={routes.faq.details(`${index}`)} onClick={() => setFaqs([item])}>
-                  <button className={style.faqCardBtn}>
-                    <p className='text-[#828e99] group-hover:text-mainColor'>{t('view-all')}</p>
-                    <Image className={style.arrow} src={arrow} alt="arrow icon" />
-                    <Image className={style.arrowHover} src={arrowHover} alt="hover arrow icon" />
+              )
+            ))}
+            {/* Repeat other FAQ sections here similarly */}
+            <div className={`${style.FindMore} bg-mainColor`}>
+              <div className={style.FindMoreTopContainer}>
+                <div className={style.FindMoreTop}>
+                  <Image src={Findmore} alt="Find more icon" />
+                  <h2>{t('find-more')}</h2>
+                </div>
+                <div className={style.FindMoreCenter}>
+                  <p>{t('browse')}</p>
+                </div>
+              </div>
+              <div className={style.FindMoreFooter}>
+                <Link href="/">
+                  <button className={style.findmoreArrowBtn}>
+                    <p>{t('view-all-faq')}</p>
+                    <Image
+                      className={style.FindmoreArrow}
+                      src={FindmoreArrow}
+                      alt="arrow icon"
+                    />
                   </button>
                 </Link>
               </div>
-            )
-          ))}
-          {/* Repeat other FAQ sections here similarly */}
-          <div className={`${style.FindMore} bg-mainColor`}>
-            <div className={style.FindMoreTopContainer}>
-              <div className={style.FindMoreTop}>
-                <Image src={Findmore} alt="Find more icon" />
-                <h2>{t('find-more')}</h2>
-              </div>
-              <div className={style.FindMoreCenter}>
-                <p>{t('browse')}</p>
-              </div>
-            </div>
-            <div className={style.FindMoreFooter}>
-              <Link href="/">
-                <button className={style.findmoreArrowBtn}>
-                  <p>{t('view-all-faq')}</p>
-                  <Image
-                    className={style.FindmoreArrow}
-                    src={FindmoreArrow}
-                    alt="arrow icon"
-                  />
-                </button>
-              </Link>
             </div>
           </div>
-        </div>
+        }
       </div>
     </div>
   </>

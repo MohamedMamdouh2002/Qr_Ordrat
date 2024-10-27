@@ -31,6 +31,7 @@ import  {SideNav}  from "@/app/components/sideNav/SideNav";
 import path from "path";
 import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
+import { useTranslation } from '@/app/i18n/client';
 
 function HeaderMenuRight() {
   return (
@@ -85,7 +86,7 @@ export default function Header({ lang }: { lang?: string }) {
   const [isStickyVisible, setStickyVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false); // حالة التحكم في ظهور الـ SideNav
   const pathname = usePathname(); // استخدام usePathname للحصول على المسار الحالي
-
+  const { t } = useTranslation(lang!, 'search');
 
 
   useEffect(() => {
@@ -147,7 +148,7 @@ export default function Header({ lang }: { lang?: string }) {
           <Link href={`/${lang!}/search`}>
                   <Input
                     type="search"
-                    placeholder="Are you looking for something?"
+                    placeholder={t('placeholder')}
                     value=""
                     
                     inputClassName={` ${isStickyVisible ? 

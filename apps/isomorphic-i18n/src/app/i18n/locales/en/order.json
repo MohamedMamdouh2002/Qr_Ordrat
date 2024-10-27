@@ -13,9 +13,11 @@
     "quantity":"Quantity:",
     "items":"Items:",
     "Apply":"Apply",
+    "Edit":"Edit",
     "Proceed-To-Checkout":"Proceed To Checkout",
     "Cart-Totals":"Cart Totals:",
     "promo-code":"Do you have a promo code?",
+    "promo-placeholder-code":"Enter coupon code",
     "item-price":"Item Price:",
     "cash-on-delivery":"Cash On Delivery",
     "cancel":"Order cancel",
@@ -37,7 +39,9 @@
     "ordered-At":"ordered At", 
     "Customer-Details":"Customer Details",
     "Shipping-Address":"Shipping Address",
-    "status":"Order Status"
+    "status":"Order Status",
+
+    "currencyCode":"EGP"
 
 
 }

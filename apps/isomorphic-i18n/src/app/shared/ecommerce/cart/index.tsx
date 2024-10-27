@@ -55,7 +55,7 @@ function CheckCoupon({lang}:{lang?:string}) {
           <div className="relative flex items-end">
             <Input
               type="text"
-              placeholder="Enter coupon code"
+              placeholder={t('promo-placeholder-code')}
 
               inputClassName="text-sm [&.is-hover]:border-mainColor [&.is-focus]:border-mainColor [&.is-focus]:ring-mainColor"
               className="w-full"
@@ -69,7 +69,7 @@ function CheckCoupon({lang}:{lang?:string}) {
               className={`ms-3 ${isCouponEntered ? 'bg-mainColor hover:bg-mainColorHover dark:hover:bg-mainColor/90' : 'bg-muted/70'}`}
               disabled={!isCouponEntered}
             >
-              {copone ? 'Edit' : `${t('Apply')}`}
+              {copone ? `${t('Edit')}` : `${t('Apply')}`}
               {/* Apply */}
             </Button>
           </div>
@@ -90,9 +90,9 @@ function CartCalculations({fees, Tax ,lang}:{fees:number; Tax:number ,lang?:stri
   const router = useRouter();
   const { total } = useCart();
   const totalWithFees = total + Tax + fees;
-  const { price: totalPrice } = usePrice({
-    amount: totalWithFees,
-  });
+  // const { price: totalPrice } = usePrice({
+  //   amount: totalWithFees,
+  // });
 
   return (
     <div>
@@ -102,20 +102,20 @@ function CartCalculations({fees, Tax ,lang}:{fees:number; Tax:number ,lang?:stri
       <div className="mt-6 grid grid-cols-1 gap-4 @md:gap-6">
         <div className="flex items-center justify-between">
           {t('Subtotal')}
-          <span className="font-medium text-gray-1000">{toCurrency(total)}</span>
+          <span className="font-medium text-gray-1000">{toCurrency(total, lang)}</span>
         </div>
         <div className="flex items-center justify-between">
           {t('Vat')}
-          <span className="font-medium text-gray-1000">{toCurrency(Tax)}</span>
+          <span className="font-medium text-gray-1000">{toCurrency(Tax, lang)}</span>
         </div>
         <div className="flex items-center justify-between">
           {t('Shipping-Fees')}
-          <span className="font-medium text-gray-1000">{toCurrency(fees)}</span>
+          <span className="font-medium text-gray-1000">{toCurrency(fees, lang)}</span>
         </div>
         <CheckCoupon lang={lang} />
         <div className="mt-3 flex items-center justify-between border-t border-muted py-4 font-semibold text-gray-1000">
           {t('Total')}
-          <span className="font-medium text-gray-1000">{totalPrice}</span>
+          <span className="font-medium text-gray-1000">{toCurrency(totalWithFees, lang)}</span>
         </div>
         <Link href={`/en/checkout`}>
           <Button
@@ -258,7 +258,7 @@ export default function CartPageWrapper({lang}:{lang?:string}) {
       <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
         <div className="@5xl:col-span-8 mt-12 @5xl:mt-0 @6xl:col-span-7">
           {items.length ? (
-            items.map((item) => <CartProduct key={item.id} product={item} />)
+            items.map((item) => <CartProduct key={item.id} product={item} lang={lang} />)
           ) : (
             <Empty
               image={<EmptyProductBoxIcon />}

@@ -10,7 +10,7 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useState, useRef } from 'react';
 import { useMediaQuery } from 'react-responsive'; 
 
-const AllProduct: React.FC =({lang}: { lang?: string }) => {
+export default function AllProduct({params: { lang },}: {params: {lang: string;};}){
   const [products, setProducts] = useState<Food[]>([]);
   const [loading, setLoading] = useState(false); 
   const [page, setPage] = useState(1);
@@ -27,7 +27,8 @@ const AllProduct: React.FC =({lang}: { lang?: string }) => {
       try {
         const response = await fetch(`${API_BASE_URL}/api/Products/GetByCategoryId/${shopId}/${params.id}?PageNumber=${page}&PageSize=4`, {
           headers: {
-            accept: '*/*',
+            // accept: '*/*',
+            'Accept-Language': lang!,
           },
         });
 
@@ -94,5 +95,3 @@ const AllProduct: React.FC =({lang}: { lang?: string }) => {
     </>
   );
 }
-
-export default AllProduct;

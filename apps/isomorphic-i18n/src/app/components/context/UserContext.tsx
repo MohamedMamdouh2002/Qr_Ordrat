@@ -88,7 +88,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children  }) =
       const response = await fetch(`${API_BASE_URL}/api/Products/GetById/${shopId}/${id}`,{
         headers: {
           'Accept-Language': lang,
-          },
+        },
       });
       if (!response.ok) {
         throw new Error('Failed to fetch data');

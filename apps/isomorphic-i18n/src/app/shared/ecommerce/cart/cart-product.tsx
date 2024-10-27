@@ -9,7 +9,7 @@ import RemoveItem from '@/app/shared/ecommerce/cart/remove-item';
 import QuantityInput from '@/app/shared/ecommerce/cart/quantity-input';
 import { routes } from '@/config/routes';
 
-export default function CartProduct({ product }: { product: CartItem }) {
+export default function CartProduct({ product, lang }: { product: CartItem; lang?:string; }) {
   return (
     <div className="grid grid-cols-12 items-start gap-4 border-b border-muted py-6 first:pt-0 sm:flex sm:gap-6 2xl:py-8">
       <figure className="col-span-4 sm:max-w-[180px]">
@@ -30,7 +30,7 @@ export default function CartProduct({ product }: { product: CartItem }) {
             {product.name}
           </Title>
           <span className="inline-block text-sm font-semibold text-gray-1000 sm:font-medium md:text-base 3xl:text-lg">
-            {toCurrency(product.price)}
+            {toCurrency(product.price, lang)}
           </span>
         </div>
         <Text className="mt-1 w-full max-w-xs truncate leading-6 2xl:max-w-lg">
@@ -41,7 +41,7 @@ export default function CartProduct({ product }: { product: CartItem }) {
           {product.oldPrice?
             <li className={`flex items-center gap-3 text-gray-500`}>
               <span>Old Price :</span>
-              <span className="text-gray-1000">{toCurrency(product.oldPrice)}</span>
+              <span className="text-gray-1000">{toCurrency(product.oldPrice, lang)}</span>
             </li>
             :''
           }

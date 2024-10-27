@@ -8,8 +8,10 @@ import Card from '../ui/card/Card';
 import { shopId } from '@/config/shopId';
 import { API_BASE_URL } from '@/config/base-url';
 import { Food } from '@/types';
+import { useTranslation } from '@/app/i18n/client';
+import { Loader } from 'lucide-react';
 
-const Content: React.FC =({lang}: { lang?: string }) => {
+export default function Content({lang}: { lang?: string }) {
 	const [searchValue, setSearchValue] = useState('');
 	const [products, setProducts] = useState<Food[]>([]);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -20,6 +22,7 @@ const Content: React.FC =({lang}: { lang?: string }) => {
 	const [isSearching, setIsSearching] = useState(false); // New state for searching
 	const [hasMore, setHasMore] = useState(true);
 	const observerRef = useRef<HTMLDivElement | null>(null);
+	const { t } = useTranslation(lang!, 'search');
 
 	const fetchData = async (searchTerm: string, page: number) => {
 		if (isLoading || !hasMore) return;
@@ -101,16 +104,16 @@ const Content: React.FC =({lang}: { lang?: string }) => {
 						className='!relative object-cover' style={{position:"absolute",height:"100%",width:"100%",left:0,top:0,right:0,bottom:0,objectFit:"cover", color:"transparent"}} />
 					</div>
 					<div className="absolute bg-white rounded-lg bottom-0 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 translate-y-1/2">
-						<SearchInput isTop={true} value={searchValue} handleInputChange={handleInputChange} />
+						<SearchInput lang={lang} isTop={true} value={searchValue} handleInputChange={handleInputChange} />
 					</div>
 				</div>
 				<div className="w-[90%] mx-auto flex flex-col gap-1">
 					<h3 className="font-semibold text-lg md:text-2xl py-3 sm:py-4 truncate max-w-[30ch]">
-						{`Results ${searchValue ? `for ${searchValue}` : ''}`}
+						{`${t('result')} ${searchValue ? `${t('for')} ${searchValue}` : ''}`}
 					</h3>
 					{!isSearching && products.length === 0 ? (
 						<div className="flex justify-center">
-							<NotFound name="items" />
+							<NotFound name={t('not-found')} />
 						</div>
 					) : (
 						<>
@@ -136,7 +139,9 @@ const Content: React.FC =({lang}: { lang?: string }) => {
 								))}
 							</div>
 							<div ref={observerRef} className="loading-spinner" />
-							{isLoading && <p>Loading more products...</p>}
+							{isLoading && <div className="flex justify-center w-full my-24 lg:mt-10">
+								<Loader className="animate-spin text-mainColor" width={40} height={40} />
+							</div>}
 						</>
 					)}
 				</div>
@@ -144,5 +149,3 @@ const Content: React.FC =({lang}: { lang?: string }) => {
 		</>
 	);
 }
-
-export default Content;
