@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Flame, Star, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ReactDOM from 'react-dom';
-import SpecialNotes from '@/app/components/ui/SpecialNotes';
+// import SpecialNotes from '@/app/components/ui/SpecialNotes';
 import QuantityHandler from '../item/QuantityHandler';
 import ItemPrice from '../ItemPrice';
 import Badge from '../Badge';
@@ -28,6 +28,7 @@ import { toCurrency } from '@utils/to-currency';
 import { PhoneNumber } from '@ui/phone-input';
 import RoleSelect from '../inputs/selectInput/SelectInput';
 import { Data } from '@react-google-maps/api';
+import SpecialNotes from '../item/SpecialNotes';
 // type Props = {
 
 interface Variation {
@@ -291,7 +292,7 @@ function Modal({
                                             <>
                                                 <div className="flex flex-col gap-3 pb-4">
                                                 {prodId.variations.map((variation: Variation) => {
-                                                    if (variation.buttonType === 0 && (variation.isActive)) {
+                                                    if (variation.buttonType === 0 && (!variation.isActive)) {
                                                     const options: Option[] = variation.choices.map((choice: Choice) => ({
                                                         label: (
                                                             <div className="flex flex-col justify-center items-center">
@@ -590,7 +591,7 @@ function Modal({
                             <>
                                 <div className="flex flex-col gap-3">
                                 {prodId.variations.map((variation: Variation) => {
-                                    if (variation.buttonType === 0 && (variation.isActive)) {
+                                    if (variation.buttonType === 0 && (!variation.isActive)) {
                                     const options: Option[] = variation.choices.map((choice: Choice) => ({
                                         label: (
                                             <div className="flex flex-col justify-center items-center">
