@@ -82,8 +82,8 @@ export default function OrderProducts({
                     {item.name}
                   </Link>
                 </Title>
-                <div className="text-gray-500">
-                  {item.price} x {item.quantity}
+                <div className="text-gray-500 flex gap-1">
+                  <div>{item.price}</div> <div>x</div> <div>{item.quantity}</div>
                 </div>
                 {showControls && (
                   <QuantityControl

@@ -32,9 +32,9 @@ function MediumCard(data:Props) {
   return (
     <>
         <div onClick={handleOpenModal} className="flex flex-wrap sm:border sm:border-dashed sm:border-mainColor pb-2 sm:pb-4 sm:p-4 rounded-lg justify-between mt-5 gap-5 hover:cursor-pointer">
-          <div className="flex sm:flex-row w-full sm:gap-0 gap-3 h-[135px] rounded-lg">
-            <div className="relative w-full sm:w-8/12">
-              <div className="sm:pe-2">
+          <div className="flex sm:flex-row w-full sm:gap-0 gap-3 h-[135px] 4xl:h-[200px] rounded-lg">
+            <div className="relative w-full sm:w-8/12 4xl:w-9/12">
+              <div className="sm:pe-2 4xl:pe-0">
                 {data?.isTopRated || data.isTopSelling ? (
                   <span className="text-[8px] font-bold text-center rounded-lg bg-[#FECACA] text-[#EF4444]">
                     {data.isTopRated ? (
@@ -60,7 +60,7 @@ function MediumCard(data:Props) {
                 )}
               </div>
             </div>
-            <div className="relative w-[160px] h-[130px] sm:w-4/12 sm:h-full rounded-lg sm:rounded-s-lg">
+            <div className="relative w-[160px] h-[130px] sm:w-4/12 4xl:w-3/12  sm:h-full rounded-lg sm:rounded-s-lg">
 
             <Image
               src={data.imageUrl}

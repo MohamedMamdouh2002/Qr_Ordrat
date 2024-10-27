@@ -14,7 +14,7 @@ function Review({
   };
 }) {
   return <>
-  <div className="w-[90%] mx-auto mt-20">
+  <div className="w-[90%] mx-auto ">
     <Reviews lang={lang}/>   
   </div>
   </>
