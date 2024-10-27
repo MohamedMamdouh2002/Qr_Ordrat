@@ -7,7 +7,6 @@ import { useTranslation } from "@/app/i18n/client";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import { useUserContext } from '../context/UserContext';
-
 import { fetchData } from '@/utils/fetch/fetch';
 import { shopId } from '@/config/shopId';
 import { useParams } from 'next/navigation';

@@ -30,7 +30,6 @@ type Props = Food & {
       setIsModalOpen(false);
     };
   return<>
-    {!isModalOpen &&
     <>
         <div
         onClick={handleOpenModal} 
@@ -85,7 +84,7 @@ type Props = Food & {
             </div>
         </div>
     </>
-    }
+   
     {isModalOpen && (
         <Modal
             lang={data.lang}
@@ -93,9 +92,9 @@ type Props = Food & {
             setIsModalOpen={handleCloseModal}
             quantity={quantity}
             setQuantity={setQuantity}
-            setShowItem={function (val: boolean): void {
-            throw new Error('Function not implemented.');
-            } }
+            // setShowItem={function (val: boolean): void {
+            // throw new Error('Function not implemented.');
+            // } }
         />
     )}
 

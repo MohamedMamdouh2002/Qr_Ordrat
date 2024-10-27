@@ -1597,3 +1597,25 @@ div[style='z-index: 1000001;'],
   }
 }
 
+
+.truncate-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* عدد السطور المطلوبة */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+.secShadow{
+  box-shadow: 0 2px 6px 0 rgba(62, 82, 255, .08);
+
+}
+
+.custom-scroll {
+  scrollbar-width: none; /* لإخفاء شريط التمرير في Firefox */
+  -ms-overflow-style: none; /* لإخفاء شريط التمرير في Internet Explorer وEdge */
+}
+
+.custom-scroll::-webkit-scrollbar {
+  display: none; /* لإخفاء شريط التمرير في Chrome وSafari */
+}

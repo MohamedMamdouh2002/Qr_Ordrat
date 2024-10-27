@@ -44,6 +44,7 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "@uploadthing/react": "^6.5.1",
     "accept-language": "^3.0.18",
+    "axios": "^1.7.7",
     "clsx": "^2.1.1",
     "cookies-next": "^4.2.1",
     "date-arithmetic": "^4.1.0",

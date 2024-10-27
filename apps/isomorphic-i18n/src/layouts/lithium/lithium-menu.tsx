@@ -276,8 +276,8 @@ export default function HeaderMenuLeft({ lang }: { lang?: string }) {
         </NavMenu.Item>
         <NavMenu.Item >
         <NavMenu.Trigger  className={`flex items-center text-sm  gap-1 pt-2 ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`}>
-            <Link href={`/${lang!}/features`}>
-            <MenuTriggerButton name="Categories"  />
+            <Link href={`/${lang!}/reviews`}>
+            <MenuTriggerButton name="Reviews"  />
             </Link>
           </NavMenu.Trigger>
           {/* <NavMenu.Content>
@@ -324,7 +324,7 @@ function MenuTriggerButton({
     <>
       <span
         className={cn(
-          "inline-block 4xl:text-2xl w-full overflow-hidden whitespace-nowrap pe-1.5 ps-0 text-sm  leading-5 font-montserrat  font-monbold   transition-all duration-200",
+          "inline-block 4xl:text-xl w-full overflow-hidden whitespace-nowrap pe-1.5 ps-0 text-sm  leading-5 font-montserrat  font-monbold   transition-all duration-200",
           isActive(lithiumMenuItems[name].name!) ?
            "text-yellow-500 hover:text-orange-500" : " text-darkGreenColor dark:text-mainText hover:text-greenColor dark:hover:text-greenColor"
         )}

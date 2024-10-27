@@ -1,10 +1,21 @@
 import Reviews from '@/app/components/reviews/Reviews'
 import React from 'react'
+import { metaObject } from '@/config/site.config';
 
-const Review: React.FC =({lang}: { lang?: string }) => {
+export const metadata = {
+  ...metaObject('Reviews'),
+};
+
+function Review({
+  params: { lang },
+}: {
+  params: {
+    lang: string;
+  };
+}) {
   return <>
   <div className="w-[90%] mx-auto mt-20">
-    <Reviews lang={lang!}/>   
+    <Reviews lang={lang}/>   
   </div>
   </>
 }

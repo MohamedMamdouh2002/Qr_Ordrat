@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useAtomValue } from 'jotai';
 import isEmpty from 'lodash/isEmpty';
 import { PiCheckBold } from 'react-icons/pi';
+import { FaTimes } from 'react-icons/fa';
 import { useParams } from 'next/navigation'; 
 
 import {
@@ -26,34 +27,7 @@ import { API_BASE_URL } from '@/config/base-url';
 
 
 
-const transitions = [
-  {
-    id: 1,
-    paymentMethod: {
-      name: 'Cash on delivery',
-      image:<BadgeCent className="text-orange-500" />
-    },
-    // price: '$1575.00',
-  },
-  // {
-  //   id: 2,
-  //   paymentMethod: {
-  //     name: 'PayPal',
-  //     image:
-  //       'https://isomorphic-furyroad.s3.amazonaws.com/public/payment/paypal.png',
-  //   },
-  //   price: '$75.00',
-  // },
-  // {
-  //   id: 2,
-  //   paymentMethod: {
-  //     name: 'Stripe',
-  //     image:
-  //       'https://isomorphic-furyroad.s3.amazonaws.com/public/payment/stripe.png',
-  //   },
-  //   price: '$375.00',
-  // },
-];
+
 
 
 function WidgetCard({
@@ -107,6 +81,34 @@ export default function OrderView({lang}:{lang:string}) {
   // const currentOrderStatus = order?.status;
   const { id } = useParams();
   const phone=localStorage.getItem('phoneNumber')
+  const transitions = [
+    {
+      id: 1,
+      paymentMethod: {
+        name: `${t('cash-on-delivery')}`,
+        image:<BadgeCent className="text-orange-500" />
+      },
+      // price: '$1575.00',
+    },
+    // {
+    //   id: 2,
+    //   paymentMethod: {
+    //     name: 'PayPal',
+    //     image:
+    //       'https://isomorphic-furyroad.s3.amazonaws.com/public/payment/paypal.png',
+    //   },
+    //   price: '$75.00',
+    // },
+    // {
+    //   id: 2,
+    //   paymentMethod: {
+    //     name: 'Stripe',
+    //     image:
+    //       'https://isomorphic-furyroad.s3.amazonaws.com/public/payment/stripe.png',
+    //   },
+    //   price: '$375.00',
+    // },
+  ];
   const orderStatus = [
     { id: 0, label: `${t('cancel')}` },
     { id: 1, label: `${t('Pending')}` },
@@ -271,7 +273,7 @@ export default function OrderView({lang}:{lang:string}) {
             childrenWrapperClass="py-5 @5xl:py-8 flex"
           >
             <div className="ms-2 w-full space-y-7 border-s-2 border-gray-100">
-  {/* عرض حالة الـ id === 0 فقط إذا كان currentOrderStatus === 0 */}
+              {/* عرض حالة الـ id === 0 فقط إذا كان currentOrderStatus === 0 */}
               {currentOrderStatus === 0 &&
                 orderStatus
                   .filter((item) => item.id === 0)
@@ -280,12 +282,12 @@ export default function OrderView({lang}:{lang:string}) {
                       key={item.id}
                       className={cn(
                         "relative ps-6 text-sm font-medium before:absolute before:-start-[9px] before:top-px before:h-5 before:w-5 before:-translate-x-px before:rounded-full before:bg-gray-100 before:content-[''] after:absolute after:-start-px after:top-5 after:h-10 after:w-0.5 after:bg-gray-100 last:after:hidden",
-                        'text-red-500 before:bg-red-500' // تنسيق مخصص لـ id === 0
+                        'text-red-500 before:bg-red-500' 
                       )}
                     >
                         
-                        <span className="absolute -start-1.5 top-1 text-white">
-                          <PiCheckBold className="h-auto w-3" />
+                        <span className={`absolute ${lang ==='en' ? `-start-1.5`:`-start-1`} top-1 text-white`}>
+                          <FaTimes  className="h-auto w-3" />
                         </span>
                     
                       {item.label}
@@ -308,7 +310,7 @@ export default function OrderView({lang}:{lang:string}) {
                       )}
                     >
                       {(currentOrderStatus ?? 0) >= item.id && item.id !== 0 ? (
-                        <span className="absolute -start-1.5 top-1 text-white">
+                        <span className={`absolute ${lang ==='en' ? `-start-1.5`:`-start-1`} top-1 text-white`}>
                           <PiCheckBold className="h-auto w-3" />
                         </span>
                       ) : null}
