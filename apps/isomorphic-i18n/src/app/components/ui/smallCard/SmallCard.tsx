@@ -93,10 +93,6 @@ type Props = Food & {
             setIsModalOpen={handleCloseModal}
             quantity={quantity}
             setQuantity={setQuantity}
-            notes={''}
-            setNotes={function (val: string): void {
-            throw new Error('Function not implemented.');
-            }}
             setShowItem={function (val: boolean): void {
             throw new Error('Function not implemented.');
             } }

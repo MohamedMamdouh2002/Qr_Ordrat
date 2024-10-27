@@ -14,10 +14,10 @@ import { calculatePercentage } from '@utils/calculate-percentage';
 import { GetColor } from '@/app/shared/ecommerce/product/get-color';
 import WishlistButton from '@/app/shared/ecommerce/product/wishlist-button';
 import { useCart } from '@/store/quick-cart/cart.context';
-import {
-  ProductDetailsInput,
-  productDetailsSchema,
-} from '@/validators/product-details.schema';
+// import {
+//   ProductDetailsInput,
+//   productDetailsSchema,
+// } from '@/validators/product-details.schema';
 import { generateCartProduct } from '@/store/quick-cart/generate-cart-product';
 
 export default function ProductDetailsSummery({
@@ -28,13 +28,13 @@ export default function ProductDetailsSummery({
   const { addItemToCart } = useCart();
   const [isLoading, setLoading] = useState(false);
 
-  const methods = useForm<ProductDetailsInput>({
-    mode: 'onChange',
-    // defaultValues: defaultValues(order),
-    resolver: zodResolver(productDetailsSchema),
-  });
+  // const methods = useForm<ProductDetailsInput>({
+  //   mode: 'onChange',
+  //   // defaultValues: defaultValues(order),
+  //   resolver: zodResolver(productDetailsSchema),
+  // });
 
-  const onSubmit: SubmitHandler<ProductDetailsInput> = (data) => {
+  // const onSubmit: SubmitHandler<ProductDetailsInput> = (data) => {
     // const item = generateCartProduct({
     //   ...product,
     //   color: data.productColor,
@@ -48,7 +48,7 @@ export default function ProductDetailsSummery({
     //   addItemToCart(item, 1);
     //   toast.success(<Text as="b">Product added to the cart</Text>);
     // }, 600);
-  };
+  // };
 
   // console.log('errors', methods.formState.errors?.productColor);
 
@@ -63,7 +63,7 @@ export default function ProductDetailsSummery({
         </Text>
       </div>
 
-      <FormProvider {...methods}>
+      {/* <FormProvider {...methods}>
         <form className="pb-8 pt-5" onSubmit={methods.handleSubmit(onSubmit)}>
           <div className="mb-1.5 mt-2 flex items-end font-lexend text-base">
             <div className="-mb-0.5 text-2xl font-semibold text-gray-900 lg:text-3xl">
@@ -110,7 +110,7 @@ export default function ProductDetailsSummery({
             <WishlistButton />
           </div>
         </form>
-      </FormProvider>
+      </FormProvider> */}
     </>
   );
 }

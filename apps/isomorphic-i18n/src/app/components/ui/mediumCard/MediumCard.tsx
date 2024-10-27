@@ -67,21 +67,23 @@ function MediumCard(data:Props) {
             />
           </div>
         </div>
-      )}
-      {isModalOpen && data && (
-        <Modal
-          lang={data.lang}
-          modalId={data.id}
-          setIsModalOpen={handleCloseModal}
-          quantity={quantity}
-          setQuantity={setQuantity}
-          notes=""
-          setNotes={() => {}}
-          setShowItem={() => {}}
-        />
-      )}
-    </>
-  );
+  )}
+  {isModalOpen && (
+    <Modal
+      modalId={data.id}
+      setIsModalOpen={handleCloseModal}
+      quantity={quantity}
+      setQuantity={setQuantity}
+      setShowItem={function (val: boolean): void {
+        throw new Error('Function not implemented.');
+      } }
+    />
+  )}
+
+{/* <hr className='mt-3 sm:hidden flex'/> */}
+
+            
+  </>
 }
 
 export default MediumCard;

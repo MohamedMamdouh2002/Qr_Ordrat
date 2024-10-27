@@ -17,8 +17,8 @@ import cardImage from '../../../../../public/assets/card.png'
 import sandwitsh from '../../../../../public/assets/sandwitsh.jpg'
 import SpecialNotes from '@/app/components/ui/SpecialNotes';
 import { toCurrency } from '@utils/to-currency';
+import { useUserContext } from '@/app/components/context/UserContext';
 import { useTranslation } from '@/app/i18n/client';
-
 
 type FormValues = {
   couponCode: string;
@@ -26,23 +26,31 @@ type FormValues = {
 
 function CheckCoupon({lang}:{lang?:string}) {
   const [reset, setReset] = useState({});
+  const { orderNote, setOrderNote, copone, setCopone } = useUserContext();
   const { t } = useTranslation(lang!, 'order');
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
-    setReset({ couponCode: '' });
+    console.log("coupon: ",data.couponCode);
+    setCopone(data.couponCode);
+    setReset({ couponCode: copone });
   };
-
+  console.log("copoc",copone);
+  
   return (
     <Form<FormValues>
-      resetValues={reset}
+      // resetValues={reset}
       onSubmit={onSubmit}
       useFormProps={{
         defaultValues: { couponCode: '' },
       }}
       className="w-full"
     >
-      {({ register, formState: { errors }, watch }) => (
+      {({ register, formState: { errors }, watch }) =>  {
+        const couponCode = watch('couponCode');
+        const isCouponEntered = couponCode !== copone;
+        // this for if you want that the input Empty then you can't apply any coupon
+        // const isCouponEntered = couponCode && couponCode !== copone;
+        return (
         <>
           <div className="relative flex items-end">
             <Input
@@ -58,14 +66,15 @@ function CheckCoupon({lang}:{lang?:string}) {
             <Button
               type="submit"
 
-              className={`ms-3 ${watch('couponCode') ? 'bg-mainColor hover:bg-mainColorHover dark:hover:bg-mainColor/90' : 'bg-muted/70'}`}
-              disabled={watch('couponCode') ? false : true}
+              className={`ms-3 ${isCouponEntered ? 'bg-mainColor hover:bg-mainColorHover dark:hover:bg-mainColor/90' : 'bg-muted/70'}`}
+              disabled={!isCouponEntered}
             >
-              {t('Apply')}
+              {copone ? 'Edit' : {t('Apply')}}
+              {/* Apply */}
             </Button>
           </div>
         </>
-      )}
+      )}}
     </Form>
   );
 }
@@ -84,6 +93,7 @@ function CartCalculations({fees, Tax ,lang}:{fees:number; Tax:number ,lang?:stri
   const { price: totalPrice } = usePrice({
     amount: totalWithFees,
   });
+
   return (
     <div>
       <Title as="h2" className="border-b border-muted pb-4 text-lg font-medium">
@@ -235,7 +245,10 @@ export default function CartPageWrapper({lang}:{lang?:string}) {
   // ];
 
   const { items } = useCart();  
+  console.log("items: ",items);
+   
   const [notes, setNotes] = useState('');
+  const { orderNote, setOrderNote} = useUserContext();
   useEffect(() => {
     i18n.changeLanguage(lang);
   }, [lang, i18n]);
@@ -263,8 +276,8 @@ export default function CartPageWrapper({lang}:{lang?:string}) {
                 lang={lang!}
                 des=""
                 className="py-0 col-span-full"
-                notes={notes}
-                setNotes={setNotes}
+                notes={orderNote}
+                setNotes={setOrderNote}
               />
             </div>
             <CartCalculations lang={lang!} fees={0} Tax={0} />

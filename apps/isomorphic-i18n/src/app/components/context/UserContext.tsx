@@ -17,6 +17,10 @@ type UserContextType = {
   setAccessToken: React.Dispatch<React.SetStateAction<string | null>>; 
   token: string | null;
   setToken: React.Dispatch<React.SetStateAction<string | null>>; 
+  orderNote: string;
+  setOrderNote: React.Dispatch<React.SetStateAction<string>>; 
+  copone: string | null;
+  setCopone: React.Dispatch<React.SetStateAction<string | null>>; 
   profileUserName: string;
   setProfileUserName: React.Dispatch<React.SetStateAction<string>>; 
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -45,6 +49,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children  }) =
   const [page, setPage] = useState<number>(0);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [orderNote, setOrderNote] = useState<string>('');
+  const [copone, setCopone] = useState<string | null>(null);
   const [profileUserName, setProfileUserName] = useState<string>('User Name');
   const [userData, setUserData] = useState<boolean>(false);
   const [updateAddresses, setUpdateAddresses] = useState<boolean>(false);
@@ -114,7 +120,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children  }) =
   }
   
   return (
-    <UserContext.Provider value={{product,setProduct,order,setOrder,token,setToken, profileUserName, setProfileUserName, accessToken,setAccessToken, userData, setUserData, updateAddresses, setUpdateAddresses, faqs, setFaqs, updatefaqs, setUpdateFaqs, page, setPage, GetHome, GetProduct ,GetRewiew }}>
+    <UserContext.Provider value={{product,setProduct,order,setOrder,token,setToken, orderNote, setOrderNote, copone, setCopone, profileUserName, setProfileUserName, accessToken,setAccessToken, userData, setUserData, updateAddresses, setUpdateAddresses, faqs, setFaqs, updatefaqs, setUpdateFaqs, page, setPage, GetHome, GetProduct ,GetRewiew }}>
       {children}
     </UserContext.Provider>
   );

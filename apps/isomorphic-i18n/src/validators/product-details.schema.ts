@@ -1,60 +1,51 @@
 import { z } from 'zod';
+import { validateEmail } from './common-rules';
 import { messages } from '@/config/messages';
-import { fileSchema, validateEmail } from './common-rules';
 
-// form zod validation schema
-// const imageFileSchema = z.instanceof(File)
-//   .refine((file) => file.size <= 5 * 1024 * 1024, { message: 'File size should be less than 5MB' })
-//   .refine((file) => ['image/jpeg', 'image/png', 'image/gif'].includes(file.type), { message: 'Only JPEG, PNG, or GIF files are allowed' });
-const imageFileSchema = z.instanceof(File).optional();
+// Define schema for different types
+const phoneNumberSchema = z.string().min(1, "Phone Number is required");
+const emailSchema = z.string().email("Invalid email address").min(1, "Email is required");
+const dateSchema = z.string().min(1, "Date is required");
+// const imageSchema = z.instanceof(File).refine(
+//   (file) => file.size <= 5 * 1024 * 1024,
+//   { message: 'File size should be less than 5MB' }
+// ).refine(
+//   (file) => ['image/jpeg', 'image/png', 'image/gif'].includes(file.type),
+//   { message: 'Only JPEG, PNG, or GIF files are allowed' }
+// );
 
-export const productDetailsSchema = z.object({
+// Helper function to map buttonType to schema
+const getSchemaByButtonType = (buttonType: number) => {
+  switch (buttonType) {
+    case 0: // Radio
+      return z.string().nonempty("Radio is required");
+    case 1: // Dropdown
+      return z.string().min(1, "Radio is required");
+    case 2: // Checkbox
+      return z.string().min(1, "Selection is required");
+    case 3: // Input
+      return z.string().min(1, "Input is required");
+    case 4: // PhoneNumber
+      return phoneNumberSchema;
+    case 5: // Email
+      return emailSchema;
+    case 6: // Date
+      return dateSchema;
+    case 7: // ImageUploade
+      // return imageSchema;
+    default:
+      return z.string().optional();
+  }
+};
 
-  // Date Fields
-  birthDay: z.string().nonempty("تاريخ الميلاد مطلوب"),
-  enterexpectNumber: z.string().nonempty("تاريخ الدخول المتوقع مطلوب"),
-  exitNumber: z.string().nonempty("تاريخ الخروج المتوقع مطلوب"),
+// Main schema builder
+export const buildProductDetailsSchema = (variations: { id: string, name: string, buttonType: number }[]) => {
+  const schema = variations.reduce((acc, variation) => {
+    const fieldSchema = getSchemaByButtonType(variation.buttonType);
+    acc[variation.id] = fieldSchema;
+    return acc;
+  }, {} as Record<string, any>);
 
-  // Radio Fields
-  LicenseClass: z.string().nonempty("فئة الرخصة مطلوبة"),
-  ExtraDriver: z.string().nonempty("السائق الإضافي مطلوب"),
-  personType: z.string().nonempty("نوع الشخص مطلوب"),
-  selectLicenseCategory: z.string().nonempty("فئة الترخيص مطلوب"),
-
-  // Select Fields
-  blood: z.string().nonempty("فصيله الدم مطلوب"),
-  enterNumber: z.string().nonempty("عدد مرات الدخول مطلوب"),
-  status: z.string().nonempty("الحالة الإجتماعية مطلوبة"),
-  stateResidence: z.string().nonempty("دولة الإقامة مطلوبة"),
-  localLicenseSource: z.string().nonempty("مصدر رخصة القيادة المحلية مطلوبة"),
-  nationality: z.string().nonempty("الجنسية مطلوبة"),
-  operatingSystemType: z.string().nonempty("نوع نظام التشغيل مطلوبة"),
-  dataSize: z.string().nonempty("حجم البيانات مطلوبة"),
-
-  // Image Upload Fields
-  passportImage: z.string().nonempty("صورة جواز السفر مطلوبة"),
-  passportImage2: z.string().nonempty("صوره جواز السفر مطلوبة"),
-  internationalDrivingLicence: z.string().nonempty("رخصة القيادة الدولية مطلوبة"),
-  personalPhoto: z.string().nonempty("الصورة الشخصية مطلوبة"),
-  passportNumberImage: z.string().nonempty("رقم جواز السفر مطلوبة"),
-  imageValuepassportImage: imageFileSchema,
-  imageValuepassportImage2: imageFileSchema,
-  imageValueinternationalDrivingLicence: imageFileSchema,
-  imageValuepersonalPhoto: imageFileSchema,
-  imageValuepassportNumberImage: imageFileSchema,
-
-  // Text Fields
-  fullPersonName: z.string().nonempty("الاسم الكامل مطلوب"),
-  passport: z.string().nonempty("رقم جواز السفر مطلوب"),
-  IDNumber: z.string().nonempty("رقم الهوية مطلوب"),
-  Address: z.string().nonempty("العنوان مطلوب"),
-  
-  // Phone Number Fields
-  phoneNumber: z.string().nonempty("رقم الهاتف مطلوب"),
-  
-  // Optional Field for unsupported types
-  none: z.string().optional(),
-});
-
-// generate form types from zod validation schema
-export type ProductDetailsInput = z.infer<typeof productDetailsSchema>;
+  return z.object(schema);
+};
+export type ProductDetailsInput = z.infer<ReturnType<typeof buildProductDetailsSchema>>;

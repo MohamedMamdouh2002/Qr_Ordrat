@@ -81,9 +81,9 @@ const Card = (data:Props) => {
           setIsModalOpen={handleCloseModal}
           quantity={quantity}
           setQuantity={setQuantity}
-          notes={''}
-          setNotes={() => {}}
-          setShowItem={() => {}}
+          setShowItem={function (val: boolean): void {
+            throw new Error('Function not implemented.');
+          } }
         />
       )}
     </>

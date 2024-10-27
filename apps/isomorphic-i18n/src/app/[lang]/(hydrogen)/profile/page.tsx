@@ -20,6 +20,18 @@ export default function Profile({
 }) {
 	// const { t } = useTranslation(lang!, 'order');
 
+const translations = {
+  accountDetails: { en: 'Account Details', ar: 'معلوماتي' },
+  myAddresses: { en: 'My addresses', ar: 'عناويني' },
+};
+
+export default function Profile({
+	params: { lang },
+}: {
+	params: {
+	  lang: string;
+	};
+}) {
 	return (
 		<>
 			<SessionGuard>
@@ -30,26 +42,24 @@ export default function Profile({
 					/>
 				</div>
 				<div className='w-[95%] md:w-[85%]  mx-auto'>
-					<Layout fullLayout="false" currentPage="Profile" locale={lang}>
-						<div className="container flex flex-col gap-10 w-full my-5">
-							<div className="flex flex-col gap-5">
-								<div className="flex justify-between items-center">
-									<h2 className="text-2xl md:text-3xl font-medium">Account Details</h2>
+						<Layout fullLayout="false" currentPage="Profile" locale={lang}>
+							<div className="container flex flex-col gap-10 w-full my-5">
+								<div className="flex flex-col gap-5">
+									<div className="flex justify-between items-center">
+										<h2 className="text-2xl md:text-3xl font-medium">{translations.accountDetails[lang=='en'?'en':'ar']}</h2>
+									</div>
+									<UpdateProfileForm lang={lang} />
 								</div>
-								<UpdateProfileForm lang={lang} />
-							</div>
-							<div className="flex flex-col gap-5">
-								<div className="flex justify-between items-center">
-									<h2 className="text-2xl md:text-3xl font-medium">My addresses</h2>
-								</div>
-								<Addresses lang={lang} />
-							</div>
-						</div>
-					</Layout>
+								<div className="flex flex-col gap-5">
+									<div className="flex justify-between items-center">
+										<h2 className="text-2xl md:text-3xl font-medium">{translations.myAddresses[lang=='en'?'en':'ar']}</h2>
+								  </div>
+								  <Addresses lang={lang} />
+							  </div>
+						  </div>
+					  </Layout>
 				</div>
 			</SessionGuard>
 		</>
 	);
 }
-
-

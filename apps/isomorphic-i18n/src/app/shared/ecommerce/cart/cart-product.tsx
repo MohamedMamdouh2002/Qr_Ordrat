@@ -37,32 +37,27 @@ export default function CartProduct({ product }: { product: CartItem }) {
           {product.description}
         </Text>
 
-        {(!isEmpty(product.sizeFood) || !isEmpty(product.color)) && (
-          <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-3 sm:mt-4 sm:gap-x-8">
-            {product.sizeFood && (
-              <li className="flex items-center gap-3 text-gray-500">
-                <span>sizeFood :</span>
-                <span className="text-gray-1000">{product.sizeFood}</span>
-
-              </li>
-            )}
-            {!isEmpty(product.color) && (
-              <li className="flex items-center gap-3 text-gray-500">
-                <span>Color :</span>
-                <div className="flex items-center gap-2">
-                  <div
-                    className="inline-block h-4 w-4 rounded-full"
-                    style={{
-                      backgroundColor: product.color.code,
-                    }}
-                  ></div>
-                  <span className="text-gray-1000">{product.color.name}</span>
-                </div>
-              </li>
-            )}
-          </ul>
-        )}
-
+        <ul className="mt-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-[1fr,1fr] gap-x-4 gap-y-3 sm:mt-4 sm:gap-x-8">
+          {product.oldPrice?
+            <li className={`flex items-center gap-3 text-gray-500`}>
+              <span>Old Price :</span>
+              <span className="text-gray-1000">{toCurrency(product.oldPrice)}</span>
+            </li>
+            :''
+          }
+          {/* Map over orderItemVariations */}
+          {product.orderItemVariations?.map((variation) => (
+            <li key={variation.variationId} className="flex items-center gap-3 text-gray-500">
+              <span>{variation.variationLable} :</span>
+              {variation.choices?.[0]?.choiceValue && (
+                <span className="text-gray-1000">{variation.choices[0].choiceValue}</span>
+              )}
+              {variation.choices?.[0]?.inputValue && (
+                <span className="text-gray-1000">{variation.choices[0].inputValue}</span>
+              )}
+            </li>
+          ))}
+        </ul>
         <div className="mt-3 hidden items-center justify-between xs:flex sm:mt-6">
           <QuantityInput product={product} />
           <div className="flex items-center gap-4">

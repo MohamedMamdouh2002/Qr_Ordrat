@@ -29,7 +29,7 @@ function SpecialNotes({ des, className, notes, setNotes }: Props) {
 						</div>
 					</div>
 				</div>
-				<button onClick={() => setShowNoteInput(true)} className="text-orange-500 font-bold">
+				<button type='button' onClick={() => setShowNoteInput(true)} className="text-orange-500 font-bold">
 					{notes ? 'Edit' : 'Add'} notes
 				</button>
 			</div>
