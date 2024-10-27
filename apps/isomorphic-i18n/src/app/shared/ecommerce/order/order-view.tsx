@@ -294,7 +294,6 @@ export default function OrderView({lang}:{lang:string}) {
                     </div>
                   ))}
 
-              {/* عرض الحالات من id === 1 إلى id === 4 فقط إذا كان currentOrderStatus !== 0 */}
               {currentOrderStatus !== 0 &&
                 orderStatus
                   .filter((item) => item.id !== 0)

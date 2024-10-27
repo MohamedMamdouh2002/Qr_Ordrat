@@ -110,7 +110,7 @@ function Modal({
 
   useEffect(() => {
     window.addEventListener("scroll", handleScrollPc);
-    return () => window.removeEventListener("scroll", handleScrollPc); // تنظيف الحدث عند إلغاء التثبيت
+    return () => window.removeEventListener("scroll", handleScrollPc); 
   }, []);
   useEffect(() => {
     const fetchData = async () => {
@@ -264,14 +264,14 @@ function Modal({
                     <div onClick={handleOutsideClick}
                         className="fixed inset-0 flex z-[999] bg-black/20 items-center justify-center p-4"
                     >
-                        <div className="bg-stone-100 rounded-lg b-4 w-[600px] 4xl:w-[800px] min-h-auto max-h-[650px]">
+                        <div className="bg-white rounded-lg b-4 w-[600px] 4xl:w-[800px] min-h-auto max-h-[650px]">
                             <div
                                 className={cn('grid grid-cols-3 rounded-lg  gap-2 relative', {
                                 'grid-cols-1': !hasMoreDetails,
                                 })}
                             >
-                              <div className="relative rounded-t-lg z-50 bg-stone-100">
-                                    <div className={`sticky mb-5 rounded-t-lg ${isScrolled  ? `secShadow` :`shadow-none`} top-0 bg-stone-100 z-50 `}>
+                              <div className="relative rounded-t-lg z-50 bg-white">
+                                    <div className={`sticky mb-5 rounded-t-lg ${isScrolled  ? `secShadow` :`shadow-none`} top-0 bg-white z-50 `}>
                                         <div className={`flex mb-4 `}>
                                             <div className="">
                                                 <Image
@@ -357,7 +357,7 @@ function Modal({
                                                     }
                                                     if (variation.buttonType === 1) {
                                                         return <>
-                                                            <div key={variation.id} className="flex px-4 pt-0">
+                                                            <div key={variation.id} className="flex z-10 px-4 pt-0">
                                                                 <div className="w-full flex flex-col gap-1">
                                                                     <div className="flex items-end justify-between">
                                                                         {/* <strong>Your choice of: {variation.name}</strong> */}

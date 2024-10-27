@@ -43,7 +43,8 @@
     "currencyCode":"EGP",
     "Update-Order":"Update Order",
     "Place-Order":"Place Order",
-    "Your-Order":"Your Order"
+    "Your-Order":"Your Order",
+    "Order-Status":"Order Status"
 
 
 }

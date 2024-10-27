@@ -21,9 +21,11 @@ import Phone from '../ui/inputs/phone';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useTranslation } from '@/app/i18n/client';
+import toast from 'react-hot-toast';
 // import { SessionContext } from '@/utils/contexts';
 
 type Props = {
+	
 	onLogin?: () => void;
 	setCurrentModal: (val: 'login' | 'register' | 'resetPassword') => void;
 };
@@ -68,15 +70,17 @@ function Login({ onLogin, setCurrentModal }: Props,{ lang }: { lang?: string }) 
 	  
 		const result = await res.json();
 		setLoading(false)
+		toast.success(t('welcome-to-Karam-Elsham'))
 		console.log("resault: " ,result);
 		if (result?.refreshToken) {
+			
 			localStorage.setItem('accessToken', result?.accessToken);
 			setAccessToken(result.accessToken)
 			localStorage.setItem('Token', result?.refreshToken);
 			localStorage.setItem('phoneNumber', result?.phoneNumber);
 			// console.log("result?.refreshToken",result?.refreshToken);
 			setToken(result.refreshToken)
-
+			onLogin?.();
 			const userData = {
 				phoneNumber: result.phoneNumber,
 				firstName: result.firstName || '',
@@ -116,7 +120,7 @@ function Login({ onLogin, setCurrentModal }: Props,{ lang }: { lang?: string }) 
 		<div className="flex flex-col gap-5">
 			<div className="flex flex-col items-center justify-center">
 				<Image width={60} height={60} src={Logo} alt="logo"/>
-				<p className="text-sm font-light">Fried chicken, Sandwiches, Fast Food...</p>
+				<p className="text-sm font-light truncate-text">{t('desc')}</p>
 			</div>
 			<div className="flex flex-col items-center">
 				{/* <h3 className="font-bold text-lg">Login</h3> */}
@@ -167,12 +171,12 @@ function Login({ onLogin, setCurrentModal }: Props,{ lang }: { lang?: string }) 
 										type="tel"
 										autoComplete="tel"
 										placeholder={t('phone-ph')}
-										id="phoneNumber"
-										className={`rounded-md border-gray-300 focus:border-mainColor focus:outline-none 
-											focus:outline-2 focus:outline-transparent focus:outline-offset-2 
-											focus:ring-1 focus:ring-mainColor focus:ring-offset-0 shadow-sm ${
-											  errors.phoneNumber && touched.phoneNumber ? 'border-red-800' : 'border-gray-300'
-											}`}
+										id="phoneNumber"					
+										className={`rounded-md  border-gray-300 focus:border-mainColor focus:outline-none 
+										focus:outline-2 focus:outline-transparent focus:outline-offset-2  rtl:text-end
+										focus:ring-1 focus:ring-mainColor focus:ring-offset-0 shadow-sm ${
+											errors.phoneNumber && touched.phoneNumber ? 'border-red-800' : 'border-gray-300'
+										}`}
 									/>
 									)}
 								</Field>
