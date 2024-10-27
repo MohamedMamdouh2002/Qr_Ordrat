@@ -194,7 +194,7 @@ export default function OrderView({lang}:{lang:string}) {
                   {t('Vat')} <span>{order?.totalVat}</span>
                 </div>
                 <div className="flex justify-between border-t border-muted pt-5 text-base font-semibold">
-                  {t('Total')} <span>{toCurrency((order?.totalPrice || 0) + (order?.shippingFees || 0) + (order?.totalVat || 0))}</span>
+                  {t('Total')} <span>{toCurrency((order?.totalPrice || 0) + (order?.shippingFees || 0) + (order?.totalVat || 0) , lang)}</span>
                 </div>
               </div>
             </div>

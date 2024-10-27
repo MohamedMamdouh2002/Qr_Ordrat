@@ -15,5 +15,22 @@
     "My-addresses":"العناوين الخاصه بي",
     "Account-Details":"تفاصيل الحساب",
     "delete":"هل انت متأكد من حذف هذا العنوان ؟",
-    "delete-desc":"لن تتمكن من إعادة هذا العنوان مره اخري في حالة الحذف."
+    "delete-desc":"لن تتمكن من إعادة هذا العنوان مره اخري في حالة الحذف.",
+
+    "not-found":"لا يوجد عناوين",
+    "edit-address":"تعديل العنوان",
+    "new-address":"عنوان جديد",
+    "apt-lable":"رقم الشقة",
+    "floor-lable":"رقم الطابق",
+    "street-lable":"اسم الشارع",
+    "phoneNumber-lable":"رقم الهاتف",
+    "additionalDirections-lable":"اتجاهات إضافية",
+    "more-information":"معلومات اضافية",
+    "cancelAddressModal":"إلغاء",
+    "save":"حفظ",
+
+    "apartment":"شقة",
+    "home":"المنزل",
+    "office":"المكتب"
+
 }

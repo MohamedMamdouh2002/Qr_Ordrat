@@ -168,9 +168,11 @@ function Login({ onLogin, setCurrentModal }: Props,{ lang }: { lang?: string }) 
 										autoComplete="tel"
 										placeholder={t('phone-ph')}
 										id="phoneNumber"
-										className={`rounded-md focus:border-2 focus:border-mainColor focus:outline-none ${
-										errors.phoneNumber && touched.phoneNumber ? 'border-red-800' : 'border-gray-300'
-										}`}
+										className={`rounded-md border-gray-300 focus:border-mainColor focus:outline-none 
+											focus:outline-2 focus:outline-transparent focus:outline-offset-2 
+											focus:ring-1 focus:ring-mainColor focus:ring-offset-0 shadow-sm ${
+											  errors.phoneNumber && touched.phoneNumber ? 'border-red-800' : 'border-gray-300'
+											}`}
 									/>
 									)}
 								</Field>

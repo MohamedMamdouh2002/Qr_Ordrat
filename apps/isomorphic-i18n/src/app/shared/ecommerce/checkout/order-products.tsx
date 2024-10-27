@@ -17,6 +17,7 @@ export default function OrderProducts({
   clearItemFromCart,
   addItemToCart,
   removeItemFromCart,
+  lang,
 }: {
   items: CartItem[];
   className?: string;
@@ -25,6 +26,7 @@ export default function OrderProducts({
   clearItemFromCart: (id: number | string) => void;
   addItemToCart: (item: CartItem, quantity: number) => void;
   removeItemFromCart: (id: number | string) => void;
+  lang?:string;
 }) {
   if (!items.length) {
     return (
@@ -81,7 +83,7 @@ export default function OrderProducts({
                   </Link>
                 </Title>
                 <div className="text-gray-500">
-                  {toCurrency(item.price)} x {item.quantity}
+                  {item.price} x {item.quantity}
                 </div>
                 {showControls && (
                   <QuantityControl
@@ -93,7 +95,7 @@ export default function OrderProducts({
               </div>
             </div>
             <div className="flex items-center gap-3 font-medium text-gray-700">
-              {toCurrency(item.price * item.quantity)}
+              {toCurrency(item.price * item.quantity, lang)}
             </div>
           </div>
         ))}

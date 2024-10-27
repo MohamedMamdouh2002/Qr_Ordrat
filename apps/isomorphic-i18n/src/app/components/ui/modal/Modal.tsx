@@ -306,7 +306,7 @@ function Modal({
                                                                 />
                                                             )}
                                                             <p>{choice.name}</p>
-                                                            {choice.price && <small>{toCurrency(choice.price)}</small>}
+                                                            {choice.price && <small>{toCurrency(choice.price, lang)}</small>}
                                                             </div>
                                                         ),
                                                         value: choice.id,
@@ -605,7 +605,7 @@ function Modal({
                                                 />
                                             )}
                                             <p>{choice.name}</p>
-                                            {choice.price && <small>{toCurrency(choice.price)}</small>}
+                                            {choice.price && <small>{toCurrency(choice.price, lang)}</small>}
                                             </div>
                                         ),
                                         value: choice.id,

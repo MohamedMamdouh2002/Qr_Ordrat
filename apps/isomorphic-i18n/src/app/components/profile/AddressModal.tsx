@@ -10,18 +10,23 @@ import LocationPicker from '../ui/inputs/map/LocationPicker';
 import { API_BASE_URL } from '@/config/base-url';
 import toast from 'react-hot-toast';
 import { useUserContext } from '../context/UserContext';
+import { useTranslation } from '@/app/i18n/client';
 
 export default function AddressModal({
 	isOpen,
 	setIsOpen,
-	address
+	address,
+	lang
 }: {
 	isOpen: boolean;
 	setIsOpen: (state: boolean) => void;
 	address?: Partial<any>;
+	lang?:string;
 }) {
 	const [schema, initialValues] = useAddressValidation();
 	const { updateAddresses, setUpdateAddresses } = useUserContext();
+	const { t } = useTranslation(lang!, 'profile');
+
 	console.log("address: ",address);
 
 	const initialLocation = {
@@ -37,17 +42,17 @@ export default function AddressModal({
 	
 	const addressTypes = [
 		{
-			name: 'apartment',
+			name: t('apartment'),
 			icon: Building,
 			value: 0
 		},
 		{
-			name: 'home',
+			name: t('home'),
 			icon: Home,
 			value: 1
 		},
 		{
-			name: 'office',
+			name: t('office'),
 			icon: BriefcaseBusiness,
 			value: 2
 		}
@@ -159,12 +164,12 @@ export default function AddressModal({
 								{address?.id ? (
 									<>
 										<PenBox className="text-mainColor mt-1" />
-										Edit Address
+										{t('edit-address')}
 									</>
 								) : (
 									<>
 										<PlusCircle className="text-mainColor  mt-1" />
-										New Address
+										{t('new-address')}
 									</>
 								)}
 							</Dialog.Title>
@@ -217,15 +222,15 @@ export default function AddressModal({
 													</RadioGroup>
 												</div>
 												<div className="grid sm:grid-cols-2 grid-cols-1 gap-x-3  mr-1 md:mr-0">
-													<Text name="aptNo" label="apt no." placeholder='apt no.' required={true} />
-													<Text name="floor" label="floor" placeholder='Floor'required={true}/>
-													<Text name="street" label="street" placeholder='Street' required={true} />
-													<Phone disabled={true} name="phoneNumber" label="Phone Number" placeholder='Phone Number' required={true} />
+													<Text name="aptNo" label={t('apt-lable')} placeholder={t('apt-lable')} required={true} />
+													<Text name="floor" label={t('floor-lable')} placeholder={t('floor-lable')} required={true}/>
+													<Text name="street" label={t('street-lable')} placeholder={t('street-lable')} required={true} />
+													<Phone disabled={true} name="phoneNumber" label={t('phoneNumber-lable')} placeholder={t('phoneNumber-lable')} required={true} />
 													<div className="col-span-full">
 														<Text
 															name="additionalDirections"
-															label="additional directions"
-															placeholder='more information'
+															label={t('additionalDirections-lable')}
+															placeholder={t('more-information')}
 															IsTextarea={true}
 														/>
 													</div>
@@ -239,14 +244,14 @@ export default function AddressModal({
 														setIsOpen(false);
 													}}
 												>
-													Cancel
+													{t('cancelAddressModal')}
 												</button>
 												<button
 													disabled={!isValid}
 													className="px-8 py-2 text-slate-50 bg-mainColor border border-transparent hover:border-mainColor hover:text-mainColor hover:bg-transparent transition duration-150 rounded-lg disabled:bg-black/50 disabled:text-white disabled:border-none"
 													type="submit"
 												>
-													Save
+													{t('save')}
 												</button>
 											</div>
 										</Form>

@@ -133,7 +133,7 @@ function Addresses({lang}:{lang:string}) {
 							<Loader2 className="text-mainColor  animate-spin" />
 						</span>
 					) : (
-						!isLoading && <NotFound name="Addresses" />
+						!isLoading && <NotFound name={t('not-found')} />
 					)}
 				</AnimatePresence>
 				<button
@@ -145,7 +145,7 @@ function Addresses({lang}:{lang:string}) {
 				</button>
 			</div>
 			<AnimatePresence mode="wait">
-				{isOpen && <AddressModal isOpen={isOpen} setIsOpen={setIsOpen} address={selectedAddress} />}
+				{isOpen && <AddressModal lang={lang} isOpen={isOpen} setIsOpen={setIsOpen} address={selectedAddress} />}
 			</AnimatePresence>
 		</>
 	);
