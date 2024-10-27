@@ -171,6 +171,8 @@ function FAQSection({ lang }: { lang: string }) {
 			setUpdateFaqs(false);	
 		}
   }, [lang, updatefaqs]);
+  console.log("faqData: ",faqData);
+  
   
   return <>
     <div className={style.faqContainer}>
@@ -186,7 +188,7 @@ function FAQSection({ lang }: { lang: string }) {
                   <div className={style.faqCardHead} style={{ alignItems: 'center' }}>
                     <div className={style.iconWrapper} style={{ width: '50px', marginInlineEnd: '5px' }}>
                       <Image
-                        src={images[index] || Findmore}
+                        src={item.imageUrl || images[index]}
                         width="50"
                         height="50"
                         alt={item.name}

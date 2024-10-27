@@ -42,7 +42,7 @@ function SpecialNotes({ des, className, notes, setNotes }: Props) {
 				<Sheet.Container className="items-center">
 					<Sheet.Header />
 					<Sheet.Content className="container">
-						<div className=" flex flex-col gap-2 pb-5">
+						<div className=" flex flex-col gap-2 pb-5 px-2 sm:px-5 md:px-10">
 							<label htmlFor="notes" className="text-black/75 font-bold">
 								Special request
 							</label>

@@ -17,6 +17,7 @@ type Props = Food & {
 function MediumCard(data:Props) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -63,13 +64,17 @@ function MediumCard(data:Props) {
     </div>
   </div>
   )}
-  {isModalOpen && <Modal modalId={data.id} setIsModalOpen={handleCloseModal} quantity={0} setQuantity={function (value: SetStateAction<number>): void {
+  {isModalOpen && (
+    <Modal
+      modalId={data.id}
+      setIsModalOpen={handleCloseModal}
+      quantity={quantity}
+      setQuantity={setQuantity}
+      setShowItem={function (val: boolean): void {
         throw new Error('Function not implemented.');
-      } } notes={''} setNotes={function (val: string): void {
-        throw new Error('Function not implemented.');
-      } } handleUpdateCart={function (): void {
-        throw new Error('Function not implemented.');
-      } }  />}
+      } }
+    />
+  )}
 
 {/* <hr className='mt-3 sm:hidden flex'/> */}
 

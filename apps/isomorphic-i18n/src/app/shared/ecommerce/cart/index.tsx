@@ -17,6 +17,7 @@ import cardImage from '../../../../../public/assets/card.png'
 import sandwitsh from '../../../../../public/assets/sandwitsh.jpg'
 import SpecialNotes from '@/app/components/ui/SpecialNotes';
 import { toCurrency } from '@utils/to-currency';
+import { useUserContext } from '@/app/components/context/UserContext';
 
 
 type FormValues = {
@@ -25,22 +26,30 @@ type FormValues = {
 
 function CheckCoupon() {
   const [reset, setReset] = useState({});
+  const { orderNote, setOrderNote, copone, setCopone } = useUserContext();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
-    setReset({ couponCode: '' });
+    console.log("coupon: ",data.couponCode);
+    setCopone(data.couponCode);
+    setReset({ couponCode: copone });
   };
-
+  console.log("copoc",copone);
+  
   return (
     <Form<FormValues>
-      resetValues={reset}
+      // resetValues={reset}
       onSubmit={onSubmit}
       useFormProps={{
         defaultValues: { couponCode: '' },
       }}
       className="w-full"
     >
-      {({ register, formState: { errors }, watch }) => (
+      {({ register, formState: { errors }, watch }) =>  {
+        const couponCode = watch('couponCode');
+        const isCouponEntered = couponCode !== copone;
+        // this for if you want that the input Empty then you can't apply any coupon
+        // const isCouponEntered = couponCode && couponCode !== copone;
+        return (
         <>
           <div className="relative flex items-end">
             <Input
@@ -56,14 +65,15 @@ function CheckCoupon() {
             <Button
               type="submit"
 
-              className={`ms-3 ${watch('couponCode') ? 'bg-mainColor hover:bg-mainColorHover dark:hover:bg-mainColor/90' : 'bg-muted/70'}`}
-              disabled={watch('couponCode') ? false : true}
+              className={`ms-3 ${isCouponEntered ? 'bg-mainColor hover:bg-mainColorHover dark:hover:bg-mainColor/90' : 'bg-muted/70'}`}
+              disabled={!isCouponEntered}
             >
-              Apply
+              {copone ? 'Edit' : 'Apply'}
+              {/* Apply */}
             </Button>
           </div>
         </>
-      )}
+      )}}
     </Form>
   );
 }
@@ -80,6 +90,7 @@ function CartCalculations({fees, Tax}:{fees:number; Tax:number}) {
   const { price: totalPrice } = usePrice({
     amount: totalWithFees,
   });
+
   return (
     <div>
       <Title as="h2" className="border-b border-muted pb-4 text-lg font-medium">
@@ -229,7 +240,10 @@ export default function CartPageWrapper() {
   // ];
 
   const { items } = useCart();  
+  console.log("items: ",items);
+   
   const [notes, setNotes] = useState('');
+  const { orderNote, setOrderNote} = useUserContext();
   return (
     <div className="@container">
       <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
@@ -252,8 +266,8 @@ export default function CartPageWrapper() {
               <SpecialNotes
                 des="Anything else we need to know?"
                 className="py-0 col-span-full"
-                notes={notes}
-                setNotes={setNotes}
+                notes={orderNote}
+                setNotes={setOrderNote}
               />
             </div>
             <CartCalculations fees={0} Tax={0} />

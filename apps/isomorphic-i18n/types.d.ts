@@ -86,6 +86,7 @@ type FullProduct = {
 
 type FaqType = {
   name: string
+  imageUrl?: string
   shopId: string
   faQs: Array<{
     id: string

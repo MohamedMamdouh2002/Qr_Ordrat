@@ -10,6 +10,7 @@ type Props = {
 	action?: () => void;
 	price?: string;
 	oldPrice?: string;
+	buttonType?: "submit" | "reset" | "button" | undefined;
 	isAddedToCart?: boolean;
 };
 
@@ -20,10 +21,12 @@ function AddToCartButton({
 	type = 'add',
 	price,
 	oldPrice,
+	buttonType = "button",
 	isAddedToCart
 }: Props) {
 	return (
 		<button
+			type={buttonType}
 			onClick={action}
 			className={cn(
 				'flex text-white bg-orange-500 px-2 py-1 rounded-lg font-bold items-center justify-center gap-1',
@@ -32,7 +35,7 @@ function AddToCartButton({
 		>
 			{mainItem ? (
 				<div className="w-full px-2 font-normal flex items-center justify-between">
-					{type === 'add' ? 'Add item' : 'Update item'}
+					Add item
 					<Price
 						className="flex-col-reverse items-end"
 						price={price!}
@@ -44,7 +47,7 @@ function AddToCartButton({
 			) : !isAddedToCart ? (
 				<>
 					<Plus className="text-white" />
-					{type === 'add' ? 'Add' : 'Update'}
+					Add
 				</>
 			) : (
 				<>

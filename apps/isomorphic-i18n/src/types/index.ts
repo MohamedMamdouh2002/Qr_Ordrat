@@ -40,19 +40,42 @@ export interface ProductColor {
 }
 
 export interface CartItem {
+  // not need
+  slug?: string;
+  color?: ProductColor | null;
+  salePrice?: number;
+  size?: number;
+  stock?: number;
+
+  // the product information Not Important
+  sizeFood?: string;
+
+  // the product information
   id: number | string;
   name: string;
-  slug?: string;
   description?: string;
   image: string | StaticImageData;
-  color?: ProductColor | null;
   price: number;
-  salePrice?: number;
+  oldPrice?: number;
   quantity: number;
-  size?: number;
-  sizeFood?: string;
-  stock?: number;
   discount?: number;
+
+  // Variations
+  // Order-related information
+  specialInstructions?: string;
+  notes?: string;
+
+  orderItemVariations?: {
+    variationId: string;
+    variationLable: string;
+    choices: {
+      image?: string;
+      inputValue?: string;
+      specialInstructions?: string;
+      choiceId?: string;
+      choiceValue?: string;
+    }[];
+  }[];
 }
 
 
@@ -209,6 +232,24 @@ export type Food = {
     isOffer: boolean
 }
 
+interface Variation {
+  id: string;
+  name: string;
+  buttonType: number;
+  isActive:boolean;
+  isRequired:boolean;
+  choices: Choice[];
+}
+
+interface Choice {
+  id: string;
+  name?: string;
+  imageUrl?: string;
+  price?: number;
+  isActive:boolean;
+  isDefault:boolean;
+}
+
 export type FoodId= {
   id: string;
   name: string;
@@ -227,7 +268,7 @@ export type FoodId= {
   categoryId: string;
   numberOfSales: number;
   category: string | null;
-  variations: any[]; // يمكنك تخصيص نوع البيانات بناءً على شكل الـ variations إذا كانت معلومة.
+  variations: Variation[];
   frequentlyOrderedWith: any[]; // يمكنك تخصيص نوع البيانات بناءً على شكل الـ frequentlyOrderedWith إذا كانت معلومة.
   reviews: any[]; // يمكنك تخصيص نوع البيانات بناءً على شكل الـ reviews إذا كانت معلومة.
   price: number;

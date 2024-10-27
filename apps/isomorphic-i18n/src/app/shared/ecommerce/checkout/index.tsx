@@ -31,11 +31,28 @@ import {
   CreateOrderInput,
   orderFormSchema,
 } from '@/validators/create-order.schema';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MapWithZones from '@/app/components/ui/inputs/map/MapWithZones';
 import { RadioGroup } from '@headlessui/react';
 
 import { BriefcaseBusiness, Building, Home } from 'lucide-react';
+import { useUserContext } from '@/app/components/context/UserContext';
+import { API_BASE_URL } from '@/config/base-url';
+import { MadeOrderInput, madeOrderSchema } from '@/validators/checkoutcreditecard.schema';
+import { useCart } from '@/store/quick-cart/cart.context';
+import usePrice from '@hooks/use-price';
+import { shopId } from '@/config/shopId';
+
+type Address = {
+  id: string;
+  apartmentNumber: string;
+  additionalDirections?: string;
+  floor?: number;
+  street: string;
+  latitude: number;
+  longtude: number;
+  buildingType: number;
+};
 
 // main order form component for create and update order
 export default function CheckoutPageWrapper({
@@ -47,77 +64,110 @@ export default function CheckoutPageWrapper({
 }) {
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
-  const setOrderNote = useSetAtom(orderNoteAtom);
-  const setBillingAddress = useSetAtom(billingAddressAtom);
-  const setShippingAddress = useSetAtom(shippingAddressAtom);
-
-  const methods = useForm({
-    mode: 'onChange',
-    resolver: zodResolver(orderFormSchema),
-    defaultValues: {
-      sameShippingAddress: orderData.sameShippingAddress,
-      shippingMethod: orderData.shippingMethod,
-    },
+  const { orderNote, copone } = useUserContext();
+  const { items, total, addItemToCart, removeItemFromCart, clearItemFromCart } =
+    useCart();
+  const { price: totalPrice } = usePrice({
+    amount: total,
   });
-
-  const sameShippingAddress = useWatch({
-    control: methods.control,
-    name: 'sameShippingAddress',
-  });
-
-  const onSubmit: SubmitHandler<CreateOrderInput> = (data) => {
-    setOrderNote(data?.note as string);
-    if (sameShippingAddress) {
-      setBillingAddress(data.billingAddress);
-      setShippingAddress(data.billingAddress);
-    } else {
-      if (!isEmpty(data.shippingAddress)) {
-        setShippingAddress(data.shippingAddress);
-      }
-    }
-
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-      console.log('checkout_data', data);
-      router.push(routes.eCommerce.orderDetails(DUMMY_ID));
-      toast.success(<Text as="b">Order placed successfully!</Text>);
-    }, 600);
-  };
+  // console.log("total: ",total);
   
-   // Sample addresses
-   const addresses = [
-    {
-      id: 'd6a3d710-96ae-4197-ab6c-9494a735e400',
-      additionalDirections: 'street',
-      apartmentNumber: 122,
-      floor: 'street',
-      street: 'street',
-      latitude: 31.201240111381715,
-      longtude: 29.90064892297799,
-      buildingType: 1,
-    },
-    {
-      id: '46f1e3e0-6ac2-4d66-8758-f62474d5d635',
-      additionalDirections: 'string',
-      apartmentNumber: 0,
-      floor: 'string',
-      street: 'string',
-      latitude: 30.013056,
-      longtude: 31.208853,
-      buildingType: 0,
-    },
-  ];
+  const methods = useForm<MadeOrderInput>({
+    mode: 'onChange',
+    resolver: zodResolver(madeOrderSchema),
+  });
+
+  
+  // Sample addresses
+  const [addresses, setAddresses] = useState<Address[]>([]);
+	const [isAddressApiLoading, setIsAddressApiLoading] = useState(false);
+	const { updateAddresses, setUpdateAddresses } = useUserContext();
+  
+  
+	const fetchAddresses = async () => {
+	  setIsAddressApiLoading(true);
+	  const token = localStorage.getItem('accessToken');
+
+	  try {
+		const response = await fetch(`${API_BASE_URL}/api/Address/GetEndUserAddresses`, {
+		  method: 'GET',
+		  headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
+		  },
+		});
+
+		if (!response.ok) {
+		  setIsAddressApiLoading(false);
+		  throw new Error('Failed to fetch addresses');
+		}
+
+		const data = await response.json();
+
+		const mappedAddresses = data.map((a: any) => ({
+			id: a.id,
+			additionalDirections: a.additionalDirections,
+			apartmentNumber: a.apartmentNumber,
+			floor: a.floor,
+			street: a.street,
+			latitude: a.latitude,
+			longtude: a.longtude,
+			buildingType: a.buildingType,
+		}));
+	
+		  setAddresses(mappedAddresses);
+      setUserLocation({
+        lat: mappedAddresses[mappedAddresses?.length - 1]?.latitude,
+        lng: mappedAddresses[mappedAddresses?.length - 1]?.longtude,
+      })
+      setSelectedAddressId(mappedAddresses[mappedAddresses?.length - 1]?.id)
+		  setIsAddressApiLoading(false);
+	  } catch (error) {
+		// toast.error('Error fetching addresses');
+		console.error('Error fetching addresses:', error);
+		setIsAddressApiLoading(false);
+	  }
+	};
+	
+	useEffect(() => {
+		fetchAddresses();
+		if (updateAddresses === true) {
+			fetchAddresses();
+			setUpdateAddresses(false);	
+		}
+	}, [updateAddresses]);
+
+  //  const addresses = [
+  //   {
+  //     id: 'd6a3d710-96ae-4197-ab6c-9494a735e400',
+  //     additionalDirections: 'street',
+  //     apartmentNumber: 122,
+  //     floor: 'street',
+  //     street: 'street',
+  //     latitude: 31.201240111381715,
+  //     longtude: 29.90064892297799,
+  //     buildingType: 1,
+  //   },
+  //   {
+  //     id: '46f1e3e0-6ac2-4d66-8758-f62474d5d635',
+  //     additionalDirections: 'string',
+  //     apartmentNumber: 0,
+  //     floor: 'string',
+  //     street: 'string',
+  //     latitude: 30.013056,
+  //     longtude: 31.208853,
+  //     buildingType: 0,
+  //   },
+  // ];
 
   // Initial user location
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number }>({
-    lat: 30.013056,
-    lng: 31.208853,
+    lat: addresses[addresses?.length - 1]?.latitude,
+    lng: addresses[addresses?.length - 1]?.longtude,
   });
 
   // Active selected address ID
-  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(addresses[1]?.id || null);
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(addresses[addresses?.length - 1]?.id || null);
 
   // Handle location change from the map
   const handleLocationChange = (newLocation: { lat: number; lng: number }) => {
@@ -140,6 +190,95 @@ export default function CheckoutPageWrapper({
     { center: { lat: 30.020817, lng: 31.275039 }, radius: 1000, color: '#FFFF00' },  // Eastern Giza
   ];
 
+  console.log("errors: ",methods.formState.errors);
+  
+  const onSubmit: SubmitHandler<MadeOrderInput> = async (data) => {
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append('paymentmethod', '0');
+      formData.append('OrderType', '0');
+      formData.append('TotalPrice', '0');
+      formData.append('ShippingFees', '0');
+      if (copone) {
+        formData.append('CouponCode', copone);
+      }
+      if (orderNote) {
+        formData.append('Notes', orderNote);
+      }
+      if (selectedAddressId) {
+        formData.append('AddressId', selectedAddressId);
+      }
+      formData.append('ShopId', shopId);
+
+      items.forEach((item, index) => {
+        formData.append(`Items[${index}].quantity`, item.quantity.toString());
+        if (item.notes) {
+          formData.append(`Items[${index}].notes`, item.notes);
+        }
+        formData.append(`Items[${index}].productId`, item.id.toString());
+        item.orderItemVariations?.forEach((order, orderIndex) => {
+          if (order.variationId) {
+            formData.append(`Items[${index}].orderItemVariations[${orderIndex}].variationId`, order.variationId);
+          }
+          order.choices?.forEach((choice, choiceIndex) => {
+            if (choice.inputValue) {
+              formData.append(`Items[${index}].orderItemVariations[${orderIndex}].choices[${choiceIndex}].inputValue`, choice.inputValue);
+            }
+            if (choice.choiceId) {
+              formData.append(`Items[${index}].orderItemVariations[${orderIndex}].choices[${choiceIndex}].choiceId`, choice.choiceId);
+            }
+            if (choice.image) {
+              formData.append(`Items[${index}].orderItemVariations[${orderIndex}].choices[${choiceIndex}].image`, choice.image);
+            }
+          })
+        });
+      });
+
+      formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        toast.error('No token found, please log in again.');
+        return;
+      }
+      console.log("Token from localStorage:", token);
+      const response = await fetch(`${API_BASE_URL}/api/Order/Create`, {
+        method: 'POST',
+        headers: {
+          // 'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+      
+      const result = await response.text();
+      
+      if (response.ok) {
+        // console.log('Order created successfully:', result);
+
+        // Clear the cart items
+        items.forEach(item => clearItemFromCart(item.id));
+        // Display success toast
+        toast.success(<Text as="b">Order placed successfully!</Text>);
+
+        // Go to success page
+        router.push("/");
+        setLoading(false);
+      } else {
+        console.error('Error creating order:', result);
+        toast.error(<Text as="b">Failed to place order. Please try again.</Text>);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error during order submission:', error);
+      toast.error(<Text as="b">An error occurred. Please try again later.</Text>);
+      setLoading(false);
+    }
+  };
+  
   return (
     <div className='w-[90%] mx-auto mt-8'>
       <FormProvider {...methods}>
@@ -160,9 +299,9 @@ export default function CheckoutPageWrapper({
                     onLocationChange={handleLocationChange}
                     zones={zones}
                   />
-                  <p>
+                  {/* <p>
                     Current Location: Latitude: {userLocation.lat}, Longitude: {userLocation.lng}
-                  </p>
+                  </p> */}
                 </div>
 
                 {/* Address selection via radio buttons */}
@@ -174,7 +313,7 @@ export default function CheckoutPageWrapper({
                       handleAddressSelection(selectedAddress);
                     }
                   }}
-                  className="grid md:flex grid-cols-3 gap-1 sm:gap-2 col-span-full"
+                  className="grid grid-cols-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-2 sm:gap-2 col-span-full"
                 >
                   {addresses.map((address) => (
                     <RadioGroup.Option key={address.id} value={address.id}>
@@ -186,8 +325,8 @@ export default function CheckoutPageWrapper({
                         >
                           {/* <p>{`Apartment No: ${address.apartmentNumber}, Street: ${address.street}`}</p>
                           <p>{`Floor: ${address.floor}, Directions: ${address.additionalDirections}`}</p> */}
-                          <div className={cn('flex flex-col gap-2', className)}>
-                            <span className={`px-3 py-2 rounded-lg transition duration-150 flex items-center gap-2`}>
+                          <div className={cn('flex flex-col gap-2 max-w-full', className)}>
+                            <span className={`px-3 py-2 rounded-lg transition duration-150 flex items-center gap-2 max-w-full`}>
                               {address.buildingType === 0 ? (
                                 <Building className={`pt-1 ${checked ?'text-white':'text-orange-500'}`} />
                               ) : address.buildingType === 1 ? (
@@ -195,10 +334,12 @@ export default function CheckoutPageWrapper({
                               ) : (
                                 <BriefcaseBusiness className={`pt-1 ${checked ?'text-white':'text-orange-500'}`} />
                               )}
-                              {address.apartmentNumber}, {address.floor ? address.floor + ', ' : ''}
-                              {address.street}
+                              <span className='whitespace-nowrap overflow-hidden truncate max-w-[200px] sm:max-w-[80%]'>
+                                {address.apartmentNumber}, {address.floor ? address.floor + ', ' : ''}
+                                {address.street}
+                              </span>
                             </span>
-                            <p className={`px-6 ${checked ?'text-white/80':'text-black/50'} text-sm font-bold`}>
+                            <p className={`px-6 ${checked ?'text-white/80':'text-black/50'} text-sm font-bold sm:whitespace-nowrap sm:overflow-hidden sm:truncate max-w-full`}>
                               {/* {address.phoneNumber}
                               <br /> */}
                               {address.additionalDirections}
@@ -210,7 +351,7 @@ export default function CheckoutPageWrapper({
                   ))}
                 </RadioGroup>
 
-                <AddressInfo type="billingAddress" title="Billing Information" />
+                {/* <AddressInfo type="billingAddress" title="Billing Information" />
 
                 <DifferentBillingAddress />
 
@@ -220,7 +361,7 @@ export default function CheckoutPageWrapper({
 
                 <ShippingMethod />
 
-                <PaymentMethod />
+                <PaymentMethod /> */}
               </div>
             </div>
 

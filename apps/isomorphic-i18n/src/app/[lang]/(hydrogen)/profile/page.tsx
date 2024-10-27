@@ -12,8 +12,18 @@ type Props = {
 	};
 };
 
-async function Profile({ params: { locale } }: Props) {
-	unstable_setRequestLocale(locale);
+const translations = {
+  accountDetails: { en: 'Account Details', ar: 'معلوماتي' },
+  myAddresses: { en: 'My addresses', ar: 'عناويني' },
+};
+
+export default function Profile({
+	params: { lang },
+}: {
+	params: {
+	  lang: string;
+	};
+}) {
 	return (
 		<>
 			<SessionGuard>
@@ -24,17 +34,17 @@ async function Profile({ params: { locale } }: Props) {
 					/>
 				</div>
 				<div className='w-[95%] md:w-[85%]  mx-auto'>
-						<Layout fullLayout="false" currentPage="Profile" locale={locale}>
+						<Layout fullLayout="false" currentPage="Profile" locale={lang}>
 							<div className="container flex flex-col gap-10 w-full my-5">
 								<div className="flex flex-col gap-5">
 									<div className="flex justify-between items-center">
-										<h2 className="text-2xl md:text-3xl font-medium">Account Details</h2>
+										<h2 className="text-2xl md:text-3xl font-medium">{translations.accountDetails[lang=='en'?'en':'ar']}</h2>
 									</div>
 									<UpdateProfileForm />
 								</div>
 								<div className="flex flex-col gap-5">
 									<div className="flex justify-between items-center">
-										<h2 className="text-2xl md:text-3xl font-medium">My addresses</h2>
+										<h2 className="text-2xl md:text-3xl font-medium">{translations.myAddresses[lang=='en'?'en':'ar']}</h2>
 									</div>
 									<Addresses />
 								</div>
@@ -45,5 +55,3 @@ async function Profile({ params: { locale } }: Props) {
 		</>
 	);
 }
-
-export default Profile;

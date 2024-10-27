@@ -69,7 +69,7 @@ function FAQSectionContent({ lang }: { lang: string }) {
         <div className="md:w-10/12 w-11/12 mb-10 gap-20 mx-auto">  
           <div className="col-span-6 pt-5">
             {selectedFaqCategory?.faQs?.map((faq, index) => (
-              <div key={`${index}`} className="mb-8 relative rounded-xl shadow-lg border border-mainColor border-l-0">
+              <div key={`${index}`} className="mb-8 relative rounded-xl shadow-lg border border-mainColor border-s-0">
                   <button
                       aria-expanded={openAccordion === `${index}`}
                       style={{ borderColor: index % 2 === 0 ? '#f97316' : '#5B5B5B' }}

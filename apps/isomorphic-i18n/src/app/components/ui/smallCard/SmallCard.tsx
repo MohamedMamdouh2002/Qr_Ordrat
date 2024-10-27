@@ -18,6 +18,7 @@ type Props = Food & {
 };
 function SmallCard(data:Props) {
     const [isModalOpen, setIsModalOpen] = useState(false); 
+    const [quantity, setQuantity] = useState(1);
 
     const handleOpenModal = () => {
       setIsModalOpen(true);
@@ -83,14 +84,17 @@ function SmallCard(data:Props) {
         </div>
     </>
     }
-    {isModalOpen && <Modal modalId={data.id} setIsModalOpen={handleCloseModal} quantity={0} setQuantity={function (value: SetStateAction<number>): void {
+    {isModalOpen && (
+        <Modal
+            modalId={data.id}
+            setIsModalOpen={handleCloseModal}
+            quantity={quantity}
+            setQuantity={setQuantity}
+            setShowItem={function (val: boolean): void {
             throw new Error('Function not implemented.');
-        } } notes={''} setNotes={function (val: string): void {
-            throw new Error('Function not implemented.');
-        } } handleUpdateCart={function (): void {
-            throw new Error('Function not implemented.');
-        } }  />
-    }
+            } }
+        />
+    )}
 
   </>
 }

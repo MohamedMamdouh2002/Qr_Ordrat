@@ -17,6 +17,10 @@ import { shopId } from '@/config/shopId';
 import { API_BASE_URL } from '@/config/base-url';
 import { method } from 'lodash';
 import { useUserContext } from '../context/UserContext';
+import Phone from '../ui/inputs/phone';
+import { isValidPhoneNumber } from 'react-phone-number-input';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+
 // import { SessionContext } from '@/utils/contexts';
 
 type Props = {
@@ -84,21 +88,28 @@ function Login({ onLogin, setCurrentModal }: Props) {
 	}
 	const phoneRegex = /^((\+[1-9]{1,4}[ \-]*)|(\([0-9]{2,3}\)[ \-]*)|([0-9]{2,4})[ \-]*)?[0-9]{7,8}$/;
 
-	let validationSchema=yup.object({
-		phoneNumber:yup.string()
-		.matches(phoneRegex, "Phone number is not valid")
-		.required(),
-	})
-let formik= useFormik({
-	initialValues:{
+	const validationSchema = yup.object({
+		// phoneNumber: yup
+		// 	.string()
+		// 	.required('Phone number is required')
+		// 	.test('validate phone number', 'Invalid phone number', value => {
+		// 		if (value && value !== '') return isValidPhoneNumber(value);
+		// 		return false;
+		// 	}),
+	});
+	const initialValues = {
 		phoneNumber:'',
-		shopId:shopId
-	},
-	validationSchema,
-onSubmit:sendData
-	
+		shopId:shopId,
+	};
 
-})
+	// let formik= useFormik({
+	// 	initialValues:{
+	// 		phoneNumber:'',
+	// 		shopId:shopId
+	// 	},
+	// 	validationSchema,
+	// 	onSubmit:sendData
+	// })
 	return (
 		<div className="flex flex-col gap-5">
 			<div className="flex flex-col items-center justify-center">
@@ -106,7 +117,7 @@ onSubmit:sendData
 				<p className="text-sm font-light">Fried chicken, Sandwiches, Fast Food...</p>
 			</div>
 			<div className="flex flex-col items-center">
-				<h3 className="font-bold text-lg">Login</h3>
+				{/* <h3 className="font-bold text-lg">Login</h3> */}
 				{/* <button
 					// onClick={() => setCurrentModal('register')}
 					className="text-xs font-bold text-black/50 hover:underline"
@@ -131,35 +142,60 @@ onSubmit:sendData
 						</button>
 					</Form>
 				</Formik> */}
-				<form className='flex flex-col' onSubmit={formik.handleSubmit}>
-					
-					<label htmlFor="phone" className='font-bold mb-1'>Phone</label>
-					<Input
-						type='tel'
-						autoComplete='tel'
-						placeholder='Enter Your Phone Number'
-						autoFocus
-						id='phoneNumber'
-						name='phoneNumber'
-						className="rounded-md focus:border-2 focus:border-mainColor focus:outline-none "
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
-						value={formik.values.phoneNumber}
-					/>
-					 {formik.errors.phoneNumber&& formik.touched.phoneNumber ?
-					 <p className="text-red-500 text-xs">{formik.errors.phoneNumber}</p>:"" }
-					  <button
-        type="submit"
-        className="bg-mainColor py-3 px-3 rounded-xl mt-4 font-bold text-base text-white flex items-center justify-center"
-			disabled={loading} 
-		>
-			{loading ? (
-				<Loader2 className="animate-spin" /> 
-			) : (
-				"Login"
-			)}
-		</button>
-				</form>
+				{/* <form className='flex flex-col' onSubmit={formik.handleSubmit}> */}
+				<Formik<any>
+					initialValues={initialValues}
+					enableReinitialize
+					validationSchema={validationSchema}
+					onSubmit={async (vals, { setSubmitting }) => {
+						console.log('Submitted values: ', vals);
+						sendData(vals);
+						setSubmitting(false);
+					}}
+				>
+					{({ errors, values, initialValues, touched }) => {
+						return (
+							<Form className="flex flex-col w-full">
+
+								{/* <label htmlFor="phone" className='font-bold mb-1'>Phone</label> */}
+								<Field name="phoneNumber">
+									{({ field }: any) => (
+									<input
+										{...field}
+										type="tel"
+										autoComplete="tel"
+										placeholder="Enter Your Phone Number"
+										id="phoneNumber"
+										className={`rounded-md focus:border-2 focus:border-mainColor focus:outline-none ${
+										errors.phoneNumber && touched.phoneNumber ? 'border-red-800' : 'border-gray-300'
+										}`}
+									/>
+									)}
+								</Field>
+								{errors.phoneNumber && touched.phoneNumber && (
+									<p className="text-red-500 text-xs">{errors.phoneNumber?.toString() || ''}</p>
+								)}
+
+								{/* <Phone name="phoneNumber" label="Phone Number" placeholder="Phone Number" /> */}
+
+								{/* {formik.errors.phoneNumber&& formik.touched.phoneNumber ? */}
+								{/* <p className="text-red-500 text-xs">{formik.errors.phoneNumber}</p>:"" } */}
+								<button
+									type="submit"
+									className="bg-mainColor py-3 px-3 rounded-xl mt-4 font-bold text-base text-white flex items-center justify-center"
+									disabled={loading} 
+								>
+									{loading ? (
+										<Loader2 className="animate-spin" /> 
+									) : (
+										"Login"
+									)}
+								</button>
+							{/* </form> */}
+							</Form>
+						);
+					}}
+				</Formik>
 			
 			</div>
 		</div>
