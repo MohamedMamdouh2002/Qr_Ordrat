@@ -9,6 +9,7 @@
   "Home": "Home",
   "Categories": "Categories",
   "FAQ": "FAQ",
+  "Reviews": "Reviews",
   "sidebar-menu-search-here": "Search here",
   "sidebar-menu-quick-page-links": "Quick Page Links",
   "sidebar-menu-no-result-found": "No Result Found",
@@ -144,6 +145,19 @@
   "welcome-to":"welcome to Karam Elsham",
   "select-item":"EGP 239.5 off on select items",
   "mins":"hours",
+  "mins1":"mins",
   "Cash":"Cash On Delivery",
-   "menu":"Menu categories"
+   "menu":"Menu categories",
+   "address":"ELDoki-Eltehrer street",
+   "desc":"Fried chicken, Sandwiches, Fast Food Fried chicken, Sandwiches, Fast Food Fried chicken, Sandwiches",
+   "Get-in-Touch":"Get in Touch",
+   "title":"karam El Sham",
+   "ratings":"ratings",
+   "deliveryFee":"deliveryFee",
+   "delivery-Time":"delivery Time",
+   "Restaurant":"Restaurant",
+   "Account":"My Account",
+   "quickLinks":"Quick Links",
+   "contact":"Contact Us"
+
 }

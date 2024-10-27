@@ -1,4 +1,5 @@
-import React from 'react';
+'use client'
+import React, { useEffect } from 'react';
 // import Logo from './Logo';
 import  Link from 'next/link';
 import logo from '@public/assets/karam-el-sham.png'
@@ -11,7 +12,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelopesBulk, faPhone } from '@fortawesome/free-solid-svg-icons';
 
 function Footer({lang}:{lang:string}) {
-	const { t } = useTranslation(lang! ,'nav');
+  const { t, i18n } = useTranslation(lang!, 'nav');
+
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [lang, i18n]);
 	return (
     <div className=" mt-auto bg-orange-500/20">
       <div className="mt-10">
@@ -19,10 +24,10 @@ function Footer({lang}:{lang:string}) {
           <div className="col-span-2 flex flex-col gap-2 me-10">
             <div className="w-fit flex items-center gap-4 ">
               <Image src={logo} alt="logo" className="max-w-[60px]" />
-              <h3>Karam Elsham</h3>
+              <h3>{t('title')}</h3>
             </div>
-            <p className="text-sm font-light">Fried chicken, Sandwiches, Fast Food Fried chicken, Sandwiches, Fast Food Fried chicken, Sandwiches, Fast Food</p>
-              <h4 className='mt-10'>Get in Touch</h4>
+            <p className="text-sm font-light">{t('desc')}</p>
+              <h4 className='mt-10'>{t('Get-in-Touch')}</h4>
             <div className="flex items-center gap-2">
               <a className="bg-white rounded-full flex items-center justify-center text-orange-500 p-2 size-10 hover:bg-white transition duration-150 hover::fill-orange-500 hover::text-white cursor-pointer">
                 <BsWhatsapp size={20} />
@@ -39,7 +44,7 @@ function Footer({lang}:{lang:string}) {
             </div>
           </div>
           <div className="">
-              <h3 className="font-bold text-lg h-[60px] capitalize flex items-center">myAccount</h3>
+              <h3 className="font-bold text-lg h-[60px] capitalize flex items-center">{t('Account')}</h3>
               <div className="flex flex-col gap-2">
                 <Link
                   href={'/profile'}
@@ -137,12 +142,12 @@ function Footer({lang}:{lang:string}) {
           </div>
           <div className="">
               <h3 className="font-bold text-lg h-[60px] capitalize flex items-center">
-                {t('contactUs')} 
+                {t('contact')} 
               </h3>
               <div className="flex flex-col gap-2">
                 <ul className='space-y-3 text-TextColor'>
                     <li>
-                      ELDoki-Eltehrer street
+                      {t('address')}
                     </li>
                     <li  className='hover:text-mainColor  items-center  duration-200 w-fit'>
                         <Link className='flex gap-2 items-center' href={""}>

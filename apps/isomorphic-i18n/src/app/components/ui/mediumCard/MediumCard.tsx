@@ -30,7 +30,6 @@ function MediumCard(data:Props) {
 
   return (
     <>
-      {!isModalOpen && data && ( // تأكد من وجود data قبل عرض المحتوى
         <div onClick={handleOpenModal} className="flex flex-wrap sm:border sm:border-dashed sm:border-mainColor pb-2 sm:pb-4 sm:p-4 rounded-lg justify-between mt-5 gap-5 hover:cursor-pointer">
           <div className="flex sm:flex-row w-full sm:gap-0 gap-3 h-[135px] rounded-lg">
             <div className="relative w-full sm:w-8/12">
@@ -58,16 +57,19 @@ function MediumCard(data:Props) {
                 )}
               </div>
             </div>
+            <div className="relative w-[160px] h-[130px] sm:w-4/12 sm:h-full rounded-lg sm:rounded-s-lg">
+
             <Image
               src={data.imageUrl}
-              width={300}
-              height={100}
-              className="w-[130px] h-[130px] sm:w-4/12 sm:h-full rounded-lg sm:rounded-s-lg"
+                layout="fill"
+                objectFit="cover"
+              className="rounded-lg sm:rounded-s-lg"
               alt=""
-            />
+              />
+            </div>
           </div>
         </div>
-  )}
+  
   {isModalOpen && (
     <Modal
       lang={data.lang}
@@ -75,9 +77,9 @@ function MediumCard(data:Props) {
       setIsModalOpen={handleCloseModal}
       quantity={quantity}
       setQuantity={setQuantity}
-      setShowItem={function (val: boolean): void {
-        throw new Error('Function not implemented.');
-      } }
+      // setShowItem={function (val: boolean): void {
+      //   throw new Error('Function not implemented.');
+      // } }
     />
   )}
 

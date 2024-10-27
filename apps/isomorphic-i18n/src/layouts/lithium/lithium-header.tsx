@@ -31,7 +31,7 @@ import  {SideNav}  from "@/app/components/sideNav/SideNav";
 import path from "path";
 import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
-import { useTranslation } from '@/app/i18n/client';
+import { useTranslation } from "@/app/i18n/client";
 
 function HeaderMenuRight() {
   return (
@@ -86,8 +86,10 @@ export default function Header({ lang }: { lang?: string }) {
   const [isStickyVisible, setStickyVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false); // حالة التحكم في ظهور الـ SideNav
   const pathname = usePathname(); // استخدام usePathname للحصول على المسار الحالي
-  const { t } = useTranslation(lang!, 'search');
-
+  const { t, i18n } = useTranslation(lang!, 'nav');
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [lang, i18n]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -188,21 +190,21 @@ export default function Header({ lang }: { lang?: string }) {
 <nav>
     <div  className={`flex lg:hidden ${
         isStickyVisible
-          ? "fixed top-0 z-[999] w-full bg-white  "
+          ? "fixed top-0 z-50 w-full bg-white  "
           : "hidden"}`}>
             <div className="w-5/6 mx-auto flex justify-between h-16  items-center">
               <Link href={'/'}>
-                <h1 className='text-base'>karam El Sham</h1>
+                <h1 className='text-base'>{t('title')}</h1>
               </Link>
               <div className="  flex justify-between items-center">
+                <div className="flex gap-5">
                 <LanguageSwitcher
                 lang={lang!}
                 className="ms-3 rounded-none shadow-none"
                 variant="icon"
                 />
-                <div className="flex gap-5">
                   <Link href={`/${lang!}/search`}>
-                        <PiMagnifyingGlassBold size={20} />    
+                    <PiMagnifyingGlassBold size={20} />    
                   </Link>
                   <button
                     onClick={() => setIsOpen(true)} 
@@ -273,12 +275,12 @@ export default function Header({ lang }: { lang?: string }) {
                     <h1 className='text-base'>karam El Sham</h1>
                   </Link>
                     <div className="  flex justify-between items-center">
+                          <div className="flex gap-5">
                           <LanguageSwitcher
                           lang={lang!}
                           className="ms-3 rounded-none shadow-none"
                           variant="icon"
                           />
-                          <div className="flex gap-5">
                             <Link href={`/${lang!}/search`}>
                               <PiMagnifyingGlassBold size={20} />    
                             </Link>

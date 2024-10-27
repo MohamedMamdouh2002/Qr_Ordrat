@@ -33,8 +33,8 @@ export const lithiumMenuItems: LithiumMenuItem = {
       },
     ],
   },
-  Categories: {
-    name: 'Categories',
+  Reviews: {
+    name: 'Reviews',
     type: 'link',
     dropdownItems: [
       {

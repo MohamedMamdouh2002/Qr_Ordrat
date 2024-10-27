@@ -13,7 +13,7 @@ function QuantityHandler({ quantity, setQuantity, type, className }: Props) {
 	return (
 		<div
 			className={cn(
-				'flex gap-3 rounded-lg px-2  py-2 shadow-md items-center justify-between',
+				'flex  rounded-lg px-2  py-2 shadow-md items-center justify-between',
 				className
 			)}
 		>

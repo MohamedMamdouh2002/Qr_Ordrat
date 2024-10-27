@@ -9,8 +9,13 @@ import { Loader } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState, useRef } from 'react';
 import { useMediaQuery } from 'react-responsive'; 
-
-export default function AllProduct({params: { lang },}: {params: {lang: string;};}){
+function AllProduct({
+  params: { lang },
+}: {
+  params: {
+    lang: string;
+  };
+}){ 
   const [products, setProducts] = useState<Food[]>([]);
   const [loading, setLoading] = useState(false); 
   const [page, setPage] = useState(1);
