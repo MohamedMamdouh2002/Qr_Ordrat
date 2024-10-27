@@ -9,7 +9,7 @@ import { Loader } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState, useRef } from 'react';
 import { useMediaQuery } from 'react-responsive'; 
-function AllProduct({
+export default function AllProduct({
   params: { lang },
 }: {
   params: {
