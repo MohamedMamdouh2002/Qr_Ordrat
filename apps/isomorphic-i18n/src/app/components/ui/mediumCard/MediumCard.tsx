@@ -5,6 +5,7 @@ import Modal from '../modal/Modal';
 import Badge from '../Badge';
 import { Star, Flame } from 'lucide-react';
 import TextTruncate from '../../ui/TruncateText';
+import { toCurrency } from '@utils/to-currency';
 
 type Props = Food & {
   lang:string;
@@ -49,10 +50,12 @@ function MediumCard(data:Props) {
               </div>
               <TextTruncate text={data.description} limit={10} />
               <div className="mt-2 flex items-center font-semibold text-mainColor absolute bottom-2">
-                <span>EGP {data.price}</span>
+                <span>
+                  {toCurrency(data.price, data.lang)}
+                </span>
                 {data.oldPrice && (
                   <del className="ps-1.5 text-[13px] font-normal text-gray-500">
-                    EGP {data.oldPrice}
+                    {toCurrency(data.oldPrice, data.lang)}
                   </del>
                 )}
               </div>

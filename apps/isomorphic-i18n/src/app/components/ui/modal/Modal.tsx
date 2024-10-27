@@ -583,7 +583,7 @@ function Modal({
             <div 
                   ref={scrollContainerRef}
                   onScroll={handleScroll}
-                   className="bg-white rounded-lg b-4 w-full max-h-screen flex flex-col overflow-y-auto custom-scroll">
+                   className="bg-white rounded-lg b-4 w-full max-h-svh flex flex-col overflow-y-auto custom-scroll">
                 <FormProvider {...methods}>
                     <form className="" onSubmit={methods.handleSubmit(onSubmit)}>
                             {/* <div className="relative flex-shrink-0">

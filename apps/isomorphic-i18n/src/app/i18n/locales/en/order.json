@@ -40,8 +40,10 @@
     "Customer-Details":"Customer Details",
     "Shipping-Address":"Shipping Address",
     "status":"Order Status",
-
-    "currencyCode":"EGP"
+    "currencyCode":"EGP",
+    "Update-Order":"Update Order",
+    "Place-Order":"Place Order",
+    "Your-Order":"Your Order"
 
 
 }

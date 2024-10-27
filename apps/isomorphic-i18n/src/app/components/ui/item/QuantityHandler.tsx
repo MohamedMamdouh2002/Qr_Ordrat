@@ -22,7 +22,7 @@ function QuantityHandler({ quantity, setQuantity, type, className }: Props) {
 					<Trash className={cn('text-orange-500')} size={type === 'cart' ? 16 : undefined} />
 				</button>
 			) : (
-				<button disabled={quantity === 1} onClick={() => setQuantity(prev => prev - 1)}>
+				<button type='button' disabled={quantity === 1} onClick={() => setQuantity(prev => prev - 1)}>
 					<Minus
 						className={cn({
 							'text-orange-500/50': quantity === 1,
@@ -33,7 +33,7 @@ function QuantityHandler({ quantity, setQuantity, type, className }: Props) {
 				</button>
 			)}
 			<span>{quantity}</span>
-			<button onClick={() => setQuantity(prev => prev + 1)}>
+			<button type='button' onClick={() => setQuantity(prev => prev + 1)}>
 				<Plus className={cn({ 'text-orange-500': true })} size={type === 'cart' ? 16 : undefined} />
 			</button>
 		</div>

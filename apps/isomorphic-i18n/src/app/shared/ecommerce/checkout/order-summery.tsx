@@ -9,6 +9,8 @@ import { Button, Title, Text } from 'rizzui';
 import cn from '@utils/class-names';
 import { toCurrency } from '@utils/to-currency';
 import { useCart } from '@/store/quick-cart/cart.context';
+import { useTranslation } from '@/app/i18n/client';
+import { useEffect } from 'react';
 
 export default function OrderSummery({
   isLoading,
@@ -30,7 +32,11 @@ export default function OrderSummery({
   const { price: totalPrice } = usePrice({
     amount: total,
   });
+  const { t, i18n } = useTranslation(lang!, 'order');
 
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [lang, i18n]);
   return (
     <div
       className={cn(
@@ -39,7 +45,7 @@ export default function OrderSummery({
       )}
     >
       <Title as="h4" className="font-semibold">
-        Your Order
+        {t('Your-Order')}
       </Title>
       <div className="rounded-lg border border-muted p-4 @xs:p-6 pt-0 @xs:pt-0 @5xl:rounded-none @5xl:border-none @5xl:px-0">
         <div className="flex justify-between rounded-tl-lg rounded-tr-lg border-b border-muted pb-4 @xs:pb-4">
@@ -64,26 +70,28 @@ export default function OrderSummery({
             lang={lang}
           />
           <div className="mb-4 flex items-center justify-between last:mb-0">
-            Subtotal
+            {t('Subtotal')}
             <Text as="span" className="font-medium text-gray-900">
-              {subtotal}
+              {/* {subtotal} */}
+              {toCurrency(total, lang)}
             </Text>
           </div>
           <div className="mb-4 flex items-center justify-between last:mb-0">
-            Tax
+            {t('Vat')}
             <Text as="span" className="font-medium text-gray-900">
               {toCurrency(0, lang)}
             </Text>
           </div>
           <div className="mb-4 flex items-center justify-between last:mb-0">
-            Shipping
+            {t('Shipping-Fees')}
             <Text as="span" className="font-medium text-gray-900">
               {toCurrency(0, lang)}
             </Text>
           </div>
           <div className="flex items-center justify-between border-t border-muted py-4 text-base font-bold text-gray-1000">
-            Total
-            <Text>{totalPrice}</Text>
+            {t('Total')}
+            {/* <Text>{totalPrice}</Text> */}
+            <Text>{toCurrency(total, lang)}</Text>
           </div>
 
           {items.length ? (
@@ -92,7 +100,7 @@ export default function OrderSummery({
               isLoading={isLoading}
               className="mt-3 w-full text-base @md:h-12 bg-mainColor hover:bg-mainColorHover"
             >
-              {params?.id ? 'Update Order' : 'Place Order'}
+              {params?.id ? `${t('Update-Order')}` : `${t('Place-Order')}`}
             </Button>
           ) : (
             <Link href={routes.eCommerce.shop}>
