@@ -63,14 +63,14 @@ export default function CartProduct({ product, lang }: { product: CartItem; lang
         <div className="mt-3 hidden items-center justify-between xs:flex sm:mt-6">
           <QuantityInput product={product} />
           <div className="flex items-center gap-4">
-            <AddToWishList />
+            {/* <AddToWishList /> */}
             <RemoveItem productID={product.id} placement="bottom-end" />
           </div>
         </div>
       </div>
       <div className="col-span-full flex items-center justify-between xs:hidden">
         <div className="flex items-center gap-4">
-          <AddToWishList />
+          {/* <AddToWishList /> */}
           <RemoveItem productID={product.id} placement="bottom-start" />
         </div>
         <QuantityInput product={product} />
