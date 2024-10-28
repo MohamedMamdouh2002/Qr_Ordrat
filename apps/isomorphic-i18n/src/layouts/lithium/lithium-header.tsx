@@ -13,9 +13,11 @@ import {
   PiBellSimpleRingingDuotone,
   PiChatsCircleDuotone,
   PiGearDuotone,
-  PiMagnifyingGlassBold,
+  // IoSearchOutline ,
   PiMagnifyingGlassDuotone,
 } from "react-icons/pi";
+import { IoSearchOutline } from "react-icons/io5";
+
 import HeaderMenuLeft from "@/layouts/lithium/lithium-menu";
 import Sidebar from "@/layouts/hydrogen/sidebar";
 import StickyHeader from "@/layouts/sticky-header";
@@ -148,7 +150,7 @@ export default function Header({ lang }: { lang?: string }) {
       
 
           <Link href={`/${lang!}/search`}>
-                  <Input
+                  {/* <Input
                     type="search"
                     placeholder={t('placeholder')}
                     value=""
@@ -159,12 +161,14 @@ export default function Header({ lang }: { lang?: string }) {
                       `hover:border-none focus:border-none focus:outline-none focus:ring-none border-none  placeholder:text-white`
                     } placeholder:text-white`}  // تغيير لون الـ placeholder هنا
                     className={`w-72  ${isStickyVisible?"placeholder:text-yellow-400 placeholder-shown:text-yellow-300":"placeholder:text-yellow-400"}`}
-                    prefix={<PiMagnifyingGlassBold className="h-4 w-4" />}
-                  />
+                    prefix={
+                    }
+                  /> */}
+                    <IoSearchOutline  className="h-5  w-5" />
           </Link>
           <LanguageSwitcher
             lang={lang!}
-            className="ms-3 rounded-none shadow-none"
+            className=" rounded-none shadow-none"
             variant="icon"
             />
           <Link href={`/${lang!}/cart`}>
@@ -204,7 +208,7 @@ export default function Header({ lang }: { lang?: string }) {
                 variant="icon"
                 />
                   <Link href={`/${lang!}/search`}>
-                    <PiMagnifyingGlassBold size={20} />    
+                    <IoSearchOutline  size={20} />    
                   </Link>
                   <button
                     onClick={() => setIsOpen(true)} 
@@ -226,7 +230,7 @@ export default function Header({ lang }: { lang?: string }) {
     />
     <div className="flex gap-5">
       <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
-        <PiMagnifyingGlassBold className="w-5 " />    
+        <IoSearchOutline  className="w-5 " />    
       </div>
       <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
         <User className=" w-5 " />    
@@ -244,7 +248,7 @@ export default function Header({ lang }: { lang?: string }) {
             
               <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
                 <Link href={`/${lang!}/search`}>
-                  <PiMagnifyingGlassBold size={20} />    
+                  <IoSearchOutline  size={20} />    
                 </Link>
               </div>
             
@@ -282,7 +286,7 @@ export default function Header({ lang }: { lang?: string }) {
                           variant="icon"
                           />
                             <Link href={`/${lang!}/search`}>
-                              <PiMagnifyingGlassBold size={20} />    
+                              <IoSearchOutline  size={20} />    
                             </Link>
                             <button
                               onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر

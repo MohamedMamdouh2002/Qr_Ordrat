@@ -66,11 +66,12 @@ function Addresses({lang}:{lang:string}) {
 	};
 	
 	useEffect(() => {
+	fetchAddresses();
+	if (updateAddresses === true) {
 		fetchAddresses();
-		if (updateAddresses === true) {
-			fetchAddresses();
-			setUpdateAddresses(false);
-		}
+
+		setUpdateAddresses(false);
+	}
 	}, [updateAddresses]);
 
 	const handleAddNewAddress = () => {

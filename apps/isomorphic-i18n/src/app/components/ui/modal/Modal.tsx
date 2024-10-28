@@ -28,8 +28,7 @@ import { toCurrency } from '@utils/to-currency';
 import { PhoneNumber } from '@ui/phone-input';
 import RoleSelect from '../inputs/selectInput/SelectInput';
 import { Data } from '@react-google-maps/api';
-// import SpecialNotes from '../SpecialNotes';
-// import SpecialNotes from '../item/SpecialNotes';
+
 import SpecialNotes from '@/app/components/ui/SpecialNotes';
 
 // type Props = {

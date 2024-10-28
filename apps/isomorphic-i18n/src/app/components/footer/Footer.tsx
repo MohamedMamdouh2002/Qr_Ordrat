@@ -158,7 +158,11 @@ function Footer({lang}:{lang:string}) {
                     </li>
                     <li  className='hover:text-mainColor  items-center duration-200 w-fit'>
                         <Link className='flex gap-2 items-center' href={""}>
-                            <FontAwesomeIcon icon={faEnvelopesBulk} />{" "}<span>tariq@marosetravel.mail.com</span>
+                            <FontAwesomeIcon icon={faEnvelopesBulk} />{" "}
+                            <span className="block max-w-[250px] md:max-w-[250px] lg:max-w-[120px] xl:max-w-xs break-words">
+                                tariq@marosetravel.mail.com
+                            </span>
+
                         </Link>
                     </li>
                 </ul>
