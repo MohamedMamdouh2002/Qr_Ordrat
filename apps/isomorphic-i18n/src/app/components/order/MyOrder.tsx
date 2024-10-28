@@ -10,6 +10,7 @@ import { Order } from '@/types';
 import axiosClient from '../fetch/api'; 
 import { EmptyProductBoxIcon } from 'rizzui';
 import { useTranslation } from '@/app/i18n/client';
+import fetchClient from '../fetch/api';
 
 const MyOrder: React.FC<{ lang: string }> = ({ lang }) => {
   const [orders, setOrders] = useState<Order[]>([]);

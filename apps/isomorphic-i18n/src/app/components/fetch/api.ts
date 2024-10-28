@@ -22,7 +22,7 @@ axiosClient.interceptors.response.use(
     const originalRequest = error.config;
 
     // تحقق إذا كان الخطأ بسبب انتهاء صلاحية التوكين (401 Unauthorized)
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+    if (error.response && error.response.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true; // منع تكرار نفس الطلب
 
       // قم بطلب Refresh Token API لتحديث التوكين

@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { API_BASE_URL } from '@/config/base-url';
 import { useUserContext } from '../context/UserContext';
 import { useTranslation } from '@/app/i18n/client';
+import axiosClient from '../fetch/api';
 
 type Address = {
   id: string;
@@ -34,27 +35,20 @@ function Addresses({lang}:{lang:string}) {
 	console.log("selectedAddress: ",selectedAddress);
 	
 	const fetchAddresses = async () => {
-	  setIsLoading(true);
-	  const token = localStorage.getItem('accessToken');
-
-	  try {
-		const response = await fetch(`${API_BASE_URL}/api/Address/GetEndUserAddresses`, {
-		  method: 'GET',
-		  headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`,
-		  },
-		});
-
-		if (!response.ok) {
-		  setIsLoading(false);
-		  throw new Error('Failed to fetch addresses');
-		}
-
-		const data = await response.json();
-		const phoneNumber = localStorage.getItem('phoneNumber');
-
-		const mappedAddresses = data.map((a: any) => ({
+		setIsLoading(true);
+	  
+		try {
+		  const response = await axiosClient.get('/api/Address/GetEndUserAddresses', {
+			headers: {
+			  'Content-Type': 'application/json',
+			  'Accept-Language': lang,
+			},
+		  });
+	  
+		  const data = response.data;
+		  const phoneNumber = localStorage.getItem('phoneNumber');
+	  
+		  const mappedAddresses = data.map((a: { id: any; apartmentNumber: any; latitude: any; longtude: any; street: any; buildingType: any; floor: any; additionalDirections: any; }) => ({
 			id: a.id,
 			aptNo: a.apartmentNumber,
 			lat: a.latitude,
@@ -65,22 +59,21 @@ function Addresses({lang}:{lang:string}) {
 			floor: a.floor,
 			additionalDirections: a.additionalDirections,
 		}));
-	
-		  setAddresses(mappedAddresses);
-		  setIsLoading(false);
-	  } catch (error) {
-		// toast.error('Error fetching addresses');
-		console.error('Error fetching addresses:', error);
+		
+		setAddresses(mappedAddresses);
 		setIsLoading(false);
-	  }
+	} catch (error) {
+		console.error('Error fetching addresses:', error);
+		  setIsLoading(false);
+		} 
 	};
 	
 	useEffect(() => {
+	fetchAddresses();
+	if (updateAddresses === true) {
 		fetchAddresses();
-		if (updateAddresses === true) {
-			fetchAddresses();
-			setUpdateAddresses(false);	
-		}
+		setUpdateAddresses(false);
+	}
 	}, [updateAddresses]);
 
 	const handleAddNewAddress = () => {

@@ -28,7 +28,7 @@ import { toCurrency } from '@utils/to-currency';
 import { PhoneNumber } from '@ui/phone-input';
 import RoleSelect from '../inputs/selectInput/SelectInput';
 import { Data } from '@react-google-maps/api';
-import SpecialNotes from '../item/SpecialNotes';
+import SpecialNotes from '@/app/components/ui/SpecialNotes';
 
 // type Props = {
 
@@ -294,7 +294,7 @@ function Modal({
                                                 </div>
                                                 <h3 className="text-xl font-bold leading-10">{prodId?.name}</h3>
                                                 <p className="text-sm font-medium text-black/75">{prodId?.description}</p>
-                                                <SpecialNotes notes={notes} setNotes={setNotes} />
+                                                <SpecialNotes lang={lang} notes={notes} setNotes={setNotes} />
                                             </div>
                                         </div>
                                     </div>
@@ -871,6 +871,7 @@ function Modal({
                                 )} */}
                             </div>     
                                <SpecialNotes
+                                lang={lang}
                                 // des="Anything else we need to know?"
                                 className="pt-4 pb-2 col-span-full "
                                 notes={notes}
