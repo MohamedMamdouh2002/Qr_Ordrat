@@ -18,8 +18,10 @@ const NavMobile = ({ lang }: { lang: string }) => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await GetHome({ lang });
-      setHome(data);
-      setActive(data[0]?.id || "");
+      if (data && data.length > 0) {
+        setHome(data);
+        setActive(data[0]?.id || "");
+      }
     };
     fetchData();
   }, [GetHome, lang]);
