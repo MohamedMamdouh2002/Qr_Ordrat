@@ -217,6 +217,9 @@ html[dir=rtl] .faqContainer .faqCardsContainer .faqCardWrapper .faqCardBody .faq
   }
 }
 @media(max-width: 1024px) {
+  .faqContainer{
+    padding: 100px 0;
+  }
   .faqContainer .faqCardsContainer .FindMore{
       width: 100%;
   }
