@@ -40,7 +40,7 @@ const MyOrder: React.FC<{ lang: string }> = ({ lang }) => {
 
   return (
     <>
-      <Title title={t('Orders')} className="text-center md:mt-10 mt-20" />
+      <Title title={t('Orders')} className="text-center text-[#404040]  mt-20" />
       {loading ? (
         <div className="flex justify-center ">
           <Loader className="animate-spin text-mainColor " />

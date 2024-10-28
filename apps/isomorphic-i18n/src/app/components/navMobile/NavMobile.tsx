@@ -19,11 +19,7 @@ const NavMobile = ({ lang }: { lang: string }) => {
     const fetchData = async () => {
       const data = await GetHome({ lang });
       setHome(data);
-
-      if (data?.length > 0) {
-        setActive(data[0]?.id); // تعيين العنصر الأول كنشط
-        scrollToItem(0); // التنقل تلقائيًا إلى العنصر الأول عند التحميل
-      }
+      setActive(data[0]?.id || "");
     };
     fetchData();
   }, [GetHome, lang]);
@@ -43,33 +39,35 @@ const NavMobile = ({ lang }: { lang: string }) => {
   }, []);
 
   useEffect(() => {
-    if (home?.length > 0) {
-      const sections = home.map(item => document.getElementById(item.id));
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (!isNavigating) {
-            entries.forEach(entry => {
-              if (entry?.isIntersecting) {
-                setActive(entry?.target.id);
-                const index = home.findIndex(item => item?.id === entry.target.id);
-                scrollToItem(index);
-              }
-            });
-          }
-        },
-        { rootMargin: "0px", threshold: 0.5 }
-      );
+    const sections = home?.map(item => document.getElementById(item.id));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!isNavigating) { // فقط يعمل عندما لا يكون هناك تنقل مباشر
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              setActive(entry.target.id);
+              const index = home.findIndex(item => item.id === entry.target.id);
+              scrollToItem(index);
+            }
+          });
+        }
+      },
+      { rootMargin: "0px", threshold: 0.5 }
+    );
 
-      sections.forEach(section => {
-        if (section) observer.observe(section);
+    sections?.forEach(section => {
+      if (section) {
+        observer.observe(section);
+      }
+    });
+
+    return () => {
+      sections?.forEach(section => {
+        if (section) {
+          observer.unobserve(section);
+        }
       });
-
-      return () => {
-        sections.forEach(section => {
-          if (section) observer.unobserve(section);
-        });
-      };
-    }
+    };
   }, [home, isNavigating]);
 
   const scrollToItem = (index: number) => {
@@ -77,10 +75,10 @@ const NavMobile = ({ lang }: { lang: string }) => {
       const itemWidth = navRef.current.scrollWidth / home.length;
       const scrollAmount = index * itemWidth;
       const centerOffset = (navRef.current.clientWidth - itemWidth) / 2;
-
+  
       navRef.current.scrollTo({
         left: scrollAmount - centerOffset,
-        behavior: "smooth",
+        behavior: "smooth", // التنقل الفوري بدون سلاسة
       });
     }
   };
@@ -122,10 +120,10 @@ const NavMobile = ({ lang }: { lang: string }) => {
                   active === item.id ? "text-orange-500" : "text-gray-700"
                 }`}
                 onClick={() => {
-                  setIsNavigating(true);
+                  setIsNavigating(true); // تفعيل حالة التنقل
                   setActive(item.id);
                   scrollToItem(index);
-                  setTimeout(() => setIsNavigating(false), 600);
+                  setTimeout(() => setIsNavigating(false), 600); // إعادة تعيين حالة التنقل بعد انتهاء التنقل
                 }}
               >
                 {item.name}
@@ -155,31 +153,34 @@ const NavMobile = ({ lang }: { lang: string }) => {
               </div>
               <ul className="flex flex-col gap-4">
                 {home?.map((item, index) => (
-                  <Link
-                    key={item.id}
-                    to={item.id}
-                    smooth={true}
-                    duration={500} 
-                    offset={-145}
-                    className={`text-sm relative cursor-pointer h-full flex justify-between items-center font-medium ${
-                      active === item.id ? "text-orange-500" : "text-gray-700"
-                    }`}
-                    onClick={() => {
-                      setIsNavigating(true);
-                      setActive(item.id);
-                      scrollToItem(index);
-                      handleClose();
-                      setTimeout(() => setIsNavigating(false), 600);
-                    }}
-                  >
-                    <li className="flex justify-between items-center mx-4 w-full">
-                      <span>{item.name}</span>
-                      <span>{item.numberOfProducts}</span>
-                    </li>
-                    {active === item.id && (
-                      <span className="absolute bg-orange-500 h-[30px] w-1 rounded-e-full transition-all duration-700 start-0 -top-1 bottom-0"></span>
-                    )}
-                  </Link>
+                  <>
+                    <Link
+                      key={item.id}
+                      to={item.id}
+                      smooth={true}
+                      duration={500} 
+                      offset={-145}
+                      className={`text-sm relative cursor-pointer h-full flex justify-between items-center font-medium ${
+                        active === item.id ? "text-orange-500" : "text-gray-700"
+                      }`}
+                      onClick={() => {
+                        setIsNavigating(true);
+                        setActive(item.id);
+                        scrollToItem(index);
+                        handleClose();
+                        setTimeout(() => setIsNavigating(false), 600);
+                      }}
+                    >
+                      <li className="flex justify-between items-center mx-4 w-full">
+                        <span>{item.name}</span>
+                        <span>{item.numberOfProducts}</span>
+                      </li>
+                      {active === item.id && (
+                        <span className="absolute bg-orange-500 h-[30px] w-1 rounded-e-full transition-all duration-700 start-0 -top-1 bottom-0"></span>
+                      )}
+                    </Link>
+                    <hr className=" mx-2"/>
+                  </>
                 ))}
               </ul>
             </div>

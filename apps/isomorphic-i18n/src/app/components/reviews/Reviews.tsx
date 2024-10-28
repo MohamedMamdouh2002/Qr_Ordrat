@@ -26,7 +26,7 @@ function Reviews({ lang }: { lang: string }) {
       fetchData();
     }, [GetRewiew]);
   return <>
-    <Title className="text-center mt-24 lg:mt-10 " title={t('review')}/>
+    <Title className="text-center mt-20 text-[#404040]" title={t('review')}/>
     {loading? 
         <div className="flex justify-center ">
         <Loader className="animate-spin text-mainColor " /> 
