@@ -20,8 +20,8 @@ const NavMobile = ({ lang }: { lang: string }) => {
       const data = await GetHome({ lang });
       setHome(data);
 
-      if (data.length > 0) {
-        setActive(data[0].id); // تعيين العنصر الأول كنشط
+      if (data?.length > 0) {
+        setActive(data[0]?.id); // تعيين العنصر الأول كنشط
         scrollToItem(0); // التنقل تلقائيًا إلى العنصر الأول عند التحميل
       }
     };
@@ -43,15 +43,15 @@ const NavMobile = ({ lang }: { lang: string }) => {
   }, []);
 
   useEffect(() => {
-    if (home.length > 0) {
+    if (home?.length > 0) {
       const sections = home.map(item => document.getElementById(item.id));
       const observer = new IntersectionObserver(
         (entries) => {
           if (!isNavigating) {
             entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                setActive(entry.target.id);
-                const index = home.findIndex(item => item.id === entry.target.id);
+              if (entry?.isIntersecting) {
+                setActive(entry?.target.id);
+                const index = home.findIndex(item => item?.id === entry.target.id);
                 scrollToItem(index);
               }
             });

@@ -73,13 +73,13 @@ type Props = Food & {
                 {data?.description}
                 </Text>
                 <div className="mt-2 flex  items-center font-semibold text-mainColor">
-                <div className='text-[10px] sm:pt-0 pt-0.5 font-normal sm:text-[13px]'>
+                <div className='text-[12px] sm:pt-0 pt-0.5 font-normal sm:text-[13px]'>
                     <span>
                       {toCurrency(data.price, data.lang)}
                     </span>
                 </div>
                 <div>
-                    <del className="ps-1.5  text-[10px] sm:text-[13px] font-normal text-gray-500">
+                    <del className="ps-1.5  text-[12px] sm:text-[13px] font-normal text-gray-500">
                       {toCurrency(data.oldPrice, data.lang)}
                     </del>
                 </div>
