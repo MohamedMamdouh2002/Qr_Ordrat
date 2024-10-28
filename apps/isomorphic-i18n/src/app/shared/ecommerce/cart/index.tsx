@@ -117,17 +117,27 @@ function CartCalculations({fees, Tax ,lang}:{fees:number; Tax:number ,lang?:stri
           {t('Total')}
           <span className="font-medium text-gray-1000">{toCurrency(totalWithFees, lang)}</span>
         </div>
-        <Link href={`/${lang}/checkout`}>
+        {totalWithFees === 0 ? (
           <Button
             size="xl"
             rounded="pill"
-            onClick={() => router.push(routes.eCommerce.checkout)}
-
-            className="w-full bg-mainColor hover:bg-mainColorHover"
+            className="w-full bg-gray-200 text-gray-500 cursor-not-allowed"
+            disabled
           >
             {t('Proceed-To-Checkout')}
           </Button>
-        </Link>
+        ) : (
+          <Link href={`/${lang}/checkout`} passHref>
+            <Button
+              size="xl"
+              rounded="pill"
+              className="w-full bg-mainColor hover:bg-mainColorHover"
+              onClick={() => router.push(routes.eCommerce.checkout)}
+            >
+              {t('Proceed-To-Checkout')}
+            </Button>
+          </Link>
+        )}
         {/* <Button
           size="xl"
           variant="outline"

@@ -1,5 +1,5 @@
 'use client';
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, useFormContext, Controller } from 'react-hook-form';
 import {
     buildProductDetailsSchema,
@@ -28,7 +28,9 @@ import { toCurrency } from '@utils/to-currency';
 import { PhoneNumber } from '@ui/phone-input';
 import RoleSelect from '../inputs/selectInput/SelectInput';
 import { Data } from '@react-google-maps/api';
-import SpecialNotes from '../item/SpecialNotes';
+// import SpecialNotes from '../SpecialNotes';
+// import SpecialNotes from '../item/SpecialNotes';
+import SpecialNotes from '@/app/components/ui/SpecialNotes';
 
 // type Props = {
 
@@ -205,13 +207,23 @@ function Modal({
     return () => subscription.unsubscribe();
   }, [watch, setValue]);
 
+  // Watch the form state for selected variations
+  const selectedChoicePrices = prodId?.variations?.reduce((total: number, variation: Variation) => {
+    const selectedChoiceId = watch(variation.id); // Watching each variation id for changes
+    const selectedChoice = variation.choices.find((choice: Choice) => choice.id === selectedChoiceId);
+    return total + (selectedChoice?.price || 0);
+  }, 0) * quantity || 0;
+  
+  const finalPrice = (prodId?.price * quantity) + selectedChoicePrices;
+  const finalOldPrice = data?.oldPrice ? (prodId.oldPrice * quantity) + selectedChoicePrices : undefined;  
+
   const onSubmit: SubmitHandler<ProductDetailsInput> = (data) => {
     const cartItem: CartItem = {
       id: prodId?.id || "",
       name: prodId?.name || "Default Item",
       description: prodId?.description,
       image: prodId?.imageUrl || "",
-      price: prodId?.price || 0,
+      price: (prodId?.price + selectedChoicePrices) || 0,
       oldPrice: prodId?.oldPrice || 0,
       quantity,
       notes: notes || "",
@@ -253,8 +265,7 @@ function Modal({
     setIsModalOpen(false);
     toast.success("Product added to cart!");
   };
-  
-  
+
   return ReactDOM.createPortal(
  <>
     {prodId&&<>
@@ -294,7 +305,7 @@ function Modal({
                                                 </div>
                                                 <h3 className="text-xl font-bold leading-10">{prodId?.name}</h3>
                                                 <p className="text-sm font-medium text-black/75">{prodId?.description}</p>
-                                                <SpecialNotes notes={notes} setNotes={setNotes} />
+                                                <SpecialNotes lang={lang!} notes={notes} setNotes={setNotes} className="gap-2"/>
                                             </div>
                                         </div>
                                     </div>
@@ -560,8 +571,8 @@ function Modal({
                                             type={type}
                                             buttonType = "submit"
                                             // action={handleAddToCart}
-                                            price={`EGP ${prodId?.price! * quantity}`}
-                                            oldPrice={data?.oldPrice ? `EGP ${prodId.oldPrice * quantity}` : undefined}
+                                            price={`EGP ${finalPrice}`}
+                                            oldPrice={data?.oldPrice ? `EGP ${finalOldPrice}` : undefined}
                                             className={cn('rounded-none rounded-br-lg rtl:rounded-bl-lg rtl:rounded-br-none', { 'rounded-br-none rtl:rounded-bl-none': hasMoreDetails })}
                                         />
                                     </div>
@@ -871,8 +882,9 @@ function Modal({
                                 )} */}
                             </div>     
                                <SpecialNotes
+                                lang={lang!}
                                 // des="Anything else we need to know?"
-                                className="pt-4 pb-2 col-span-full "
+                                className="pt-4 pb-2 col-span-full gap-2"
                                 notes={notes}
                                 setNotes={setNotes}
                             />
@@ -888,8 +900,8 @@ function Modal({
                                         type={type}
                                         buttonType = "submit"
                                         // action={handleAddToCart}
-                                        price={`EGP ${prodId?.price! * quantity}`}
-                                        oldPrice={data?.oldPrice ? `EGP ${prodId.oldPrice * quantity}` : undefined}
+                                        price={`EGP ${finalPrice}`}
+                                        oldPrice={data?.oldPrice ? `EGP ${finalOldPrice}` : undefined}
                                         className={cn('rounded-none rounded-br-lg rtl:rounded-bl-lg rtl:rounded-br-none', { 'rounded-br-none rtl:rounded-bl-none': hasMoreDetails })}
                                     />
                                 </div>

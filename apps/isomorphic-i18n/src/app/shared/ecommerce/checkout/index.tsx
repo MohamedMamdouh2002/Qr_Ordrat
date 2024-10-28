@@ -42,6 +42,7 @@ import { MadeOrderInput, madeOrderSchema } from '@/validators/checkoutcreditecar
 import { useCart } from '@/store/quick-cart/cart.context';
 import usePrice from '@hooks/use-price';
 import { shopId } from '@/config/shopId';
+import axiosClient from '@/app/components/fetch/api';
 
 type Address = {
   id: string;
@@ -84,58 +85,49 @@ export default function CheckoutPageWrapper({
 	const { updateAddresses, setUpdateAddresses } = useUserContext();
   
   
-	const fetchAddresses = async () => {
-	  setIsAddressApiLoading(true);
-	  const token = localStorage.getItem('accessToken');
-
-	  try {
-		const response = await fetch(`${API_BASE_URL}/api/Address/GetEndUserAddresses`, {
-		  method: 'GET',
-		  headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`,
-		  },
-		});
-
-		if (!response.ok) {
-		  setIsAddressApiLoading(false);
-		  throw new Error('Failed to fetch addresses');
-		}
-
-		const data = await response.json();
-
-		const mappedAddresses = data.map((a: any) => ({
-			id: a.id,
-			additionalDirections: a.additionalDirections,
-			apartmentNumber: a.apartmentNumber,
-			floor: a.floor,
-			street: a.street,
-			latitude: a.latitude,
-			longtude: a.longtude,
-			buildingType: a.buildingType,
-		}));
-	
-		  setAddresses(mappedAddresses);
+  const fetchAddresses = async () => {
+    setIsAddressApiLoading(true);
+  
+    try {
+      const response = await axiosClient.get('/api/Address/GetEndUserAddresses', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      const data = response.data;
+  
+      const mappedAddresses = data.map((a:any) => ({
+        id: a.id,
+        additionalDirections: a.additionalDirections,
+        apartmentNumber: a.apartmentNumber,
+        floor: a.floor,
+        street: a.street,
+        latitude: a.latitude,
+        longtude: a.longtude,
+        buildingType: a.buildingType,
+      }));
+  
+      setAddresses(mappedAddresses);
       setUserLocation({
-        lat: mappedAddresses[mappedAddresses?.length - 1]?.latitude,
-        lng: mappedAddresses[mappedAddresses?.length - 1]?.longtude,
-      })
-      setSelectedAddressId(mappedAddresses[mappedAddresses?.length - 1]?.id)
-		  setIsAddressApiLoading(false);
-	  } catch (error) {
-		// toast.error('Error fetching addresses');
-		console.error('Error fetching addresses:', error);
-		setIsAddressApiLoading(false);
-	  }
-	};
-	
-	useEffect(() => {
-		fetchAddresses();
-		if (updateAddresses === true) {
-			fetchAddresses();
-			setUpdateAddresses(false);	
-		}
-	}, [updateAddresses]);
+        lat: mappedAddresses[mappedAddresses.length - 1]?.latitude,
+        lng: mappedAddresses[mappedAddresses.length - 1]?.longtude,
+      });
+      setSelectedAddressId(mappedAddresses[mappedAddresses.length - 1]?.id);
+      setIsAddressApiLoading(false);
+    } catch (error) {
+      console.error('Error fetching addresses:', error);
+      setIsAddressApiLoading(false);
+    }
+  };
+  
+  useEffect(() => {
+    fetchAddresses();
+    if (updateAddresses === true) {
+      fetchAddresses();
+      setUpdateAddresses(false);
+    }
+  }, [updateAddresses]);
 
   //  const addresses = [
   //   {
@@ -200,6 +192,7 @@ export default function CheckoutPageWrapper({
       formData.append('OrderType', '0');
       formData.append('TotalPrice', '0');
       formData.append('ShippingFees', '0');
+  
       if (copone) {
         formData.append('CouponCode', copone);
       }
@@ -210,7 +203,7 @@ export default function CheckoutPageWrapper({
         formData.append('AddressId', selectedAddressId);
       }
       formData.append('ShopId', shopId);
-
+  
       items.forEach((item, index) => {
         formData.append(`Items[${index}].quantity`, item.quantity.toString());
         if (item.notes) {
@@ -218,7 +211,10 @@ export default function CheckoutPageWrapper({
         }
         formData.append(`Items[${index}].productId`, item.id.toString());
         item.orderItemVariations?.forEach((order, orderIndex) => {
-          if (order.variationId) {
+          const hasValidChoice = order.choices?.some(
+            (choice) => choice.choiceId || choice.inputValue || choice.image
+          );
+          if (order.variationId && hasValidChoice) {
             formData.append(`Items[${index}].orderItemVariations[${orderIndex}].variationId`, order.variationId);
           }
           order.choices?.forEach((choice, choiceIndex) => {
@@ -234,47 +230,28 @@ export default function CheckoutPageWrapper({
           })
         });
       });
-
+  
       formData.forEach((value, key) => {
         console.log(`${key}: ${value}`);
       });
-
-      const token = localStorage.getItem('accessToken');
-      if (!token) {
-        toast.error('No token found, please log in again.');
-        return;
-      }
-      console.log("Token from localStorage:", token);
-      const response = await fetch(`${API_BASE_URL}/api/Order/Create`, {
-        method: 'POST',
-        headers: {
-          // 'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
-      
-      const result = await response.text();
-      
-      if (response.ok) {
-        // console.log('Order created successfully:', result);
-
+  
+      const response = await axiosClient.post('/api/Order/Create', formData);
+  
+      if (response.status === 200) {
         // Clear the cart items
         items.forEach(item => clearItemFromCart(item.id));
         // Display success toast
         toast.success(<Text as="b">Order placed successfully!</Text>);
-
         // Go to success page
         router.push("/");
-        setLoading(false);
       } else {
-        console.error('Error creating order:', result);
+        console.error('Error creating order:', response.data);
         toast.error(<Text as="b">Failed to place order. Please try again.</Text>);
-        setLoading(false);
       }
     } catch (error) {
       console.error('Error during order submission:', error);
       toast.error(<Text as="b">An error occurred. Please try again later.</Text>);
+    } finally {
       setLoading(false);
     }
   };

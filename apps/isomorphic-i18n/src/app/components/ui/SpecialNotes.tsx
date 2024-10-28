@@ -32,7 +32,7 @@ function SpecialNotes({ lang ,des, className, notes, setNotes }: Props) {
 						</div>
 					</div>
 				</div>
-				<button onClick={() => setShowNoteInput(true)} className="text-mainColor font-bold">
+				<button type='button' onClick={() => setShowNoteInput(true)} className="text-mainColor font-bold">
 					{notes ? `${t('Edit-notes')}` : `${t('Add-notes')}`} 
 				</button>
 			</div>

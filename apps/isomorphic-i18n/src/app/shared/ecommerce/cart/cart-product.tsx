@@ -47,15 +47,17 @@ export default function CartProduct({ product, lang }: { product: CartItem; lang
           }
           {/* Map over orderItemVariations */}
           {product.orderItemVariations?.map((variation) => (
-            <li key={variation.variationId} className="flex items-center gap-3 text-gray-500">
-              <span>{variation.variationLable} :</span>
-              {variation.choices?.[0]?.choiceValue && (
-                <span className="text-gray-1000">{variation.choices[0].choiceValue}</span>
-              )}
-              {variation.choices?.[0]?.inputValue && (
-                <span className="text-gray-1000">{variation.choices[0].inputValue}</span>
-              )}
-            </li>
+            (variation.choices?.[0]?.choiceValue || variation.choices?.[0]?.inputValue) && (
+              <li key={variation.variationId} className="flex items-center gap-3 text-gray-500">
+                <span>{variation.variationLable} :</span>
+                {variation.choices?.[0]?.choiceValue && (
+                  <span className="text-gray-1000">{variation.choices[0].choiceValue}</span>
+                )}
+                {variation.choices?.[0]?.inputValue && (
+                  <span className="text-gray-1000">{variation.choices[0].inputValue}</span>
+                )}
+              </li>
+            )
           ))}
         </ul>
         <div className="mt-3 hidden items-center justify-between xs:flex sm:mt-6">
