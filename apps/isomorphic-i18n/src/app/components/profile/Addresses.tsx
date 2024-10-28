@@ -36,7 +36,6 @@ function Addresses({lang}:{lang:string}) {
 	
 	const fetchAddresses = async () => {
 		setIsLoading(true);
-	  
 		try {
 		  const response = await axiosClient.get('/api/Address/GetEndUserAddresses', {
 			headers: {
@@ -44,11 +43,9 @@ function Addresses({lang}:{lang:string}) {
 			  'Accept-Language': lang,
 			},
 		  });
-	  
 		  const data = response.data;
 		  const phoneNumber = localStorage.getItem('phoneNumber');
-	  
-		  const mappedAddresses = data.map((a: { id: any; apartmentNumber: any; latitude: any; longtude: any; street: any; buildingType: any; floor: any; additionalDirections: any; }) => ({
+		  const mappedAddresses = data.map((a: any) => ({
 			id: a.id,
 			aptNo: a.apartmentNumber,
 			lat: a.latitude,
@@ -72,6 +69,7 @@ function Addresses({lang}:{lang:string}) {
 	fetchAddresses();
 	if (updateAddresses === true) {
 		fetchAddresses();
+
 		setUpdateAddresses(false);
 	}
 	}, [updateAddresses]);

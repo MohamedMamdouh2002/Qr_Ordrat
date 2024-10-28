@@ -60,7 +60,7 @@ function FAQSectionContent({ lang }: { lang: string }) {
 
   const selectedFaqCategory = faqData[categoryIndex];
   return (
-    <section className="bg-white dark:bg-mainBg text-[#020710] min-h-screen font-montserrat">
+    <section className="bg-white dark:bg-mainBg text-[#020710] font-montserrat">
       <div className={style.faqContainer}>
         <h3 className={style.faqTitle} style={{ textAlign: 'center' }}>
           {t('frequently-asked-questions')} <span className='text-mainColor' style={{ fontWeight: 'bold' }}>FAQ</span>

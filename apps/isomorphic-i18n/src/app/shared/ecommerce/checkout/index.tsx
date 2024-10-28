@@ -85,7 +85,6 @@ export default function CheckoutPageWrapper({
 	const { updateAddresses, setUpdateAddresses } = useUserContext();
   
   
-  
   const fetchAddresses = async () => {
     setIsAddressApiLoading(true);
   
@@ -115,9 +114,9 @@ export default function CheckoutPageWrapper({
         lng: mappedAddresses[mappedAddresses.length - 1]?.longtude,
       });
       setSelectedAddressId(mappedAddresses[mappedAddresses.length - 1]?.id);
+      setIsAddressApiLoading(false);
     } catch (error) {
       console.error('Error fetching addresses:', error);
-    } finally {
       setIsAddressApiLoading(false);
     }
   };
@@ -129,7 +128,7 @@ export default function CheckoutPageWrapper({
       setUpdateAddresses(false);
     }
   }, [updateAddresses]);
-  
+
   //  const addresses = [
   //   {
   //     id: 'd6a3d710-96ae-4197-ab6c-9494a735e400',
@@ -185,76 +184,77 @@ export default function CheckoutPageWrapper({
 
   console.log("errors: ",methods.formState.errors);
   
-
-const onSubmit: SubmitHandler<MadeOrderInput> = async (data) => {
-  setLoading(true);
-  try {
-    const formData = new FormData();
-    formData.append('paymentmethod', '0');
-    formData.append('OrderType', '0');
-    formData.append('TotalPrice', '0');
-    formData.append('ShippingFees', '0');
-
-    if (copone) {
-      formData.append('CouponCode', copone);
-    }
-    if (orderNote) {
-      formData.append('Notes', orderNote);
-    }
-    if (selectedAddressId) {
-      formData.append('AddressId', selectedAddressId);
-    }
-    formData.append('ShopId', shopId);
-
-    items.forEach((item, index) => {
-      formData.append(`Items[${index}].quantity`, item.quantity.toString());
-      if (item.notes) {
-        formData.append(`Items[${index}].notes`, item.notes);
+  const onSubmit: SubmitHandler<MadeOrderInput> = async (data) => {
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append('paymentmethod', '0');
+      formData.append('OrderType', '0');
+      formData.append('TotalPrice', '0');
+      formData.append('ShippingFees', '0');
+  
+      if (copone) {
+        formData.append('CouponCode', copone);
       }
-      formData.append(`Items[${index}].productId`, item.id.toString());
-      item.orderItemVariations?.forEach((order, orderIndex) => {
-        if (order.variationId) {
-          formData.append(`Items[${index}].orderItemVariations[${orderIndex}].variationId`, order.variationId);
+      if (orderNote) {
+        formData.append('Notes', orderNote);
+      }
+      if (selectedAddressId) {
+        formData.append('AddressId', selectedAddressId);
+      }
+      formData.append('ShopId', shopId);
+  
+      items.forEach((item, index) => {
+        formData.append(`Items[${index}].quantity`, item.quantity.toString());
+        if (item.notes) {
+          formData.append(`Items[${index}].notes`, item.notes);
         }
-        order.choices?.forEach((choice, choiceIndex) => {
-          if (choice.inputValue) {
-            formData.append(`Items[${index}].orderItemVariations[${orderIndex}].choices[${choiceIndex}].inputValue`, choice.inputValue);
+        formData.append(`Items[${index}].productId`, item.id.toString());
+        item.orderItemVariations?.forEach((order, orderIndex) => {
+          const hasValidChoice = order.choices?.some(
+            (choice) => choice.choiceId || choice.inputValue || choice.image
+          );
+          if (order.variationId && hasValidChoice) {
+            formData.append(`Items[${index}].orderItemVariations[${orderIndex}].variationId`, order.variationId);
           }
-          if (choice.choiceId) {
-            formData.append(`Items[${index}].orderItemVariations[${orderIndex}].choices[${choiceIndex}].choiceId`, choice.choiceId);
-          }
-          if (choice.image) {
-            formData.append(`Items[${index}].orderItemVariations[${orderIndex}].choices[${choiceIndex}].image`, choice.image);
-          }
+          order.choices?.forEach((choice, choiceIndex) => {
+            if (choice.inputValue) {
+              formData.append(`Items[${index}].orderItemVariations[${orderIndex}].choices[${choiceIndex}].inputValue`, choice.inputValue);
+            }
+            if (choice.choiceId) {
+              formData.append(`Items[${index}].orderItemVariations[${orderIndex}].choices[${choiceIndex}].choiceId`, choice.choiceId);
+            }
+            if (choice.image) {
+              formData.append(`Items[${index}].orderItemVariations[${orderIndex}].choices[${choiceIndex}].image`, choice.image);
+            }
+          })
         });
       });
-    });
-
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}`);
-    });
-
-    const response = await axiosClient.post('/api/Order/Create', formData);
-
-    if (response.status === 200) {
-      // Clear the cart items
-      items.forEach(item => clearItemFromCart(item.id));
-      // Display success toast
-      toast.success(<Text as="b">Order placed successfully!</Text>);
-      // Go to success page
-      router.push("/");
-    } else {
-      console.error('Error creating order:', response.data);
-      toast.error(<Text as="b">Failed to place order. Please try again.</Text>);
+  
+      formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+  
+      const response = await axiosClient.post('/api/Order/Create', formData);
+  
+      if (response.status === 200) {
+        // Clear the cart items
+        items.forEach(item => clearItemFromCart(item.id));
+        // Display success toast
+        toast.success(<Text as="b">Order placed successfully!</Text>);
+        // Go to success page
+        router.push("/");
+      } else {
+        console.error('Error creating order:', response.data);
+        toast.error(<Text as="b">Failed to place order. Please try again.</Text>);
+      }
+    } catch (error) {
+      console.error('Error during order submission:', error);
+      toast.error(<Text as="b">An error occurred. Please try again later.</Text>);
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.error('Error during order submission:', error);
-    toast.error(<Text as="b">An error occurred. Please try again later.</Text>);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
   
   return (
     <div className='w-[90%] mx-auto mt-8'>
