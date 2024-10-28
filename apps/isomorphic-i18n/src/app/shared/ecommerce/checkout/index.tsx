@@ -43,6 +43,12 @@ import { useCart } from '@/store/quick-cart/cart.context';
 import usePrice from '@hooks/use-price';
 import { shopId } from '@/config/shopId';
 import axiosClient from '@/app/components/fetch/api';
+import { Loader2, Plus } from 'lucide-react';
+import Link from 'next/link';
+import { useTranslation } from '@/app/i18n/client';
+// import Modal from '../ui/Modal';
+import Modal from '@/app/components/ui/Modal';
+import Login from '@/app/components/authPopups/Login';
 
 type Address = {
   id: string;
@@ -65,20 +71,23 @@ export default function CheckoutPageWrapper({
 }) {
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
-  const { orderNote, copone } = useUserContext();
+  const { orderNote, setOrderNote, copone, setCopone } = useUserContext();
   const { items, total, addItemToCart, removeItemFromCart, clearItemFromCart } =
     useCart();
   const { price: totalPrice } = usePrice({
     amount: total,
   });
   // console.log("total: ",total);
-  
+  const [loginModal, setLoginModal] = useState(false);
+  const [currentModal, setCurrentModal] = useState<'login' | 'register' | 'resetPassword'>('login');
+  const accessToken = localStorage.getItem('accessToken');
+
   const methods = useForm<MadeOrderInput>({
     mode: 'onChange',
     resolver: zodResolver(madeOrderSchema),
   });
 
-  
+  const { t } = useTranslation(lang!, 'profile');
   // Sample addresses
   const [addresses, setAddresses] = useState<Address[]>([]);
 	const [isAddressApiLoading, setIsAddressApiLoading] = useState(false);
@@ -242,8 +251,10 @@ export default function CheckoutPageWrapper({
         items.forEach(item => clearItemFromCart(item.id));
         // Display success toast
         toast.success(<Text as="b">Order placed successfully!</Text>);
+        setOrderNote("");
+        setCopone("");
         // Go to success page
-        router.push("/");
+        router.push(`/${lang}/`);
       } else {
         console.error('Error creating order:', response.data);
         toast.error(<Text as="b">Failed to place order. Please try again.</Text>);
@@ -254,6 +265,12 @@ export default function CheckoutPageWrapper({
     } finally {
       setLoading(false);
     }
+  };
+
+  const isButtonDisabled = !selectedAddressId || !localStorage.getItem('accessToken') || total === 0;
+
+  const toggleLoginModal = () => {
+    setLoginModal(true);
   };
   
   return (
@@ -269,7 +286,7 @@ export default function CheckoutPageWrapper({
         >
           <div className="items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
             <div className="gap-4 border-muted @container @5xl:col-span-8 @5xl:border-e @5xl:pb-12 @5xl:pe-7 @6xl:col-span-7 @7xl:pe-12">
-              <div className="flex flex-col gap-4 @xs:gap-7 @5xl:gap-9">
+              <div className="flex flex-col gap-4 @xs:gap-4 @5xl:gap-7">
                 <div>
                   <MapWithZones
                     initialLocation={userLocation}
@@ -279,6 +296,11 @@ export default function CheckoutPageWrapper({
                   {/* <p>
                     Current Location: Latitude: {userLocation.lat}, Longitude: {userLocation.lng}
                   </p> */}
+                  {addresses.length === 0 && (
+                    <p className="text-red-700 font-bold mt-2">
+                      {lang === 'ar' ? "يجب ان تضيف عنوان الطلب" : "You should add an address"}
+                    </p>
+                  )}
                 </div>
 
                 {/* Address selection via radio buttons */}
@@ -328,6 +350,35 @@ export default function CheckoutPageWrapper({
                   ))}
                 </RadioGroup>
 
+                {!accessToken ? (
+                  <button
+                    type='button'
+                    onClick={toggleLoginModal}
+                    className="w-fit col-span-full large:self-start flex gap-1 items-center px-3 py-2 rounded-lg text-white border border-transparent hover:border-mainColor bg-mainColor hover:bg-transparent hover:text-mainColor  transition duation-150"
+                  >
+                    <Plus />
+                    {t('login')}
+                  </button>
+                ) : (
+                  <Link href={`/${lang}/profile`}>
+                    <button
+                      type='button'
+                      className="w-fit col-span-full large:self-start flex gap-1 items-center px-3 py-2 rounded-lg text-white border border-transparent hover:border-mainColor bg-mainColor hover:bg-transparent hover:text-mainColor  transition duation-150"
+                    >
+                      <Plus />
+                      {t('New-Address')}
+                    </button>
+                  </Link>
+                )}
+                
+                {/* <Link href={`/${lang}/profile`}>
+                  <button
+                    className="self-center col-span-full w-40 large:self-start flex gap-1 items-center px-3 py-2 rounded-lg text-white border border-transparent hover:border-mainColor bg-mainColor hover:bg-transparent hover:text-mainColor  transition duation-150"
+                  >
+                    <Plus />
+                    {t('New-Address')}
+                  </button>
+                </Link> */}
                 {/* <AddressInfo type="billingAddress" title="Billing Information" />
 
                 <DifferentBillingAddress />
@@ -342,10 +393,23 @@ export default function CheckoutPageWrapper({
               </div>
             </div>
 
-            <OrderSummery lang={lang} isLoading={isLoading} />
+            <OrderSummery lang={lang} isLoading={isLoading} isButtonDisabled={isButtonDisabled}/>
           </div>
         </form>
       </FormProvider>
+      {loginModal && (
+        <Modal isOpen={loginModal} setIsOpen={setLoginModal}>
+          {currentModal === 'login' && (
+            <Login
+              setCurrentModal={setCurrentModal}
+              onLogin={() => {
+                setLoginModal(false);
+                setUpdateAddresses(true);
+              }}
+            />
+          )}
+        </Modal>
+      )}
     </div>
   );
 }

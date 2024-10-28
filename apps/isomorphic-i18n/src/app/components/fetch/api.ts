@@ -50,7 +50,7 @@ axiosClient.interceptors.response.use(
         // إذا فشل تحديث التوكين، إعادة توجيه المستخدم لتسجيل الدخول
         localStorage.removeItem('accessToken');
         localStorage.removeItem('Token');
-        window.location.href = '/';
+        // window.location.href = '/';
         return Promise.reject(refreshError);
       }
     }

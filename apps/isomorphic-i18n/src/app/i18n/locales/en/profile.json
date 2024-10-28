@@ -31,6 +31,8 @@
 
     "apartment":"apartment",
     "home":"Home",
-    "office":"Office"
+    "office":"Office",
+
+    "login":"Login"
 
 }

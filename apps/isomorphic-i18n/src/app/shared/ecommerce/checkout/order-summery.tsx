@@ -16,10 +16,12 @@ export default function OrderSummery({
   isLoading,
   className,
   lang,
+  isButtonDisabled,
 }: {
   className?: string;
   isLoading?: boolean;
   lang?: string;
+  isButtonDisabled?: boolean;
 }) {
   const params = useParams();
   const { items, total, addItemToCart, removeItemFromCart, clearItemFromCart } =
@@ -98,7 +100,8 @@ export default function OrderSummery({
             <Button
               type="submit"
               isLoading={isLoading}
-              className="mt-3 w-full text-base @md:h-12 bg-mainColor hover:bg-mainColorHover"
+              disabled={isButtonDisabled}
+              className={`mt-3 w-full text-base @md:h-12 ${isButtonDisabled? "bg-gray-200 hover:bg-gray-200 text-gray-500 cursor-not-allowed" : "bg-mainColor hover:bg-mainColorHover"}`}
             >
               {params?.id ? `${t('Update-Order')}` : `${t('Place-Order')}`}
             </Button>
