@@ -18,9 +18,9 @@ import { MantineProvider } from "@mantine/core";
 
 import { SessionContextProvider } from "@/utils/fetch/contexts";
 
-// const NextProgress = dynamic(() => import("@components/next-progress"), {
-  // ssr: false,
-// });
+const NextProgress = dynamic(() => import("@components/next-progress"), {
+  ssr: false,
+});
 
 export const metadata = {
   title: siteConfig.title,
@@ -56,7 +56,7 @@ export default async function RootLayout({
             <CartProvider>
               <ThemeProvider>
                 <UserProvider>
-                  {/* <NextProgress /> */}
+                  <NextProgress />
                   {children}
                   <Toaster />
                   <GlobalDrawer />

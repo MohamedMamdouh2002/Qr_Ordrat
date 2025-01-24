@@ -10,35 +10,40 @@ enum MODE {
 }
 
 export const siteConfig = {
-  title: 'Isomorphic - React Typescript Admin Dashboard Template',
-  description: `Isomorphic the ultimate React TypeScript Admin Template. Streamline your admin dashboard development with our feature-rich, responsive, and highly customizable solution. Boost productivity and create stunning admin interfaces effortlessly.`,
-  logo: logoImg,
-  icon: logoIconImg,
+  title: 'اوردرات - انشاء مواقع الكترونية مجانا و أفضل المتاجر الإلكترونية',
+  description: `اوردرات يوفر خدمة انشاء مواقع الكترونية مجانا. يمكنك إنشاء موقع إلكتروني أو متجر إلكتروني بسهولة وبدون تكلفة. افضل شركة انشاء مواقع تقدم لك خدمات متميزة. تابع العد التنازلي لإطلاق خدماتنا!`,
+  logo: ``,
+  logoAr: ``,
+  icon: ``,
   mode: MODE.LIGHT,
-  layout: LAYOUT_OPTIONS.HYDROGEN,
+  layout: LAYOUT_OPTIONS.LITHIUM,
   // TODO: favicon
 };
 
 export const metaObject = (
   title?: string,
+  lang: string = 'en', 
   openGraph?: OpenGraph,
   description: string = siteConfig.description
 ): Metadata => {
+  const logoUrl = lang === 'ar' ? siteConfig.logoAr : siteConfig.logo;
+
   return {
-    title: title ? `${title} - Isomorphic Furyroad` : siteConfig.title,
+    title: title ? `${title} ` : siteConfig.title,
     description,
     openGraph: openGraph ?? {
-      title: title ? `${title} - Isomorphic Furyroad` : title,
+      title: title ? `${title} ` : title,
       description,
-      url: 'https://isomorphic-furyroad.vercel.app',
-      siteName: 'Isomorphic Furyroad', // https://developers.google.com/search/docs/appearance/site-names
-      images: {
-        url: 'https://s3.amazonaws.com/redqteam.com/isomorphic-furyroad/itemdep/isobanner.png',
-        width: 1200,
-        height: 630,
-      },
-      locale: 'en_US',
+      url: logoUrl,
+      siteName: 'اوردرات - انشاء مواقع الكترونية مجانا و أفضل المتاجر الإلكترونية',
+      images: [{
+        url: logoUrl,
+        width: 1200, // Ensure width is specified
+        height: 630, // Ensure height is specified
+      }],
+      locale: lang === 'ar' ? 'ar_AR' : 'en_US',
       type: 'website',
     },
   };
 };
+
