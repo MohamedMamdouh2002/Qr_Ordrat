@@ -7,7 +7,7 @@ import GlobalDrawer from "@/app/shared/drawer-views/container";
 import GlobalModal from "@/app/shared/modal-views/container";
 import { ThemeProvider } from "@/app/shared/theme-provider";
 import { siteConfig } from "@/config/site.config";
-import { inter, lexendDeca } from "@/app/fonts";
+import { inter, lexendDeca, NotoSansArabic } from "@/app/fonts";
 import cn from "@utils/class-names";
 import { dir } from "i18next";
 import { languages } from "../i18n/settings";
@@ -18,9 +18,9 @@ import { MantineProvider } from "@mantine/core";
 
 import { SessionContextProvider } from "@/utils/fetch/contexts";
 
-const NextProgress = dynamic(() => import("@components/next-progress"), {
-  ssr: false,
-});
+// const NextProgress = dynamic(() => import("@components/next-progress"), {
+  // ssr: false,
+// });
 
 export const metadata = {
   title: siteConfig.title,
@@ -47,7 +47,7 @@ export default async function RootLayout({
     >
       <body
         suppressHydrationWarning
-        className={cn(inter.variable, lexendDeca.variable, "font-inter")}
+        className={cn(inter.variable, NotoSansArabic.variable, "font-NotoSansArabic")}
       >
         	<MantineProvider>
 
@@ -56,7 +56,7 @@ export default async function RootLayout({
             <CartProvider>
               <ThemeProvider>
                 <UserProvider>
-                  <NextProgress />
+                  {/* <NextProgress /> */}
                   {children}
                   <Toaster />
                   <GlobalDrawer />

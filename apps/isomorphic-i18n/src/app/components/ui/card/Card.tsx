@@ -5,6 +5,9 @@
   import Modal from '../modal/Modal';
   import { Food, Product } from '@/types';
   import Badge from '../Badge';
+  import photo from '@public/assets/شاورما-عربي-لحمة-768x768.png'
+import hamburger from '@public/assets/hamburger.png'
+import potato from '@public/assets/شاورما-عراقي-لحمة-مع-بطاطا.png'
   import { Star, Flame } from 'lucide-react';
 import { toCurrency } from '@utils/to-currency';
 
@@ -36,7 +39,7 @@ import { toCurrency } from '@utils/to-currency';
             <div className="relative w-full h-[100px] xs:h-[200px] md:h-[200px] lg:h-[220px] xl:h-[270px] 2xl:h-[300px]">
               <Image
                 alt="card food"
-                src={data?.imageUrl}
+                src={data?.imageUrl||photo}
                 layout="fill"
                 objectFit="cover"
                 quality={90}

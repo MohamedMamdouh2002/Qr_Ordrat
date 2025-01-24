@@ -25,11 +25,15 @@ import toast from 'react-hot-toast';
 import GetSize from '@/app/shared/ecommerce/product/get-size';
 import GetRadio from '@/app/shared/ecommerce/product/get-radio';
 import { toCurrency } from '@utils/to-currency';
+import photo from '@public/assets/شاورما-عربي-لحمة-768x768.png'
+import hamburger from '@public/assets/hamburger.png'
+import potato from '@public/assets/شاورما-عراقي-لحمة-مع-بطاطا.png'
 import { PhoneNumber } from '@ui/phone-input';
 import RoleSelect from '../inputs/selectInput/SelectInput';
 import { Data } from '@react-google-maps/api';
 
 import SpecialNotes from '@/app/components/ui/SpecialNotes';
+import { useTranslation } from '@/app/i18n/client';
 
 // type Props = {
 
@@ -89,6 +93,7 @@ function Modal({
   const [prodCartItem, setProdCartItem] = useState<CartItem | any>(null)
   const [isLoading, setLoading] = useState(false);
   const [notes, setNotes] = useState('');
+    const { t } = useTranslation(lang!, 'home');
 
   const { GetProduct } = useUserContext();
   const { addItemToCart } = useCart();
@@ -285,7 +290,7 @@ function Modal({
                                         <div className={`flex mb-4 `}>
                                             <div className="">
                                                 <Image
-                                                    src={prodId.imageUrl}
+                                                    src={prodId.imageUrl||photo}
                                                     width={500}
                                                     height={300}
                                                     alt="s"
@@ -350,15 +355,15 @@ function Modal({
                                                             <div key={variation.id} className="flex px-4">
                                                                 <div className="w-full flex flex-col gap-1">
                                                                     <div className="flex items-end justify-between">
-                                                                        <strong>Your choice of: {variation.name}</strong>
+                                                                        <strong>{t('choiceof')} {variation.name}</strong>
                                                                         {variation.isRequired && (
                                                                             <div className="text-white bg-mainColor px-2 py-1 rounded-full text-sm">
                                                                             Required
                                                                             </div>
                                                                         )}
                                                                     </div>
-                                                                    <span className="text-black/75">Choose 1</span>
-                                                                    <div>
+                                                                    <span className="text-black/75">{t('Choose1')}</span>
+                                                                    <div className='mt-2'>
                                                                         <GetRadio name={variation.id} options={options} />
                                                                     </div>
                                                                 </div>
@@ -456,9 +461,10 @@ function Modal({
                                                                         control={methods.control}
                                                                         render={({ field: { value, onChange } }) => (
                                                                         <PhoneNumber
-                                                                            label="Phone Number"
+                                                                            label={t('phoneNumber')}
                                                                             country="us"
                                                                             value={value}
+                                                                            labelClassName='font-medium'
                                                                             inputClassName="text-sm hover:!border-mainColor focus:!border-mainColor focus:!ring-mainColor text-sm [&.is-hover]:border-mainColor [&.is-focus]:border-mainColor [&.is-focus]:ring-mainColor"
                                                                             className="w-full"
                                                                             {...methods.register(variation.id)}
@@ -604,7 +610,7 @@ function Modal({
                     {isImageVisible ? (
                         <div className="w-full h-60">
                             <Image
-                                src={prodId.imageUrl}
+                                src={prodId.imageUrl||photo}
                                 // width={900}
                                 // height={600}
                                 layout="fill"
@@ -705,8 +711,9 @@ function Modal({
                                                         name={variation.id}
                                                         control={methods.control}
                                                         render={({ field, fieldState }) => (
-                                                            <RoleSelect
+                                                                <RoleSelect
                                                                 label={variation.name}
+                                                                
                                                                 options={variation.choices as { id: string; name: string }[]}
                                                                 field={{
                                                                 ...field,
@@ -779,7 +786,7 @@ function Modal({
                                                             control={methods.control}
                                                             render={({ field: { value, onChange } }) => (
                                                             <PhoneNumber
-                                                                label="Phone Number"
+                                                                label={t('phoneNumber')}
                                                                 country="us"
                                                                 value={value}
                                                                 inputClassName="text-sm hover:!border-mainColor focus:!border-mainColor focus:!ring-mainColor text-sm [&.is-hover]:border-mainColor [&.is-focus]:border-mainColor [&.is-focus]:ring-mainColor"

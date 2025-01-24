@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "esnext", // Modern target for better support
+    "lib": ["dom", "dom.iterable", "esnext"], // Relevant libraries
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -10,8 +10,8 @@
     "noEmit": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "module": "esnext",
     "resolveJsonModule": true,
+    // "moduleResolution": "nodenext",
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
@@ -31,7 +31,7 @@
       }
     ]
   },
-  "extends": "@repo/typescript-config/nextjs.json",
+  "extends": "@repo/typescript-config/nextjs.json", // Ensure this file exists
   "include": [
     "next-env.d.ts",
     "additional.d.ts",

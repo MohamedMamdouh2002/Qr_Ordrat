@@ -1627,3 +1627,16 @@ div[style='z-index: 1000001;'],
   margin-bottom: 24px;
   letter-spacing: -1px;
 }
+
+
+.rtl{
+  direction: rtl;
+}
+
+.ltr{
+  direction: ltr;
+}
+
+[dir='rtl'] .react-tel-input .form-control {
+  padding-left: 66px !important;
+}

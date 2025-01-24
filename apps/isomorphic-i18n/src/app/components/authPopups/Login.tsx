@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Logo from '@public/assets/karam-el-sham.png';
 import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
-import {useFormik}  from 'formik';
+import { useFormik } from 'formik';
 // import Phone from '../../common/inputs/phone';
 import Text from '../ui/Text/index';
 import { loginInitialValues, useLoginValidation } from '../forms/LoginSchema';
@@ -18,22 +18,22 @@ import { API_BASE_URL } from '@/config/base-url';
 import { method } from 'lodash';
 import { useUserContext } from '../context/UserContext';
 import Phone from '../ui/inputs/phone';
-import { isValidPhoneNumber } from 'react-phone-number-input';
+// import { isValidPhoneNumber } from 'react-phone-number-input';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useTranslation } from '@/app/i18n/client';
 import toast from 'react-hot-toast';
-// import { SessionContext } from '@/utils/contexts';
+import { PhoneNumber } from '@ui/phone-input';
 
 type Props = {
-	
+
 	onLogin?: () => void;
 	setCurrentModal: (val: 'login' | 'register' | 'resetPassword') => void;
 };
 
-function Login({ onLogin, setCurrentModal }: Props,{ lang }: { lang?: string }) {
+function Login({ onLogin, setCurrentModal }: Props, { lang }: { lang?: string }) {
 	const { t } = useTranslation(lang!, 'nav');
 
-	const{accessToken ,setAccessToken ,token ,setToken}=useUserContext()
+	const { accessToken, setAccessToken, token, setToken } = useUserContext()
 	const [loading, setLoading] = useState(false);
 	// const { setSession } = useContext(SessionContext);
 	// const loginSchema = useLoginValidation({});
@@ -57,154 +57,109 @@ function Login({ onLogin, setCurrentModal }: Props,{ lang }: { lang?: string }) 
 	// }, [accountCreated, accountVerified]);
 	// console.log(errorMsg);
 	async function sendData(values: any) {
-		const jsonData = JSON.stringify(values);
+		// jsonData = JSON.stringify(values);
 		setLoading(true)
-
-		let res = await fetch(`${API_BASE_URL}/api/Auth/Login`, {
-		  method: 'POST',
-		  headers: {
-			'Content-Type': 'application/json',
-		  },
-		  body:jsonData, 
+		const jsonData={
+			phoneNumber:values.phoneNumber,
+			shopId:values.shopId
+		}
+		let res = await fetch(`${API_BASE_URL}/api/Auth/EndUserLogin`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(jsonData),
 		});
-	  
-		const result = await res.json();
-		setLoading(false)
-		toast.success(t('welcome-to-Karam-Elsham'))
-		console.log("resault: " ,result);
-		if (result?.refreshToken) {
+		if(res.ok){
+			const result = await res.json();
+			toast.success(t('welcome-to-Karam-Elsham'))
+			setLoading(false)
+			console.log("resault: ", result);
 			
-			localStorage.setItem('accessToken', result?.accessToken);
-			setAccessToken(result.accessToken)
-			localStorage.setItem('Token', result?.refreshToken);
-			localStorage.setItem('phoneNumber', result?.phoneNumber);
-			// console.log("result?.refreshToken",result?.refreshToken);
-			setToken(result.refreshToken)
-			onLogin?.();
-			const userData = {
-				phoneNumber: result.phoneNumber,
-				firstName: result.firstName || '',
-				lastName: result.lastName || '',
-				email: result.email || '',
-			};
-			localStorage.setItem('userData', JSON.stringify(userData));
-		  } else {
-			console.log('Access Token not found.');
-		  }
+			if (result?.refreshToken) {
+	
+				localStorage.setItem('accessToken', result?.accessToken);
+				setAccessToken(result.accessToken)
+				localStorage.setItem('Token', result?.refreshToken);
+				localStorage.setItem('phoneNumber', result?.phoneNumber);
+				// console.log("result?.refreshToken",result?.refreshToken);
+				setToken(result.refreshToken)
+				onLogin?.();
+				const userData = {
+					phoneNumber: result.phoneNumber,
+					firstName: result.firstName || '',
+					lastName: result.lastName || '',
+					email: result.email || '',
+				};
+				localStorage.setItem('userData', JSON.stringify(userData));
+			} else {
+				console.log('Access Token not found.');
+				setLoading(false)
+		
+			}
+		}else{
+			toast.error(t('welcome-to-Karam-Elsham'))
+			setLoading(false)
+
+
+		}
 	}
 	const phoneRegex = /^((\+[1-9]{1,4}[ \-]*)|(\([0-9]{2,3}\)[ \-]*)|([0-9]{2,4})[ \-]*)?[0-9]{7,8}$/;
 
 	const validationSchema = yup.object({
-		// phoneNumber: yup
-		// 	.string()
-		// 	.required('Phone number is required')
-		// 	.test('validate phone number', 'Invalid phone number', value => {
-		// 		if (value && value !== '') return isValidPhoneNumber(value);
-		// 		return false;
-		// 	}),
+		phoneNumber: yup
+			.string()
+			.required('Phone number is required')
 	});
-	const initialValues = {
-		phoneNumber:'',
-		shopId:shopId,
-	};
+	// const initialValues = {
+	// 	phoneNumber:'',
+	// 	shopId:shopId,
+	// };
 
-	// let formik= useFormik({
-	// 	initialValues:{
-	// 		phoneNumber:'',
-	// 		shopId:shopId
-	// 	},
-	// 	validationSchema,
-	// 	onSubmit:sendData
-	// })
+	let formik = useFormik({
+		initialValues: {
+			phoneNumber: '',
+			shopId: shopId
+		},
+		validationSchema,
+		onSubmit: sendData
+	})
 	return (
 		<div className="flex flex-col gap-5">
 			<div className="flex flex-col items-center justify-center">
-				<Image width={60} height={60} src={Logo} alt="logo"/>
+				<Image width={60} height={60} src={Logo} alt="logo" />
 				<p className="text-sm font-light truncate-text">{t('desc')}</p>
 			</div>
-			<div className="flex flex-col items-center">
-				{/* <h3 className="font-bold text-lg">Login</h3> */}
-				{/* <button
-					// onClick={() => setCurrentModal('register')}
-					className="text-xs font-bold text-black/50 hover:underline"
-				>
-					New to ordrat? Create an account now!
-				</button> */}
-				{/* <Formik>
-					<Form className="flex flex-col my-4 w-full">
-						<Text name="email" label="Email" autoComplete="email" />
-						<Text
-							name="password"
-							label="Password"
-							type="password"
-							autoComplete="current-password"
+				<form onSubmit={formik.handleSubmit}>
+					<div className=" flex justify-between w-full">
+						<PhoneNumber
+							label={t('phone')}
+							country="eg"
+							size='lg'
+							className="mt-1 font-medium w-full"
+							preferredCountries={['eg']}
+							value={formik.values.phoneNumber}
+							onChange={(value) => formik.setFieldValue('phoneNumber', value)}
+							onBlur={formik.handleBlur}
+							error={formik.touched.phoneNumber as any && formik.errors.phoneNumber ? formik.errors.phoneNumber as any : '' as any}
 						/>
-						<button
-							disabled={loading}
-							type="submit"
-							className="bg-orange-500 mt-3 text-white py-3 rounded-lg capitalize flex items-center justify-center"
+					</div>
+				
+					<div className=" flex items-center justify-center">
+
+					<button
+						type="submit"
+						className="bg-mainColor py-3 px-6 rounded-xl mt-4 font-bold text-base text-white"
+						disabled={loading}
 						>
-							{loading ? <Loader2 className="animate-spin" /> : 'Login'}
-						</button>
-					</Form>
-				</Formik> */}
-				{/* <form className='flex flex-col' onSubmit={formik.handleSubmit}> */}
-				<Formik<any>
-					initialValues={initialValues}
-					enableReinitialize
-					validationSchema={validationSchema}
-					onSubmit={async (vals, { setSubmitting }) => {
-						console.log('Submitted values: ', vals);
-						sendData(vals);
-						setSubmitting(false);
-					}}
-				>
-					{({ errors, values, initialValues, touched }) => {
-						return (
-							<Form className="flex flex-col w-full">
-
-								{/* <label htmlFor="phone" className='font-bold mb-1'>{t('phone')}</label> */}
-								<Field name="phoneNumber">
-									{({ field }: any) => (
-									<input
-										{...field}
-										type="tel"
-										autoComplete="tel"
-										placeholder={t('phone-ph')}
-										id="phoneNumber"					
-										className={`rounded-md  border-gray-300 focus:border-mainColor focus:outline-none 
-										focus:outline-2 focus:outline-transparent focus:outline-offset-2  rtl:text-end
-										focus:ring-1 focus:ring-mainColor focus:ring-offset-0 shadow-sm ${
-											errors.phoneNumber && touched.phoneNumber ? 'border-red-800' : 'border-gray-300'
-										}`}
-									/>
-									)}
-								</Field>
-								{errors.phoneNumber && touched.phoneNumber && (
-									<p className="text-red-500 text-xs">{errors.phoneNumber?.toString() || ''}</p>
-								)}
-
-								{/* <Phone name="phoneNumber" label="Phone Number" placeholder="Phone Number" /> */}
-
-								{/* {formik.errors.phoneNumber&& formik.touched.phoneNumber ? */}
-								{/* <p className="text-red-500 text-xs">{formik.errors.phoneNumber}</p>:"" } */}
-								<button
-									type="submit"
-									className="bg-mainColor py-3 px-3 rounded-xl mt-4 font-bold text-base text-white flex items-center justify-center"
-									disabled={loading} 
-								>
-									{loading ? (
-										<Loader2 className="animate-spin" /> 
-									) : (
-										"Login"
-									)}
-								</button>
-							{/* </form> */}
-							</Form>
-						);
-					}}
-				</Formik>
-			</div>
+						{loading ? (
+							<Loader2 className="animate-spin" />
+						) : (
+							t("sidebar-menu-sign-in")
+						)}
+					</button>
+						</div>
+				</form>
 		</div>
 	);
 }

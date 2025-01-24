@@ -6,7 +6,9 @@ import Badge from '../Badge';
 import { Star, Flame } from 'lucide-react';
 import TextTruncate from '../../ui/TruncateText';
 import { toCurrency } from '@utils/to-currency';
-
+import photo from '@public/assets/شاورما-عربي-لحمة-768x768.png'
+import hamburger from '@public/assets/hamburger.png'
+import potato from '@public/assets/شاورما-عراقي-لحمة-مع-بطاطا.png'
 type Props = Food & {
   lang:string;
   setCurrentItem: Dispatch<
@@ -63,7 +65,7 @@ function MediumCard(data:Props) {
             <div className="relative w-[160px] h-[130px] sm:w-4/12 4xl:w-3/12  sm:h-full rounded-lg sm:rounded-s-lg">
 
             <Image
-              src={data.imageUrl}
+              src={data?.imageUrl||photo}
                 layout="fill"
                 objectFit="cover"
               className="rounded-lg sm:rounded-s-lg"

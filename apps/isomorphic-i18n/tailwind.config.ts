@@ -13,6 +13,11 @@ const config: Pick<Config, "prefix" | "presets" | "content" | "theme" |"plugins"
         mainColor:"#f97316",
         mainColorHover:"#c96722"
       },
+      fontFamily: {
+        // rubik: ['Rubik', 'sans-serif'],
+        // almarai: ['Almarai','sans-serif'],
+        NotoSansArabic: ['var(--font-NotoSansArabic)', 'sans-serif'],
+      },
 
     }
   },
