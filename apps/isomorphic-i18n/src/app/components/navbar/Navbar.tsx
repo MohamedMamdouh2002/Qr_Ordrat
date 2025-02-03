@@ -22,7 +22,7 @@ function Navbar({ className, lang }: { className?: string, lang?: string }) {
         };
 
         window.addEventListener('resize', handleResize);
-        handleResize(); 
+        handleResize();
         return () => {
             window.removeEventListener('resize', handleResize);
         };
@@ -60,7 +60,7 @@ function Navbar({ className, lang }: { className?: string, lang?: string }) {
                             <Timer /> 24 {t('mins')}
                         </div>
                         <div className="flex items-center gap-2">
-                           <FontAwesomeIcon icon={faMoneyBills as any} className='text-lg' />
+                            <FontAwesomeIcon icon={faMoneyBills as any} className='text-lg' />
                             {t('Cash')}
                         </div>
                     </div>
@@ -75,7 +75,7 @@ function Navbar({ className, lang }: { className?: string, lang?: string }) {
                         </div>
                         <div className="relative">
                             <Info size={16}
-                            
+
                                 onClick={() => setModal(true)}
                                 className="cursor-pointer text-base relative z-10"
                             />
@@ -116,7 +116,8 @@ function Navbar({ className, lang }: { className?: string, lang?: string }) {
                                 </div>
                             </div>
 
-                            <button className='w-full h-11 rounded-lg text-xl text-white bg-mainColor mt-auto'>
+                            <button onClick={() => setModal(false)}
+                                className='w-full h-11 rounded-lg text-xl text-white bg-mainColor mt-auto'>
                                 {t('done')}
                             </button>
                         </div>

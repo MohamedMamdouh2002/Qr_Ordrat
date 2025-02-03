@@ -14,6 +14,7 @@ const NavMobile = ({ lang }: { lang: string }) => {
   const navRef = useRef<HTMLUListElement>(null);
   const [isNavigating, setIsNavigating] = useState(false); // حالة التنقل المباشر
   const { t, i18n } = useTranslation(lang!, 'nav');
+  const [isSticky, setIsSticky] = useState(true); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +45,7 @@ const NavMobile = ({ lang }: { lang: string }) => {
     const sections = home?.map(item => document.getElementById(item.id));
     const observer = new IntersectionObserver(
       (entries) => {
-        if (!isNavigating) { // فقط يعمل عندما لا يكون هناك تنقل مباشر
+        if (!isNavigating) { 
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               setActive(entry.target.id);
@@ -80,7 +81,7 @@ const NavMobile = ({ lang }: { lang: string }) => {
   
       navRef.current.scrollTo({
         left: scrollAmount - centerOffset,
-        behavior: "smooth", // التنقل الفوري بدون سلاسة
+        behavior: "smooth", 
       });
     }
   };
@@ -94,6 +95,22 @@ const NavMobile = ({ lang }: { lang: string }) => {
       handleClose();
     }
   };
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      // Check if scrollY exceeds a certain value to make it fixed
+      if (offset > 250) {  // Adjust this value as needed
+        setIsSticky(false);
+      } else {
+        setIsSticky(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = isModalOpen ? 'hidden' : 'auto';
@@ -102,7 +119,7 @@ const NavMobile = ({ lang }: { lang: string }) => {
   if (typeof window === 'undefined') return null;
 
   return (
-    <nav className="lg:hidden w-full m-auto border-b mt-5 border-gray-200 gap-4 pt-5 bg-white sticky top-14 z-50 overflow-x-auto">
+    <nav       className={`lg:hidden w-full m-auto border-b mt-5 border-gray-200 gap-4 pt-5 bg-white ${isSticky ? 'sticky top-11' : 'fixed top-11 z-50 overflow-x-auto'} transition-all`}>
       <div className="w-5/6 mx-auto flex">
         <button
           onClick={() => setIsModalOpen(true)}
@@ -122,10 +139,10 @@ const NavMobile = ({ lang }: { lang: string }) => {
                   active === item.id ? "text-orange-500" : "text-gray-700"
                 }`}
                 onClick={() => {
-                  setIsNavigating(true); // تفعيل حالة التنقل
+                  setIsNavigating(true); 
                   setActive(item.id);
                   scrollToItem(index);
-                  setTimeout(() => setIsNavigating(false), 600); // إعادة تعيين حالة التنقل بعد انتهاء التنقل
+                  setTimeout(() => setIsNavigating(false), 600);
                 }}
               >
                 {item.name}

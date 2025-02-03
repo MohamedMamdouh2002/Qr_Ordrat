@@ -83,7 +83,7 @@ function CartModal({ lang }: { lang?: string }) {
                     onClick={closeModal}
                     className="fixed inset-0 z-[99999] right-0 bg-black bg-opacity-50 flex"
                 >
-                    <div className="h-full w-[350px] sm:w-[400px] bg-white relative px-5 py-4 flex flex-col">
+                    <div className="h-full w-[360px] sm:w-[400px] bg-white relative px-5 py-4 flex flex-col">
                         <div className="flex justify-between items-center">
                             <h2 className="text-2xl font-bold">{t('cart')}</h2>
                             <button
