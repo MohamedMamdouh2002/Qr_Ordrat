@@ -95,14 +95,14 @@ const NavMobile = ({ lang }: { lang: string }) => {
       handleClose();
     }
   };
+
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      // Check if scrollY exceeds a certain value to make it fixed
-      if (offset > 250) {  // Adjust this value as needed
-        setIsSticky(false);
+      if (offset > 290) {  
+        setIsSticky(false); 
       } else {
-        setIsSticky(true);
+        setIsSticky(true);  
       }
     };
 
@@ -119,15 +119,12 @@ const NavMobile = ({ lang }: { lang: string }) => {
   if (typeof window === 'undefined') return null;
 
   return (
-    <nav       className={`lg:hidden w-full m-auto border-b mt-5 border-gray-200 gap-4 pt-5 bg-white ${isSticky ? 'sticky top-11' : 'fixed top-11 z-50 overflow-x-auto'} transition-all`}>
+    <nav className={`lg:hidden w-full m-auto border-b mt-5 border-gray-200 gap-4 pt-5 bg-white ${isSticky ? 'sticky top-11 z-50' : 'fixed top-11 z-50 overflow-x-auto'} transition-all`}>
       <div className="w-5/6 mx-auto flex">
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className={`transition duration-150 `}
-        >
+        <button onClick={() => setIsModalOpen(true)} className="transition duration-150">
           <AlignCenter />
         </button>
-        <ul ref={navRef} className="flex items-center ps-5 gap-6 whitespace-nowrap overflow-x-auto flex-nowrap w-full h-16">
+        <ul ref={navRef} className="flex bg-white items-center ps-5 gap-6 whitespace-nowrap overflow-x-auto flex-nowrap w-full h-16">
           {home?.map((item, index) => (
             <li key={item.id} className="relative w-full h-full text-left">
               <Link
@@ -135,9 +132,7 @@ const NavMobile = ({ lang }: { lang: string }) => {
                 smooth={true}
                 duration={500} 
                 offset={-145}
-                className={`text-sm text-center relative cursor-pointer h-full flex items-center justify-center font-semibold ${
-                  active === item.id ? "text-orange-500" : "text-gray-700"
-                }`}
+                className={`text-sm text-center relative cursor-pointer h-full flex items-center justify-center font-semibold ${active === item.id ? "text-orange-500" : "text-gray-700"}`}
                 onClick={() => {
                   setIsNavigating(true); 
                   setActive(item.id);
@@ -157,17 +152,17 @@ const NavMobile = ({ lang }: { lang: string }) => {
 
       {isModalOpen && (
         <>
-          <div className="fixed z-[9999] inset-0 bg-gray-600 bg-opacity-50 " onClick={handleOutsideClick} />
+          <div className="fixed z-[9999] inset-0 bg-gray-600 bg-opacity-50" onClick={handleOutsideClick} />
           <motion.div
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed bottom-0 right-0 left-0 lg:hidden flex items-end z-[1000000] "
+            className="fixed bottom-0 right-0 left-0 lg:hidden flex items-end z-[1000000]"
           >
             <div className="bg-white rounded-t-lg shadow-lg py-6 w-full">
               <div className="flex items-center gap-3 mx-4 mb-6">
-                <X onClick={() => handleClose()} className="" size={25} />
+                <X onClick={() => handleClose()} size={25} />
                 <h2 className="text-lg font-medium">{t('menu')}</h2>
               </div>
               <ul className="flex flex-col gap-4">
@@ -179,9 +174,7 @@ const NavMobile = ({ lang }: { lang: string }) => {
                       smooth={true}
                       duration={500} 
                       offset={-145}
-                      className={`text-sm relative cursor-pointer h-full flex justify-between items-center font-medium ${
-                        active === item.id ? "text-orange-500" : "text-gray-700"
-                      }`}
+                      className={`text-sm relative cursor-pointer h-full flex justify-between items-center font-medium ${active === item.id ? "text-orange-500" : "text-gray-700"}`}
                       onClick={() => {
                         setIsNavigating(true);
                         setActive(item.id);
@@ -198,13 +191,13 @@ const NavMobile = ({ lang }: { lang: string }) => {
                         <span className="absolute bg-orange-500 h-[30px] w-1 rounded-e-full transition-all duration-700 start-0 -top-1 bottom-0"></span>
                       )}
                     </Link>
-                    <hr className=" mx-2"/>
+                    <hr className="mx-2" />
                   </>
                 ))}
               </ul>
             </div>
           </motion.div>
-          <hr className=" mx-2"/>
+          <hr className="mx-2" />
         </>
       )}
     </nav>
