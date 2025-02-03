@@ -18,7 +18,7 @@ function Policy({ lang, sections }: { lang?: string, sections: props[] }) {
 
   return (
     <div className="">
-      {/* <Title className="text-center mt-20 text-[#404040]" title={t('privacypolicy')} /> */}
+      <Title className="text-center mt-20 text-[#404040]" title={t('privacypolicy')} />
       {sections.map((section, index) => (
         <div key={index} className="mt-10">
           <h2 className="text-2xl font-medium mb-2">{section.title}</h2>

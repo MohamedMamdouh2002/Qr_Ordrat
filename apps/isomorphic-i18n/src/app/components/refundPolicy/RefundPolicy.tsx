@@ -57,7 +57,7 @@ function RefundPolicy({ lang }: { lang?: string }) {
 
   return (
     <div className="w-5/6 sm:w-8/12 mx-auto mb-10">
-      <Title className="text-center mt-20 text-[#404040]" title={t('refundpolicy')}/>
+      {/* <Title className="text-center mt-20 text-[#404040]" title={t('refundpolicy')}/> */}
       <Policy sections={sections} />
     </div>
   );

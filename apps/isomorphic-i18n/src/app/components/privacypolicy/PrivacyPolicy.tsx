@@ -56,7 +56,7 @@ function PrivacyPolicy({ lang }: { lang?: string }) {
   ];
 
   return (
-    <div className="w-5/6 sm:w-8/12 mx-auto mb-10">
+    <div className="w-5/6 sm:w-8/12 mx-auto mb-10 ">
       {/* <Title className="text-center mt-20 text-[#404040]" title={t('privacypolicy')}/> */}
     <Policy sections={sections} />
     </div>
