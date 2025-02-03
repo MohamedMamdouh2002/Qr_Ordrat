@@ -39,7 +39,7 @@ function Modal({ isOpen, setIsOpen, children, className, lang = 'en' }: Props) {
 			<Dialog
 				open={isOpen}
 				onClose={() => setIsOpen(false)}
-				className="relative z-[999] flex h-screen items-center justify-center"
+				className="relative z-[99998] flex h-screen items-center justify-center"
 			>
 				<div className="fixed inset-0 bg-black/30 backdrop-blur-md" aria-hidden="true" />
 				<m.div

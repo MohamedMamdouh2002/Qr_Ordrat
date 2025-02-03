@@ -26,10 +26,10 @@ import SearchWidget from "@/app/shared/search/search";
 import Navbar from "@/app/components/navbar/Navbar";
 import Image from "next/image";
 import logo from '@public/assets/karam-el-sham.png'
-import { AlignCenter, ShoppingCart,User } from "lucide-react";
+import { AlignCenter, ShoppingCart, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import  {SideNav}  from "@/app/components/sideNav/SideNav";
+import { SideNav } from "@/app/components/sideNav/SideNav";
 import path from "path";
 import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
@@ -114,43 +114,42 @@ export default function Header({ lang }: { lang?: string }) {
   }, [scrollY]);
 
   return <>
-  <Navbar className={`   ${isStickyVisible ? "hidden  " : " "}`} />
+    <Navbar lang={lang} className={`   ${isStickyVisible ? "hidden  " : " "}`} />
 
-<StickyHeader
+    <StickyHeader
 
-  className={`hidden lg:flex  w-full z-40  ${
-    isStickyVisible ? "bg-orange-500/75  backdrop-blur-lg *:text-white" : "bg-white border-b-2"
+      className={`hidden lg:flex  w-full z-40  ${isStickyVisible ? "bg-orange-500/75  backdrop-blur-lg *:text-white" : "bg-white border-b-2"
 
-  }`}
->
-  <div className=" w-[91%] mx-auto z-[40] flex  justify-between 2xl:py-1 3xl:px-8">
-    <div className="hidden items-center gap-3 lg:flex">
-      <Link
-        aria-label="Site Logo"
-        href="/"
-        className="me-4 hidden w-[220px] shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 lg:flex gap-4 items-center"
-      >
-        <Image src={logo} alt="logo" className="max-w-[60px]" />
-        <h1 className={`font-bold text-lg ${isStickyVisible?`text-white`:`text-black`}`}>Karam El Sham</h1>
-      </Link>
-      <HeaderMenuLeft lang={lang} />
-    </div>
-    <div className="flex w-full items-center gap-5 lg:w-auto 3xl:gap-6">
-      <div className="flex w-full max-w-2xl items-center lg:w-auto gap-4">
-        <HamburgerButton
-          view={<Sidebar className="static w-full 2xl:w-full" lang={lang} />}
-        />
-        <Link
-          aria-label="Site Logo"
-          href="/"
-          className="me-4 w-9 shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 lg:hidden"
-        >
-          <Logo iconOnly={true} />
-        </Link>
-      
+        }`}
+    >
+      <div className=" w-[91%] mx-auto z-[40] flex  justify-between 2xl:py-1 3xl:px-8">
+        <div className="hidden items-center gap-3 lg:flex">
+          <Link
+            aria-label="Site Logo"
+            href={`/${lang}/`}
+            className="me-4 hidden w-[220px] shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 lg:flex gap-4 items-center"
+          >
+            <Image src={logo} alt="logo" className="max-w-[60px]" />
+            <h1 className={`font-bold text-lg ${isStickyVisible ? `text-white` : `text-black`}`}>Karam El Sham</h1>
+          </Link>
+          <HeaderMenuLeft lang={lang} />
+        </div>
+        <div className="flex w-full items-center gap-5 lg:w-auto 3xl:gap-6">
+          <div className="flex w-full max-w-2xl items-center lg:w-auto gap-4">
+            <HamburgerButton
+              view={<Sidebar className="static w-full 2xl:w-full" lang={lang} />}
+            />
+            <Link
+              aria-label="Site Logo"
+              href={`/${lang}/`}
+              className="me-4 w-9 shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 lg:hidden"
+            >
+              <Logo iconOnly={true} />
+            </Link>
 
-          <Link href={`/${lang!}/search`}>
-                  {/* <Input
+
+            <Link href={`/${lang!}/search`}>
+              {/* <Input
                     type="search"
                     placeholder={t('placeholder')}
                     value=""
@@ -164,64 +163,63 @@ export default function Header({ lang }: { lang?: string }) {
                     prefix={
                     }
                   /> */}
-                    <IoSearchOutline  className="h-5  w-5" />
-          </Link>
-          <LanguageSwitcher
-            lang={lang!}
-            className=" rounded-none shadow-none"
-            variant="icon"
+              <IoSearchOutline className="h-5  w-5" />
+            </Link>
+            <LanguageSwitcher
+              lang={lang!}
+              className=" rounded-none shadow-none"
+              variant="icon"
             />
-          <Link href={`/${lang!}/cart`}>
-            <ShoppingCart className={`transition duration-150  ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`} />
+            <Link href={`/${lang!}/cart`}>
+              <ShoppingCart className={`transition duration-150  ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`} />
 
-          </Link>
-          <button
-            onClick={() => setIsOpen(true)} 
-            className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
-          >
-            <AlignCenter />
-          </button>
+            </Link>
+            <button
+              onClick={() => setIsOpen(true)}
+              className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
+            >
+              <AlignCenter />
+            </button>
 
-          <AnimatePresence mode="wait">
-            {isOpen && <SideNav lang={lang!} isOpen={isOpen} setIsOpen={setIsOpen} />} {/* تمرير الحالة ودالة الإغلاق */}
-          </AnimatePresence>
+            <AnimatePresence mode="wait">
+              {isOpen && <SideNav lang={lang!} isOpen={isOpen} setIsOpen={setIsOpen} />}
+            </AnimatePresence>
 
+          </div>
+          <HeaderMenuRight />
+        </div>
       </div>
-      <HeaderMenuRight />
-    </div>
-  </div>
-</StickyHeader>
-<nav>
-    <div  className={`flex lg:hidden ${
-        isStickyVisible
-          ? "fixed top-0 z-50 w-full bg-white  "
-          : "hidden"}`}>
-            <div className="w-5/6 mx-auto flex justify-between h-16  items-center">
-              <Link href={'/'}>
-                <h1 className='text-base'>{t('title')}</h1>
-              </Link>
-              <div className="  flex justify-between items-center">
-                <div className="flex gap-5">
-                <LanguageSwitcher
+    </StickyHeader>
+    <nav>
+      <div className={`flex lg:hidden ${isStickyVisible
+        ? "fixed top-0 z-50 w-full bg-white  "
+        : "hidden"}`}>
+        <div className="w-5/6 mx-auto flex justify-between h-16  items-center">
+          <Link href={'/'}>
+            <h1 className='text-base'>{t('title')}</h1>
+          </Link>
+          <div className="  flex justify-between items-center">
+            <div className="flex gap-5">
+              <LanguageSwitcher
                 lang={lang!}
                 className="ms-3 rounded-none shadow-none"
                 variant="icon"
-                />
-                  <Link href={`/${lang!}/search`}>
-                    <IoSearchOutline  size={20} />    
-                  </Link>
-                  <button
-                    onClick={() => setIsOpen(true)} 
-                    className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
-                  >
-                    <AlignCenter />
-                  </button>
-                </div>
-              </div>
+              />
+              <Link href={`/${lang!}/search`}>
+                <IoSearchOutline size={20} />
+              </Link>
+              <button
+                onClick={() => setIsOpen(true)}
+                className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
+              >
+                <AlignCenter />
+              </button>
             </div>
-    </div>
-  </nav>
-{/* <div className={`imgBg  lg:hidden `}>
+          </div>
+        </div>
+      </div>
+    </nav>
+    {/* <div className={`imgBg  lg:hidden `}>
   <div className={`w-10/12 mx-auto mt-5 flex justify-between items-center ${isStickyVisible ? "hidden  " : " "}`}>
     <LanguageSwitcher
       lang={lang!}
@@ -238,31 +236,55 @@ export default function Header({ lang }: { lang?: string }) {
     </div>
   </div>
 </div> */}
-{!pathname || pathname === "/en" || pathname === "/ar" ? (
-        <div className={`imgBg lg:hidden`}>
-          <div
-            className={`w-10/12 mx-auto mt-5 flex justify-between items-center ${
-              isStickyVisible ? "hidden" : ""
+    {!pathname || pathname === "/en" || pathname === "/ar" ? (
+      <div className={`imgBg lg:hidden`}>
+        <div
+          className={`w-10/12 mx-auto mt-5 flex justify-between items-center ${isStickyVisible ? "hidden" : ""
             }`}
-          >
-            
-              <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
-                <Link href={`/${lang!}/search`}>
-                  <IoSearchOutline  size={20} />    
-                </Link>
-              </div>
-            
-            <div className="flex gap-5">
-              <div className="w-10 h-10  bg-white rounded-full flex justify-center items-center">
-                  <LanguageSwitcher
+        >
+          <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
+            <Link href={`/${lang!}/search`}>
+              <IoSearchOutline size={20} />
+            </Link>
+          </div>
+          <div className="flex gap-5">
+            <div className="w-10 h-10  bg-white rounded-full flex justify-center items-center">
+              <LanguageSwitcher
+                lang={lang!}
+                className=" rounded-none shadow-none"
+                variant="icon"
+              />
+            </div>
+            <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
+              <button
+                onClick={() => setIsOpen(true)}
+                className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
+              >
+                <AlignCenter />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <nav>
+        <div className={`flex lg:hidden fixed top-0 z-[999] w-full bg-white   `}>
+          <div className="w-5/6 mx-auto flex justify-between h-16 items-center">
+            <Link href={'/'}>
+              <h1 className='text-base'>karam El Sham</h1>
+            </Link>
+            <div className="  flex justify-between items-center">
+              <div className="flex gap-5">
+                <LanguageSwitcher
                   lang={lang!}
-                  className=" rounded-none shadow-none"
+                  className="ms-3 rounded-none shadow-none"
                   variant="icon"
                 />
-              </div>
-              <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
+                <Link href={`/${lang!}/search`}>
+                  <IoSearchOutline size={20} />
+                </Link>
                 <button
-                  onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر
+                  onClick={() => setIsOpen(true)}
                   className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
                 >
                   <AlignCenter />
@@ -271,37 +293,10 @@ export default function Header({ lang }: { lang?: string }) {
             </div>
           </div>
         </div>
-      ) : (
-        <nav>
-          <div  className={`flex lg:hidden fixed top-0 z-[999] w-full bg-white   `}>
-                  <div className="w-5/6 mx-auto flex justify-between h-16 items-center">
-                  <Link href={'/'}>
-                    <h1 className='text-base'>karam El Sham</h1>
-                  </Link>
-                    <div className="  flex justify-between items-center">
-                          <div className="flex gap-5">
-                          <LanguageSwitcher
-                          lang={lang!}
-                          className="ms-3 rounded-none shadow-none"
-                          variant="icon"
-                          />
-                            <Link href={`/${lang!}/search`}>
-                              <IoSearchOutline  size={20} />    
-                            </Link>
-                            <button
-                              onClick={() => setIsOpen(true)} // فتح الـ SideNav عند النقر
-                              className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
-                            >
-                              <AlignCenter />
-                            </button>
-                          </div>
-                    </div>
-                  </div>
-          </div>
-        </nav>
-      )}
+      </nav>
+    )}
 
 
   </>
-  
+
 }

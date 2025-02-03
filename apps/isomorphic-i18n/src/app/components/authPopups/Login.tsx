@@ -109,7 +109,7 @@ function Login({ onLogin, setCurrentModal }: Props, { lang }: { lang?: string })
 	const validationSchema = yup.object({
 		phoneNumber: yup
 			.string()
-			.required('Phone number is required')
+			.required(t('Phonenumberisrequired'))
 	});
 	// const initialValues = {
 	// 	phoneNumber:'',

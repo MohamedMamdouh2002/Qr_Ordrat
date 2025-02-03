@@ -1561,7 +1561,7 @@ div[style='z-index: 1000001;'],
 
 /* Adress Modal scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
   height: 8px;
 }
 ::-webkit-scrollbar-thumb {
@@ -1640,3 +1640,4 @@ div[style='z-index: 1000001;'],
 [dir='rtl'] .react-tel-input .form-control {
   padding-left: 66px !important;
 }
+

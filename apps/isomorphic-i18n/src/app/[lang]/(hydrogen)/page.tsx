@@ -65,7 +65,7 @@ export default function FileDashboardPage({
 }) {
   return<>
     <ScrollToTop/>
-    <RestaurantTitle/>
+    <RestaurantTitle lang={lang}/>
     <NavMobile lang={lang!}/>
     <Header lang={lang!}/>
     <MainSlider/>

@@ -1,3 +1,4 @@
+import CartModal from '@/app/components/cartModal/CartModal';
 import Footer from '@/app/components/footer/Footer';
 import ScrollToTop from '@/app/components/ui/ScrollToTop';
 import Header from '@/layouts/lithium/lithium-header';
@@ -13,11 +14,12 @@ export default function LithiumLayout({
       <div className="flex w-full flex-col ">
         <ScrollToTop/>
         <Header lang={lang} />
-        <div className="flex flex-col min-h-screen">
+        <div className="relative">
+          <CartModal lang={lang}/>
           {children}
-          <Footer lang={lang!}/>
-
         </div>
+          <Footer  lang={lang!}/>
+
       </div>
     </main>
   );

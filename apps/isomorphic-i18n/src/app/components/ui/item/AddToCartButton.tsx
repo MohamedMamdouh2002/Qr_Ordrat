@@ -1,7 +1,9 @@
+'use client'
 import  cn  from '../../../../../../../packages/isomorphic-core/src/utils/class-names';
 import { Check, Plus } from 'lucide-react';
 import React from 'react';
 import Price from './Price';
+import { useTranslation } from '@/app/i18n/client';
 
 type Props = {
 	type?: string;
@@ -10,6 +12,7 @@ type Props = {
 	action?: () => void;
 	price?: string;
 	oldPrice?: string;
+	lang?: string;
 	buttonType?: "submit" | "reset" | "button" | undefined;
 	isAddedToCart?: boolean;
 };
@@ -21,9 +24,12 @@ function AddToCartButton({
 	type = 'add',
 	price,
 	oldPrice,
+	lang,
 	buttonType = "button",
 	isAddedToCart
 }: Props) {
+	  const { t, i18n } = useTranslation(lang!, 'home');
+	
 	return (
 		<button
 			type={buttonType}
@@ -35,7 +41,7 @@ function AddToCartButton({
 		>
 			{mainItem ? (
 				<div className="w-full px-2 font-normal flex items-center justify-between">
-					Add item
+					{t('Additem')}
 					<Price
 						className="flex-col-reverse items-end"
 						price={price!}
@@ -47,7 +53,7 @@ function AddToCartButton({
 			) : !isAddedToCart ? (
 				<>
 					<Plus className="text-white" />
-					Add
+					{t('Add')}
 				</>
 			) : (
 				<>

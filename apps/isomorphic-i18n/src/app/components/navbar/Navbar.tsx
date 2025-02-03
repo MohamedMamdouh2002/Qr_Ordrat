@@ -1,69 +1,130 @@
 'use client'
-import React, { useEffect } from 'react'
-import { Banknote, Car, Info, Share2, Star, TicketPercentIcon, Timer } from 'lucide-react';
-import { locale } from 'dayjs';
-import { t } from 'i18next';
+import React, { useEffect, useState } from 'react'
+import { Car, CircleAlert, Info, Star, TicketPercentIcon, Timer } from 'lucide-react';
 import Link from 'next/link';
-import LanguageSwitcher from '@/app/i18n/language-switcher';
 import { useTranslation } from '@/app/i18n/client';
-function Navbar( {className, lang }: {className?:string, lang?: string }) {
-    const { t ,i18n} = useTranslation(lang!, 'nav');
-    useEffect(() => {
-        i18n.changeLanguage(lang);
-      }, [lang, i18n]);
-    
-  return <>
-    <div className="hidden lg:block h-14 bg-mainColor text-white text-sm" >
-        <div className="w-[90%] mx-auto grid grid-cols-9 *:col-span-3 items-center justify-between py-4">
-                <div className="flex items-center gap-3">
-                    <TicketPercentIcon /><span>{t('select-item')}</span>
-                </div>
-                <div className="flex items-center mx-auto gap-5">
-                    <div className="flex items-center gap-3">
-                        <Timer /> 24 {t('mins')}
-                    </div>
-                    {/* <div className="flex items-center gap-3">
-                        <Banknote />  EGP 33.99
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock, faMoneyBills, faX } from '@fortawesome/free-solid-svg-icons';
 
-                    </div> */}
+type props = {
+    icon: any;
+    title: string;
+}
+
+function Navbar({ className, lang }: { className?: string, lang?: string }) {
+    const { t, i18n } = useTranslation(lang!, 'nav');
+    const [isWideScreen, setIsWideScreen] = useState(typeof window !== "undefined" ? window.innerWidth > 1180 : true);
+    const [modal, setModal] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsWideScreen(window.innerWidth > 1024);
+        };
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); 
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (modal && isWideScreen) {
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';
+        };
+    }, [modal, isWideScreen]);
+
+    const descriptions: props[] = [
+        { title: t('Cash'), icon: faMoneyBills },
+        { title: t('work'), icon: faClock },
+        { title: t('work'), icon: faClock },
+    ];
+
+    return (
+        <>
+            <div className="hidden lg:block h-14 bg-mainColor text-white text-sm relative">
+                <div className="w-[90%] mx-auto grid grid-cols-9 *:col-span-3 items-center justify-between py-4">
                     <div className="flex items-center gap-3">
-                        <Car />
-                        <div className="flex items-center gap-1">
+                        <TicketPercentIcon /><span>{t('select-item')}</span>
+                    </div>
+                    <div className="flex items-center mx-auto gap-5">
+                        <div className="flex items-center gap-">
+                            <Timer /> 24 {t('mins')}
+                        </div>
+                        <div className="flex items-center gap-2">
+                           <FontAwesomeIcon icon={faMoneyBills as any} className='text-lg' />
                             {t('Cash')}
-                            <Info className="text-white/75" size={12} />
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-5 justify-end w-full col-span-3 relative">
+                        <div className={'flex items-center gap-1 text-sm'}>
+                            <Star className="fill-[#f1d045] text-[#f1d045]" size={14} />
+                            <span className="">4.3</span>
+                            <Link href={`/${lang!}/reviews`} className="underline font-light">
+                                (<bdi>{t('showRate')}</bdi> )
+                                {/* {t('ratings')}) */}
+                            </Link>
+                        </div>
+                        <div className="relative">
+                            <Info size={16}
+                            
+                                onClick={() => setModal(true)}
+                                className="cursor-pointer text-base relative z-10"
+                            />
                         </div>
                     </div>
                 </div>
-                <div className="flex items-center gap-5 justify-end  w-full  col-span-3">
-                <div className={'flex items-center gap-1 text-sm'}>
-                    <Star className={`'fill-[#f1d045] text-[#f1d045]'`} size={14} />
-                    <span className="">4.3</span>
-                    <Link href={'/reviews'} className="underline font-light">
-                        (<bdi>8, 206</bdi> {t('ratings')})
-                    </Link>
-                </div>
-                    <Share2
-                        onClick={() => {
-                            if (navigator?.share) {
-                                navigator
-                                    .share({
-                                        title: 'Karam el sham - qr menu',
-                                        url: process.env.NEXT_PUBLIC_URL || 'https://localhost:3000'
-                                    })
-                                    .then(() => console.log('Successfully shared'))
-                                    .catch(error => console.error('Something went wrong sharing', error));
-                            } else {
-                                console.error('Web Share API is not supported in this browser.');
-                            }
-                        }}
-                        size={21}
-                        className="cursor-pointer"
-                    />
-                </div>
-        </div>
-    
-    </div>
-  </>
+                {modal && (
+                    <div
+                        onClick={() => setModal(false)}
+                        className="fixed top-0 left-0 w-full h-full z-[999999] hidden lg:flex justify-center items-center bg-black/50"
+                    >
+                        <div
+                            onClick={(event) => event.stopPropagation()}
+                            className="sm:w-[500px] w-[340px] min-h-96 bg-white p-5 rounded-lg shadow-lg flex flex-col"
+                        >
+                            <div className="flex justify-between items-center">
+                                <h2 className="text-xl font-semibold">{t('shopInfo')}</h2>
+                                <button
+                                    onClick={() => setModal(false)}
+                                    className="text-gray-600 hover:text-gray-900"
+                                >
+                                    <FontAwesomeIcon icon={faX as any} className='text-xl' />
+                                </button>
+                            </div>
+
+                            <div className="flex-grow">
+                                <h4 className='text-black font-medium mt-4 mb-2 text-sm'>{t('aboutShop')}</h4>
+                                <div className="p-3 rounded-lg text-black bg-[#F2F4F7]">
+                                    <p>{t('desc')}</p>
+                                </div>
+                                <div className="text-[#212121] mt-5 space-y-4 mb-2">
+                                    {descriptions.map((i, index) => (
+                                        <div key={index} className="flex items-center gap-2">
+                                            <FontAwesomeIcon icon={i.icon} />
+                                            <p className='text-base'>{i.title}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <button className='w-full h-11 rounded-lg text-xl text-white bg-mainColor mt-auto'>
+                                {t('done')}
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </>
+    );
 }
 
-export default Navbar
+export default Navbar;

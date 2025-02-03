@@ -15,7 +15,7 @@ function Header({ lang }: { lang?: string }) {
 
   return (
     <>
-      <div className="bg-mainColor/30 h-[400px] hidden md:flex">
+      <div className="bg-mainColor/30 h-[400px] hidden lg:flex">
         <div className="w-[90%] mx-auto pt-10 relative flex justify-between items-center">
           <div>
             <h2 className="text-2xl lg:text-3xl xl:text-5xl font-bold">
@@ -24,7 +24,7 @@ function Header({ lang }: { lang?: string }) {
             <h3 className="text-sm lg:text-lg xl:text-xl font-normal my-3">
               {t('desc1')}<br /> {t('desc2')}
             </h3>
-            <Link href={`/search`}>
+            <Link href={`/${lang}/search`}>
               <button className="w-32 h-10 bg-mainColor rounded-md text-white">
                 {t('View-Product')}
               </button>

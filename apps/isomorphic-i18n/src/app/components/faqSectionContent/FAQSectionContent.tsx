@@ -80,7 +80,7 @@ function FAQSectionContent({ lang }: { lang: string }) {
                           ${openAccordion === `${index}` ? 'rounded-b-none rounded-xl border-b-0 border-s-8 border-t-0 border-e-0' : 'border-b-0 border-s-8 border-t-0 border-e-0 rounded-xl'}`}
                   >
                       <span className="md:text-base 4xl:text-xl text-start text-base font-montserrat ps-5 dark:text-white">{faq.question}</span>
-                      <FontAwesomeIcon className="4xl:text-2xl ps-2" icon={openAccordion === `${index}` ? faAngleUp : faAngleDown} />
+                      <FontAwesomeIcon className="4xl:text-2xl ps-2" icon={openAccordion === `${index}` ? faAngleUp : faAngleDown  as any} />
                   </button>
                   <div
                       style={{ borderColor: index % 2 === 0 ? '#f97316' : '#5B5B5B' }} 

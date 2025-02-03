@@ -22,29 +22,33 @@ export default function CartProduct({ product, lang }: { product: CartItem; lang
         />
       </figure>
       <div className="col-span-8 sm:block sm:w-full">
-        <div className="flex flex-col-reverse gap-1 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col-reverse gap-1 sm:flex-row sm:items-start sm:justify-between">
           <Title
             as="h3"
             className="truncate text-base font-medium transition-colors hover:text-primary 3xl:text-lg"
           >
             {product.name}
           </Title>
-          <span className="inline-block text-sm font-semibold text-gray-1000 sm:font-medium md:text-base 3xl:text-lg">
-            {toCurrency(product.price, lang)}
-          </span>
+          <div className="">
+
+            <span className="inline-block text-sm font-semibold text-gray-1000 sm:font-medium md:text-base 3xl:text-lg">
+              {toCurrency(product.price, lang)}
+            </span>
+            {product.oldPrice?
+              <li className={`flex items-center gap-3 text-gray-500`}>
+                {/* <span>Old Price :</span> */}
+                <del className="text-gray-1000 ">{toCurrency(product.oldPrice, lang)}</del>
+              </li>
+              :''
+            }
+          </div>
         </div>
         <Text className="mt-1 w-full max-w-xs truncate leading-6 2xl:max-w-lg">
           {product.description}
         </Text>
 
         <ul className="mt-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-[1fr,1fr] gap-x-4 gap-y-3 sm:mt-4 sm:gap-x-8">
-          {product.oldPrice?
-            <li className={`flex items-center gap-3 text-gray-500`}>
-              <span>Old Price :</span>
-              <span className="text-gray-1000">{toCurrency(product.oldPrice, lang)}</span>
-            </li>
-            :''
-          }
+         
           {/* Map over orderItemVariations */}
           {product.orderItemVariations?.map((variation) => (
             (variation.choices?.[0]?.choiceValue || variation.choices?.[0]?.inputValue) && (

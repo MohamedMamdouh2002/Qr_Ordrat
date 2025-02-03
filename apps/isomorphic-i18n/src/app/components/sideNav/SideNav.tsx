@@ -44,21 +44,24 @@ export const SideNav = ({ isOpen, setIsOpen, lang }: Props) => {
 			icon: <LogIn />,
 			action: () => setLoginModal(true),
 			title: t('login')
-		}
+		},
+		{ icon: <ShoppingCart />, href: `/${lang}/cart`, title: t('cart') },
+		{ icon: <FontAwesomeIcon icon={faPersonCircleQuestion as any} className='text-2xl' />, href: `/${lang}/faq`, title: t('faq') },
+		{ icon: <FontAwesomeIcon icon={faStar as any} className='text-xl' />, href: `/${lang}/reviews`, title: t('review') },
 	];
 
 	const links = [
 		{ icon: <User />, href: `/${lang}/profile`, title: t('profile') },
-		{ icon: <ShoppingCart />, href: `/${lang}/cart`, title: t('cart') },
 		{ icon: <ReceiptText />, href: `/${lang}/orders`, title: t('orders') },
-		{ icon: <FontAwesomeIcon icon={faPersonCircleQuestion} className='text-2xl' />, href: `/${lang}/faq`, title: t('faq') },
-		{ icon: <FontAwesomeIcon icon={faStar} className='text-xl' />, href: `/${lang}/reviews`, title: t('review') },
+		{ icon: <ShoppingCart />, href: `/${lang}/cart`, title: t('cart') },
+		{ icon: <FontAwesomeIcon icon={faPersonCircleQuestion as any} className='text-2xl' />, href: `/${lang}/faq`, title: t('faq') },
+		{ icon: <FontAwesomeIcon icon={faStar as any} className='text-xl' />, href: `/${lang}/reviews`, title: t('review') },
 		{ icon: <LogOut />, onClick: handleLog, title: t('logout') }
 	];
 
 	return (
 		<>
-			<Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-[999] ">
+			<Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-[9999] ">
 				<div className="fixed inset-0 dark:bg-stone-950/30 bg-black/30 backdrop-blur-md" aria-hidden="true" />
 				<motion.div
 					initial={{ x: lang === 'ar' ? 0 : -25, opacity: 0 }}
@@ -79,9 +82,8 @@ export const SideNav = ({ isOpen, setIsOpen, lang }: Props) => {
 												onClick={() => setIsOpen(false)}
 												key={i}
 												href={link.href}
-												className={`navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-orange-500 ${
-													isActive ? 'text-orange-500' : 'text-black/50'
-												}`}
+												className={`navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-orange-500 ${isActive ? 'text-orange-500' : 'text-black/50'
+													}`}
 												data-active={isActive}
 											>
 												{link.icon}
@@ -91,9 +93,8 @@ export const SideNav = ({ isOpen, setIsOpen, lang }: Props) => {
 											<button
 												onClick={link.onClick}
 												key={i}
-												className={`navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-orange-500 ${
-													isActive ? 'text-orange-500' : 'text-black/50'
-												}`}
+												className={`navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-orange-500 ${isActive ? 'text-orange-500' : 'text-black/50'
+													}`}
 												data-active={isActive}
 											>
 												{link.icon}
@@ -109,14 +110,26 @@ export const SideNav = ({ isOpen, setIsOpen, lang }: Props) => {
 									<h2>{t('welcome-to')}</h2>
 									<h2 className='text-lg'>{t('login-now')}</h2>
 									{login.map((link, i) => (
-										<button
-											onClick={link.action}
-											key={i}
-											className="navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-orange-500 text-black/50"
-										>
-											{link.icon}
-											<span className="capitalize">{link.title}</span>
-										</button>
+										link.action ? (
+											<button
+												key={i}
+												onClick={link.action}
+												className="navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-orange-500 text-black/50 cursor-pointer"
+											>
+												{link.icon}
+												<span className="capitalize">{link.title}</span>
+											</button>
+										) : (
+											<Link
+												key={i}
+												onClick={() => setIsOpen(false)}
+												href={link.href!}
+												className="navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-orange-500 text-black/50"
+											>
+												{link.icon}
+												<span className="capitalize">{link.title}</span>
+											</Link>
+										)
 									))}
 								</>
 							)}
@@ -133,7 +146,7 @@ export const SideNav = ({ isOpen, setIsOpen, lang }: Props) => {
 								onLogin={() => {
 									setLoginModal(false);
 									setIsOpen(false);
-									setHasAccount(true); 
+									setHasAccount(true);
 								}}
 							/>
 						) : currentModal === 'register' ? (
