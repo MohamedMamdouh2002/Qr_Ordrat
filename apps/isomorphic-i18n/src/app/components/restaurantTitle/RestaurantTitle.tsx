@@ -137,7 +137,9 @@ function RestaurantTitle({ lang }: { lang?: string }) {
                         </div>
                     </div>
 
-                    <button className='w-full h-11 rounded-lg text-xl text-white bg-mainColor mt-auto'>
+                <button 
+                    onClick={() => setModal(false)}
+                 className='w-full h-11 rounded-lg text-xl text-white bg-mainColor mt-auto'>
                         {t('done')}
                     </button>
                 </div>
