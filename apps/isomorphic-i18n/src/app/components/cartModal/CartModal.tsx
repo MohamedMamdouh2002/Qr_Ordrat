@@ -68,11 +68,11 @@ function CartModal({ lang }: { lang?: string }) {
             {/* {productDetailsArray.length > 0 && ( */}
             <div
                 onClick={() => setModal(true)}
-                className="bg-mainColor w-20 h-20 rounded-lg fixed top-[50%] right-0 z-[999] flex flex-col gap-4 items-center justify-center p-2 cursor-pointer"
+                className="bg-mainColor w-16 h-16 rounded-lg fixed top-[50%] right-0 z-[999] flex flex-col gap-4 items-center justify-center p-2 cursor-pointer"
             >
-                <FontAwesomeIcon icon={faCartShopping as any} className="text-white text-lg" />
-                <div className="flex text-white">
-                    {items.length} {t('items')}
+                <div className="flex gap-2 text-white">
+                    <FontAwesomeIcon icon={faCartShopping as any} className="text-white text-lg" />
+                    {items.length}
                 </div>
             </div>
             {/* )} */}
@@ -83,7 +83,7 @@ function CartModal({ lang }: { lang?: string }) {
                     onClick={closeModal}
                     className="fixed inset-0 z-[99999] right-0 bg-black bg-opacity-50 flex"
                 >
-                    <div className="h-full w-[360px] sm:w-[400px] bg-white relative px-5 py-4 flex flex-col">
+                    <div className="h-full w-[320px] sm:w-[400px] bg-white relative px-5 py-4 flex flex-col">
                         <div className="flex justify-between items-center">
                             <h2 className="text-2xl font-bold">{t('cart')}</h2>
                             <button
@@ -100,10 +100,13 @@ function CartModal({ lang }: { lang?: string }) {
                             {items.length ? (
                                 items.map((item) => <CartProduct key={item.id} product={item} lang={lang} />)
                             ) : (
-                                <Empty
-                                    image={<EmptyProductBoxIcon />}
-                                    text={t('cart-empty')}
-                                />
+                                <div className="">
+
+                                    <Empty
+                                        image={<EmptyProductBoxIcon  className='w-5/12 mx-auto'/>}
+                                        text={t('cart-empty')}
+                                    />
+                                </div>
                             )}
 
                             {/* {productDetailsArray.map((product, index) => (
@@ -154,7 +157,7 @@ function CartModal({ lang }: { lang?: string }) {
                         <div className="sticky bottom-0 left-0 right-0 bg-white ">
                             <Link
                                 href={`/${lang}/checkout`}
-                                className="bg-mainColor  text-white rounded-lg text-center text-xl font-medium w-11/12 mx-auto block py-4"
+                                className="bg-mainColor  text-white rounded-lg text-center text-lg sm:text-xl font-medium w-11/12 mx-auto block py-3 sm:py-4"
                             >
                                 {t('order-check')}
                             </Link>
