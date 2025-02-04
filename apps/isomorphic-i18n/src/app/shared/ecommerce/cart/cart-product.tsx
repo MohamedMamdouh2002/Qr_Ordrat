@@ -10,7 +10,7 @@ import QuantityInput from '@/app/shared/ecommerce/cart/quantity-input';
 import { routes } from '@/config/routes';
 import photo from '@public/assets/شاورما-عربي-لحمة-768x768.png'
 
-export default function CartProduct({ product, lang }: { product: CartItem; lang?:string; }) {
+export default function CartProduct({ product, lang , ifModal=false }: { product: CartItem; lang?:string; ifModal:boolean }) {
   return (
     <div className="grid grid-cols-12 items-start gap-4 border-b border-muted py-6 first:pt-0 sm:flex sm:gap-6 2xl:py-8">
       <figure className="col-span-4 sm:max-w-[180px]">
@@ -51,7 +51,8 @@ export default function CartProduct({ product, lang }: { product: CartItem; lang
         <ul className="mt-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-[1fr,1fr] gap-x-4 gap-y-3 sm:mt-4 sm:gap-x-8">
          
           {/* Map over orderItemVariations */}
-          {product.orderItemVariations?.map((variation) => (
+          
+          {ifModal===false && product.orderItemVariations?.map((variation) => (
             (variation.choices?.[0]?.choiceValue || variation.choices?.[0]?.inputValue) && (
               <li key={variation.variationId} className="flex items-center gap-3 text-gray-500">
                 <span>{variation.variationLable} :</span>

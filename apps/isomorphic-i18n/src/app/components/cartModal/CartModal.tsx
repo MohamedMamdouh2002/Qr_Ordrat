@@ -98,7 +98,7 @@ function CartModal({ lang }: { lang?: string }) {
 
                         <div className="flex-1 overflow-y-auto pt-3 pe-2">
                             {items.length ? (
-                                items.map((item) => <CartProduct key={item.id} product={item} lang={lang} />)
+                                items.map((item) => <CartProduct ifModal={true} key={item.id} product={item} lang={lang} />)
                             ) : (
                                 <div className="">
 
@@ -156,10 +156,10 @@ function CartModal({ lang }: { lang?: string }) {
 
                         <div className="sticky bottom-0 left-0 right-0 bg-white pt-3 ">
                             <Link
-                                href={`/${lang}/checkout`}
+                                href={`/${lang}/cart`}
                                 className="bg-mainColor  text-white rounded-lg text-center text-lg sm:text-xl font-medium w-11/12 mx-auto block py-3 sm:py-4"
                             >
-                                {t('order-check')}
+                                {t('order-cart')}
                             </Link>
                         </div>
                     </div>

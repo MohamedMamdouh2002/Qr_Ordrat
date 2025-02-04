@@ -268,7 +268,7 @@ export default function CartPageWrapper({lang}:{lang?:string}) {
       <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
         <div className="@5xl:col-span-8 mt-12 @5xl:mt-0 @6xl:col-span-7">
           {items.length ? (
-            items.map((item) => <CartProduct key={item.id} product={item} lang={lang} />)
+            items.map((item) => <CartProduct ifModal={false} key={item.id} product={item} lang={lang} />)
           ) : (
             <Empty
               image={<EmptyProductBoxIcon />}
