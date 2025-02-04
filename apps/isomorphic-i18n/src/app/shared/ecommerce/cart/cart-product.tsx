@@ -23,7 +23,7 @@ export default function CartProduct({ product, lang , ifModal=false }: { product
         />
       </figure>
       <div className="col-span-8 sm:block sm:w-full">
-        <div className="flex flex-col-reverse gap-1 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex  gap-1 flex-row items-start justify-between">
           <Title
             as="h3"
             className="truncate text-base font-medium transition-colors hover:text-primary 3xl:text-lg"

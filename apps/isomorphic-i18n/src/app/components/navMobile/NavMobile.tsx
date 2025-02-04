@@ -119,7 +119,7 @@ const NavMobile = ({ lang }: { lang: string }) => {
   if (typeof window === 'undefined') return null;
 
   return (
-    <nav className={`lg:hidden w-full m-auto border-b mt-5 border-gray-200 gap-4 pt-5 bg-white ${isSticky ? 'sticky top-11 z-50' : 'fixed top-11 z-50 overflow-x-auto'} transition-all`}>
+    <nav className={`lg:hidden w-full m-auto border-b mt-5 border-gray-200 gap-4 pt-5 bg-white ${isSticky ? 'sticky top-11 z-[9999]' : 'fixed top-11 z-[9999] overflow-x-auto'} transition-all`}>
       <div className="w-5/6 mx-auto flex">
         <button onClick={() => setIsModalOpen(true)} className="transition duration-150">
           <AlignCenter />
@@ -152,14 +152,16 @@ const NavMobile = ({ lang }: { lang: string }) => {
 
       {isModalOpen && (
         <>
-          <div className="fixed z-[9999] inset-0 bg-gray-600 bg-opacity-50" onClick={handleOutsideClick} />
-          <motion.div
-            initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed bottom-0 right-0 left-0 lg:hidden flex items-end z-[1000000]"
-          >
+   <div className="fixed z-[500] inset-0 bg-gray-600 bg-opacity-50" onClick={handleOutsideClick} />
+<motion.div
+  initial={{ y: '100%' }}
+  animate={{ y: 0 }}
+  exit={{ y: '100%' }}
+  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+  className="fixed bottom-0 right-0 left-0 lg:hidden flex items-end z-[500]"
+>
+
+       
             <div className="bg-white rounded-t-lg shadow-lg py-6 w-full">
               <div className="flex items-center gap-3 mx-4 mb-6">
                 <X onClick={() => handleClose()} size={25} />
