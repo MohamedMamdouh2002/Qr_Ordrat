@@ -119,7 +119,8 @@ const NavMobile = ({ lang }: { lang: string }) => {
   if (typeof window === 'undefined') return null;
 
   return (
-    <nav className={`lg:hidden w-full m-auto border-b mt-5 border-gray-200 gap-4 pt-5 bg-white ${isSticky ? 'sticky top-11 z-[9999]' : 'fixed top-11 z-[9999] overflow-x-auto'} transition-all`}>
+    <>
+    <nav className={`lg:hidden w-full m-auto border-b mt-5 border-gray-200 gap-4 pt-5 bg-white ${isSticky ? 'sticky top-11 z-[50]' : 'fixed top-11 z-[50] overflow-x-auto'} transition-all`}>
       <div className="w-5/6 mx-auto flex">
         <button onClick={() => setIsModalOpen(true)} className="transition duration-150">
           <AlignCenter />
@@ -150,59 +151,60 @@ const NavMobile = ({ lang }: { lang: string }) => {
         </ul>
       </div>
 
-      {isModalOpen && (
-        <>
-   <div className="fixed z-[500] inset-0 bg-gray-600 bg-opacity-50" onClick={handleOutsideClick} />
-<motion.div
+    </nav>
+    {isModalOpen && (
+      <>
+  <div className="fixed z-[9999] inset-0 bg-gray-600 bg-opacity-50" onClick={handleOutsideClick} />
+  <motion.div
   initial={{ y: '100%' }}
   animate={{ y: 0 }}
   exit={{ y: '100%' }}
   transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-  className="fixed bottom-0 right-0 left-0 lg:hidden flex items-end z-[500]"
->
+  className="fixed bottom-0 right-0 left-0 lg:hidden flex items-end z-[99991]"
+  >
 
-       
-            <div className="bg-white rounded-t-lg shadow-lg py-6 w-full">
-              <div className="flex items-center gap-3 mx-4 mb-6">
-                <X onClick={() => handleClose()} size={25} />
-                <h2 className="text-lg font-medium">{t('menu')}</h2>
-              </div>
-              <ul className="flex flex-col gap-4">
-                {home?.map((item, index) => (
-                  <>
-                    <Link
-                      key={item.id}
-                      to={item.id}
-                      smooth={true}
-                      duration={500} 
-                      offset={-145}
-                      className={`text-sm relative cursor-pointer h-full flex justify-between items-center font-medium ${active === item.id ? "text-orange-500" : "text-gray-700"}`}
-                      onClick={() => {
-                        setIsNavigating(true);
-                        setActive(item.id);
-                        scrollToItem(index);
-                        handleClose();
-                        setTimeout(() => setIsNavigating(false), 600);
-                      }}
-                    >
-                      <li className="flex justify-between items-center mx-4 w-full">
-                        <span>{item.name}</span>
-                        <span>{item.numberOfProducts}</span>
-                      </li>
-                      {active === item.id && (
-                        <span className="absolute bg-orange-500 h-[30px] w-1 rounded-e-full transition-all duration-700 start-0 -top-1 bottom-0"></span>
-                      )}
-                    </Link>
-                    <hr className="mx-2" />
-                  </>
-                ))}
-              </ul>
+    
+          <div className="bg-white rounded-t-lg shadow-lg py-6 w-full">
+            <div className="flex items-center gap-3 mx-4 mb-6">
+              <X onClick={() => handleClose()} size={25} />
+              <h2 className="text-lg font-medium">{t('menu')}</h2>
             </div>
-          </motion.div>
-          <hr className="mx-2" />
-        </>
-      )}
-    </nav>
+            <ul className="flex flex-col gap-4">
+              {home?.map((item, index) => (
+                <>
+                  <Link
+                    key={item.id}
+                    to={item.id}
+                    smooth={true}
+                    duration={500} 
+                    offset={-145}
+                    className={`text-sm relative cursor-pointer h-full flex justify-between items-center font-medium ${active === item.id ? "text-orange-500" : "text-gray-700"}`}
+                    onClick={() => {
+                      setIsNavigating(true);
+                      setActive(item.id);
+                      scrollToItem(index);
+                      handleClose();
+                      setTimeout(() => setIsNavigating(false), 600);
+                    }}
+                  >
+                    <li className="flex justify-between items-center mx-4 w-full">
+                      <span>{item.name}</span>
+                      <span>{item.numberOfProducts}</span>
+                    </li>
+                    {active === item.id && (
+                      <span className="absolute bg-orange-500 h-[30px] w-1 rounded-e-full transition-all duration-700 start-0 -top-1 bottom-0"></span>
+                    )}
+                  </Link>
+                  <hr className="mx-2" />
+                </>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+        <hr className="mx-2" />
+      </>
+    )}
+    </>
   );
 };
 
