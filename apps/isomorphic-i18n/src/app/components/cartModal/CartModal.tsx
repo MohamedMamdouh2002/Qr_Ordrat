@@ -83,7 +83,7 @@ function CartModal({ lang }: { lang?: string }) {
                     onClick={closeModal}
                     className="fixed inset-0 z-[99999] right-0 bg-black bg-opacity-50 flex"
                 >
-                    <div className="h-full w-[320px] sm:w-[400px] bg-white relative px-5 py-4 flex flex-col">
+                    <div className="h-full w-[320px] sm:w-[400px] bg-white relative ps-5 py-4 flex flex-col">
                         <div className="flex justify-between items-center">
                             <h2 className="text-2xl font-bold">{t('cart')}</h2>
                             <button
@@ -96,7 +96,7 @@ function CartModal({ lang }: { lang?: string }) {
                         </div>
                         <div className="w-full h-[1px] bg-black"></div>
 
-                        <div className="flex-1 overflow-y-auto pt-3">
+                        <div className="flex-1 overflow-y-auto pt-3 pe-2">
                             {items.length ? (
                                 items.map((item) => <CartProduct key={item.id} product={item} lang={lang} />)
                             ) : (
@@ -154,7 +154,7 @@ function CartModal({ lang }: { lang?: string }) {
                             )} */}
                         </div>
 
-                        <div className="sticky bottom-0 left-0 right-0 bg-white ">
+                        <div className="sticky bottom-0 left-0 right-0 bg-white pt-3 ">
                             <Link
                                 href={`/${lang}/checkout`}
                                 className="bg-mainColor  text-white rounded-lg text-center text-lg sm:text-xl font-medium w-11/12 mx-auto block py-3 sm:py-4"
