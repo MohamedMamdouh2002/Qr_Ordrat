@@ -19,14 +19,14 @@ function QuantityHandler({ quantity, setQuantity, type, className }: Props) {
 		>
 			{quantity === 1 && type === 'cart' ? (
 				<button onClick={() => setQuantity(prev => prev - 1)}>
-					<Trash className={cn('text-orange-500')} size={type === 'cart' ? 16 : undefined} />
+					<Trash className={cn('text-mainColor')} size={type === 'cart' ? 16 : undefined} />
 				</button>
 			) : (
 				<button type='button' disabled={quantity === 1} onClick={() => setQuantity(prev => prev - 1)}>
 					<Minus
 						className={cn({
-							'text-orange-500/50': quantity === 1,
-							'text-orange-500': quantity > 1
+							'text-Color50': quantity === 1,
+							'text-mainColor': quantity > 1
 						})}
 						size={type === 'cart' ? 16 : undefined}
 					/>
@@ -34,7 +34,7 @@ function QuantityHandler({ quantity, setQuantity, type, className }: Props) {
 			)}
 			<span>{quantity}</span>
 			<button type='button' onClick={() => setQuantity(prev => prev + 1)}>
-				<Plus className={cn({ 'text-orange-500': true })} size={type === 'cart' ? 16 : undefined} />
+				<Plus className={cn({ 'text-mainColor': true })} size={type === 'cart' ? 16 : undefined} />
 			</button>
 		</div>
 	);

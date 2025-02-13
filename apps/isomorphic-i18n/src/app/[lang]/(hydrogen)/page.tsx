@@ -29,6 +29,39 @@ const languages = {
   },
 };
 
+// async function fetchShopData() {
+//   try {
+//     const res = await fetch(
+//       "https://testapi.ordrat.com/api/Shop/GetById/952E762C-010D-4E2B-8035-26668D99E23E",
+//       {
+//         headers: {
+//           Accept: "*/*",
+//           "Accept-Language": "en",
+//         },
+//         cache: "no-store",
+//       }
+//     );
+
+//     if (!res.ok) {
+//       throw new Error("Failed to fetch shop details");
+//     }
+
+//     const shopData = await res.json();
+
+//     return {
+//       ...shopData,
+//       mainColor: shopData.mainColor || "#f97316", // Default color
+//       mainColorHover: shopData.secondaryColor || "#c96722",
+//     };
+//   } catch (error) {
+//     console.error("Error fetching shop details:", error);
+//     return {
+//       mainColor: "#f97316", // Default fallback color
+//       mainColorHover: "#c96722",
+//     };
+//   }
+// }
+
 export const generateMetadata = ({ params }: { params: { lang?: string } }): Metadata => {
   const lang: LangType = params.lang === 'ar' ? 'ar' : 'en'; 
   const selectedLang = languages[lang];
@@ -56,7 +89,8 @@ export const generateMetadata = ({ params }: { params: { lang?: string } }): Met
   );
 };
 
-export default function FileDashboardPage({
+
+export default async function FileDashboardPage({
   params: { lang },
 }: {
   params: {
@@ -64,15 +98,14 @@ export default function FileDashboardPage({
   };
 }) {
   return<>
-    <ScrollToTop/>
-    <RestaurantTitle lang={lang}/>
-    <NavMobile lang={lang!}/>
-    <Header lang={lang!}/>
-    <MainSlider/>
-    <Grills lang={lang!}/>
-    {/* <PopularMeals/> */}
-    {/* <SyrianFood/> */}
-    {/* <Offers/> */}
-    
+      <ScrollToTop/>
+      <RestaurantTitle lang={lang}/>
+      <NavMobile lang={lang!}/>
+      <Header lang={lang!}/>
+      <MainSlider/>
+      <Grills lang={lang!}/>
+      {/* <PopularMeals/> */}
+      {/* <SyrianFood/> */}
+      {/* <Offers/> */}
   </>
 }

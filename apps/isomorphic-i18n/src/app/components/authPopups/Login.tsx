@@ -35,6 +35,17 @@ function Login({ onLogin, setCurrentModal }: Props, { lang }: { lang?: string })
 
 	const { accessToken, setAccessToken, token, setToken } = useUserContext()
 	const [loading, setLoading] = useState(false);
+	const [logoUrl, setLogoUrl] = useState<string | null>(null);
+    const [shopName, setShopName] = useState<string | null>(null);
+    
+    useEffect(() => {
+        const storedLogo = localStorage.getItem("logoUrl");
+        const storedName = localStorage.getItem("subdomainName");
+        if (storedLogo) {
+            setLogoUrl(storedLogo);
+            setShopName(storedName);
+        }
+    }, [lang]);
 	// const { setSession } = useContext(SessionContext);
 	// const loginSchema = useLoginValidation({});
 	// const [submittedSuccessfully, setSubmittedSuccessfully] = useState(false);
@@ -127,7 +138,13 @@ function Login({ onLogin, setCurrentModal }: Props, { lang }: { lang?: string })
 	return (
 		<div className="flex flex-col gap-5">
 			<div className="flex flex-col items-center justify-center">
-				<Image width={60} height={60} src={Logo} alt="logo" />
+				{/* <Image width={60} height={60} src={Logo} alt="logo" /> */}
+				{logoUrl ? (
+					<Image
+						src={logoUrl} width={60} height={60} alt="logo" />
+					) : (
+					<div className="w-[60px] h-[60px] bg-gray-200 rounded-full"></div>
+                )}
 				<p className="text-sm font-light truncate-text">{t('desc')}</p>
 			</div>
 				<form onSubmit={formik.handleSubmit}>

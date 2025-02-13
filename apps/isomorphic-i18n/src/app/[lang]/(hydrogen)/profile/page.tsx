@@ -47,7 +47,7 @@ export default function Profile({
 										<h2 className="text-2xl md:text-3xl font-medium">{translations.myAddresses[lang=='en'?'en':'ar']}</h2>
 								  </div>
 								  <Addresses lang={lang} />
-							  </div>
+							    </div>
 						  </div>
 					  </Layout>
 				</div>

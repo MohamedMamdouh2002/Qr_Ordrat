@@ -37,6 +37,8 @@ function Footer({ lang }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentModal, setCurrentModal] = useState<'login' | 'register' | 'resetPassword'>('login');
   const [loginModal, setLoginModal] = useState(false);
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [shopName, setShopName] = useState<string | null>(null);
   const AccountBeforeLogin: linksProps[] = [
     {
       header: t('Account'),
@@ -100,18 +102,35 @@ function Footer({ lang }: Props) {
 
   useEffect(() => {
     i18n.changeLanguage(lang);
+    const storedLogo = localStorage.getItem("logoUrl");
+    const storedName = localStorage.getItem("subdomainName");
+    if (storedLogo) {
+        setLogoUrl(storedLogo);
+        setShopName(storedName);
+    }
   }, [lang, i18n]);
 
   return (
     <>
-      <div className="mt-auto bg-orange-500/20">
+      <div className="mt-auto bg-ColorLitleHover">
         <div className="mt-10">
           <div className="w-[90%] mx-auto grid md:grid-cols-2 lg:grid-cols-6 py-4 gap-6">
             {/* Logo Section */}
             <div className="col-span-2 flex flex-col gap-2 me-10">
               <div className="w-fit flex items-center gap-4">
-                <Image src={logo} alt="logo" className="max-w-[60px]" />
-                <h3>{t('title')}</h3>
+                {/* <Image src={logo} alt="logo" className="max-w-[60px]" /> */}
+                {logoUrl ? (
+                  <Image
+                      src={logoUrl}
+                      width={100}
+                      height={100}
+                      className="max-w-[60px]"
+                      alt="logo"
+                  />
+                  ) : (
+                  <div className="w-[60px] h-[60px] bg-gray-200 rounded-full"></div>
+                )}
+                <h3>{shopName}</h3>
               </div>
               <p className="text-sm font-light">{t('desc')}</p>
               <h4 className="mt-10">{t('Get-in-Touch')}</h4>
@@ -120,7 +139,7 @@ function Footer({ lang }: Props) {
                   <a
                     key={index}
                     href={i.href}
-                    className="bg-white rounded-full flex items-center justify-center text-orange-500 p-2 size-10 hover:bg-white transition duration-150 cursor-pointer"
+                    className="bg-white rounded-full flex items-center justify-center text-mainColor p-2 size-10 hover:bg-white transition duration-150 cursor-pointer"
                   >
                     <FontAwesomeIcon icon={i.link} className="text-xl" />
                   </a>
@@ -138,7 +157,7 @@ function Footer({ lang }: Props) {
                       <button
                         key={idx}
                         onClick={i.action}
-                        className="text-black/75 capitalize transition duration-150 hover:text-orange-500 w-fit"
+                        className="text-black/75 capitalize transition duration-150 hover:text-mainColor w-fit"
                       >
                         {i.title}
                       </button>
@@ -146,7 +165,7 @@ function Footer({ lang }: Props) {
                       <Link
                         key={idx}
                         href={i.href!}
-                        className="text-black/75 capitalize transition duration-150 hover:text-orange-500 w-fit"
+                        className="text-black/75 capitalize transition duration-150 hover:text-mainColor w-fit"
                       >
                         {i.title}
                       </Link>

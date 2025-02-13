@@ -29,6 +29,14 @@ export const SideNav = ({ isOpen, setIsOpen, lang }: Props) => {
 	const router = useRouter();
 	const modalRef = useRef<HTMLDivElement>(null);
 	const { token, setToken } = useUserContext();
+	const [logoUrl, setLogoUrl] = useState<string | null>(null);
+    
+    useEffect(() => {
+		const storedLogo = localStorage.getItem("logoUrl");
+		if (storedLogo) {
+			setLogoUrl(storedLogo);
+		}
+    }, [lang]);
 
 	const handleLog = () => {
 		setIsOpen(false);
@@ -71,7 +79,12 @@ export const SideNav = ({ isOpen, setIsOpen, lang }: Props) => {
 				>
 					<Dialog.Panel className="w-full py-2 px-2">
 						<div className="w-full flex flex-col gap-5">
-							<Image width={60} height={60} src={Logo} alt="logo" />
+							{/* <Image width={60} height={60} src={Logo} alt="logo" /> */}
+							{logoUrl ? (
+								<Image src={logoUrl} width={60} height={60} alt="logo" />
+								) : (
+								<div className="w-[60px] h-[60px] bg-gray-200 rounded-full"></div>
+							)}
 							{localStorage.getItem('Token') ? (
 								<>
 									<h2>{t('welcome-to')}</h2>
@@ -82,7 +95,7 @@ export const SideNav = ({ isOpen, setIsOpen, lang }: Props) => {
 												onClick={() => setIsOpen(false)}
 												key={i}
 												href={link.href}
-												className={`navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-orange-500 ${isActive ? 'text-orange-500' : 'text-black/50'
+												className={`navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-mainColor ${isActive ? 'text-mainColor' : 'text-black/50'
 													}`}
 												data-active={isActive}
 											>
@@ -93,7 +106,7 @@ export const SideNav = ({ isOpen, setIsOpen, lang }: Props) => {
 											<button
 												onClick={link.onClick}
 												key={i}
-												className={`navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-orange-500 ${isActive ? 'text-orange-500' : 'text-black/50'
+												className={`navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-mainColor ${isActive ? 'text-mainColor' : 'text-black/50'
 													}`}
 												data-active={isActive}
 											>
@@ -114,7 +127,7 @@ export const SideNav = ({ isOpen, setIsOpen, lang }: Props) => {
 											<button
 												key={i}
 												onClick={link.action}
-												className="navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-orange-500 text-black/50 cursor-pointer"
+												className="navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-mainColor text-black/50 cursor-pointer"
 											>
 												{link.icon}
 												<span className="capitalize">{link.title}</span>
@@ -124,7 +137,7 @@ export const SideNav = ({ isOpen, setIsOpen, lang }: Props) => {
 												key={i}
 												onClick={() => setIsOpen(false)}
 												href={link.href!}
-												className="navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-orange-500 text-black/50"
+												className="navlink font-bold transition flex items-center px-3 gap-2 relative duration-150 py-2 hover:text-mainColor text-black/50"
 											>
 												{link.icon}
 												<span className="capitalize">{link.title}</span>

@@ -106,11 +106,11 @@ export default function OrderSummery({
               {params?.id ? `${t('Update-Order')}` : `${t('Place-Order')}`}
             </Button>
           ) : (
-            <Link href={routes.eCommerce.shop}>
+            <Link href={`/${lang}`}>
               <Button
                 as="span"
                 className="mt-3 w-full text-base @md:h-12 bg-mainColor hover:bg-mainColorHover"
-              >{`Back to Store`}</Button>
+              >{lang ==='ar'? 'العودة إلى المتجر': 'Back to Store'}</Button>
             </Link>
           )}
         </div>

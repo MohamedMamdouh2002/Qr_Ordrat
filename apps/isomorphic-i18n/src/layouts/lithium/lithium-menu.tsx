@@ -259,7 +259,7 @@ export default function HeaderMenuLeft({ lang }: { lang?: string }) {
         menuContentClassName="mt-2 border border-gray-200 dark:border-gray-300"
       >
         <NavMenu.Item >
-          <NavMenu.Trigger  className={`flex items-center text-sm  gap-1 pt-2 ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`}>
+          <NavMenu.Trigger  className={`flex items-center text-sm  gap-1 pt-2 ${isStickyVisible?"hover:text-black":"hover:text-mainColor"}`}>
             <Link  lang={lang} href={`/${lang!}/`}>
             <MenuTriggerButton  name="Home" lang={lang}/>
             </Link>
@@ -275,7 +275,7 @@ export default function HeaderMenuLeft({ lang }: { lang?: string }) {
           </NavMenu.Content> */}
         </NavMenu.Item>
         <NavMenu.Item >
-        <NavMenu.Trigger  className={`flex items-center text-sm  gap-1 pt-2 ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`}>
+        <NavMenu.Trigger  className={`flex items-center text-sm  gap-1 pt-2 ${isStickyVisible?"hover:text-black":"hover:text-mainColor"}`}>
             <Link href={`/${lang!}/reviews`}>
             <MenuTriggerButton name="Reviews"  />
             </Link>
@@ -291,7 +291,7 @@ export default function HeaderMenuLeft({ lang }: { lang?: string }) {
           </NavMenu.Content> */}
         </NavMenu.Item>
         <NavMenu.Item>
-        <NavMenu.Trigger  className={`flex items-center text-sm  gap-1 pt-2 ${isStickyVisible?"hover:text-black":"hover:text-orange-500"}`}>
+        <NavMenu.Trigger  className={`flex items-center text-sm  gap-1 pt-2 ${isStickyVisible?"hover:text-black":"hover:text-mainColor"}`}>
               <Link lang={lang} href={`/${lang!}/faq`}>
               <MenuTriggerButton name="FAQ"  />
             </Link>
@@ -326,7 +326,7 @@ function MenuTriggerButton({
         className={cn(
           "inline-block 4xl:text-xl w-full overflow-hidden whitespace-nowrap pe-1.5 ps-0 text-sm  leading-5 font-montserrat  font-monbold   transition-all duration-200",
           isActive(lithiumMenuItems[name].name!) ?
-           "text-yellow-500 hover:text-orange-500" : " text-darkGreenColor dark:text-mainText hover:text-greenColor dark:hover:text-greenColor"
+           "text-yellow-500 hover:text-mainColor" : " text-darkGreenColor dark:text-mainText hover:text-greenColor dark:hover:text-greenColor"
         )}
       >
         {t(lithiumMenuItems[name].name)}

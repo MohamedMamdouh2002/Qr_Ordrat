@@ -16,11 +16,20 @@ type props = {
     icon: any;
     title: string;
 }
-function RestaurantTitle({ lang }: { lang?: string }) {
+function RestaurantTitle({ lang }: { lang?: string;}) {    
     const { t, i18n } = useTranslation(lang!, 'nav');
-
+    const [logoUrl, setLogoUrl] = useState<string | null>(null);
+    const [shopName, setShopName] = useState<string | null>(null);
+    console.log("logoUrl: ",logoUrl);
+    
     useEffect(() => {
         i18n.changeLanguage(lang);
+        const storedLogo = localStorage.getItem("logoUrl");
+        const storedName = localStorage.getItem("subdomainName");
+        if (storedLogo) {
+            setLogoUrl(storedLogo);
+            setShopName(storedName);
+        }
     }, [lang, i18n]);
     const [modal, setModal] = useState(false);
 
@@ -49,9 +58,20 @@ function RestaurantTitle({ lang }: { lang?: string }) {
         <div className={'flex lg:hidden -mt-20 rounded-xl flex-col  bg-slate-50 w-5/6 mx-auto z-10 text-black relative'}>
             <div className="flex items-start mt-6 justify-between">
                 <div className="flex gap-6 items-start">
-                    <Image src={logo} width={100} height={100} className='-mt-5 w-[80px] h-[80px] sm:w-[100px] sm:h-[100px]' alt='logo' />
+                    {/* <Image src={logo} width={100} height={100} className='-mt-5 w-[80px] h-[80px] sm:w-[100px] sm:h-[100px]' alt='logo' /> */}
+                    {logoUrl ? (
+                        <Image
+                            src={logoUrl}
+                            width={100}
+                            height={100}
+                            className="-mt-5 w-[80px] h-[80px] sm:w-[100px] sm:h-[100px]"
+                            alt="logo"
+                        />
+                        ) : (
+                        <div className="w-[100px] h-[100px] bg-gray-200 rounded-full"></div>
+                    )}
                     <div className="">
-                        <h1 className='text-base'>{t('title')}</h1>
+                        <h1 className='text-base'>{shopName}</h1>
                         <h2 className='xs:text-sm text-xs font-normal truncate-text '>{t('desc')}</h2>
                         <div className={'flex items-center gap-1 text-sm'}>
                             <Star className="fill-[#f1d045] text-[#f1d045]" size={14} />

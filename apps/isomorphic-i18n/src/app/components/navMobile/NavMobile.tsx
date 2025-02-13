@@ -133,7 +133,7 @@ const NavMobile = ({ lang }: { lang: string }) => {
                   smooth={true}
                   duration={500}
                   offset={-145}
-                  className={`text-sm text-center relative cursor-pointer h-full flex items-center justify-center font-semibold ${active === item.id ? "text-orange-500" : "text-gray-700"}`}
+                  className={`text-sm text-center relative cursor-pointer h-full flex items-center justify-center font-semibold ${active === item.id ? "text-mainColor" : "text-gray-700"}`}
                   onClick={() => {
                     setIsNavigating(true);
                     setActive(item.id);
@@ -144,7 +144,7 @@ const NavMobile = ({ lang }: { lang: string }) => {
                   {item.name}
                 </Link>
                 {active === item.id && (
-                  <span className="absolute bottom-0 bg-orange-500 h-[4px] rounded-t-full transition-all duration-700 left-0 right-0"></span>
+                  <span className="absolute bottom-0 bg-mainColor h-[4px] rounded-t-full transition-all duration-700 left-0 right-0"></span>
                 )}
               </li>
             ))}
@@ -178,7 +178,7 @@ const NavMobile = ({ lang }: { lang: string }) => {
                       smooth={true}
                       duration={500}
                       offset={-145}
-                      className={`text-sm relative cursor-pointer h-full flex justify-between items-center font-medium ${active === item.id ? "text-orange-500" : "text-gray-700"}`}
+                      className={`text-sm relative cursor-pointer h-full flex justify-between items-center font-medium ${active === item.id ? "text-mainColor" : "text-gray-700"}`}
                       onClick={() => {
                         setIsNavigating(true);
                         setActive(item.id);
@@ -192,7 +192,7 @@ const NavMobile = ({ lang }: { lang: string }) => {
                         <span>{item.numberOfProducts}</span>
                       </li>
                       {active === item.id && (
-                        <span className="absolute bg-orange-500 h-[30px] w-1 rounded-e-full transition-all duration-700 start-0 -top-1 bottom-0"></span>
+                        <span className="absolute bg-mainColor h-[30px] w-1 rounded-e-full transition-all duration-700 start-0 -top-1 bottom-0"></span>
                       )}
                     </Link>
                     <hr className="mx-2" />

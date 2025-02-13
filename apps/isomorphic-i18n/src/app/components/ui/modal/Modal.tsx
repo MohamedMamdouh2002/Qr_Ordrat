@@ -536,7 +536,7 @@ function Modal({
                                                                 <div key={index} className='p-4'>
                                                                     <h3 className="font-medium text-lg mb-2">{t('RelatedProduct')}:</h3>
                                                                     {item.relatedProduct && (
-                                                                        <div className=" border border-dashed border-orange-500 rounded-lg p-2 w-28">
+                                                                        <div className=" border border-dashed border-mainColor rounded-lg p-2 w-28">
                                                                             <Image
                                                                                 src={item.relatedProduct.imageUrl}
                                                                                 width={200}
@@ -858,7 +858,7 @@ function Modal({
                                                     <div key={index}>
                                                         <h3 className="font-bold mb-2">Related Product:</h3>
                                                         {item.relatedProduct && (
-                                                            <div className=" border border-dashed border-orange-500 rounded-lg p-2 w-28">
+                                                            <div className=" border border-dashed border-mainColor rounded-lg p-2 w-28">
                                                                 <Image
                                                                     src={item.relatedProduct.imageUrl}
                                                                     width={200}

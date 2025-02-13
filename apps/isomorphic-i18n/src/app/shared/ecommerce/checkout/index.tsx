@@ -1,54 +1,35 @@
 'use client';
-
+import { AnimatePresence } from 'framer-motion';
 import {
   useForm,
-  useWatch,
   FormProvider,
   type SubmitHandler,
 } from 'react-hook-form';
-import { useSetAtom } from 'jotai';
 import toast from 'react-hot-toast';
-import isEmpty from 'lodash/isEmpty';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import DifferentBillingAddress from '@/app/shared/ecommerce/order/order-form/different-billing-address';
-import { orderData } from '@/app/shared/ecommerce/order/order-form/form-utils';
-import AddressInfo from '@/app/shared/ecommerce/order/order-form/address-info';
-import ShippingMethod from '@/app/shared/ecommerce/checkout/shipping-method';
-import PaymentMethod from '@/app/shared/ecommerce/checkout/payment-method';
 import OrderSummery from '@/app/shared/ecommerce/checkout/order-summery';
-import OrderNote from '@/app/shared/ecommerce/checkout/order-note';
-import { DUMMY_ID } from '@/config/constants';
-import { routes } from '@/config/routes';
 import { Text } from 'rizzui';
 import cn from '@utils/class-names';
-import {
-  billingAddressAtom,
-  orderNoteAtom,
-  shippingAddressAtom,
-} from '@/store/checkout';
-import {
-  CreateOrderInput,
-  orderFormSchema,
-} from '@/validators/create-order.schema';
 import { useEffect, useState } from 'react';
 import MapWithZones from '@/app/components/ui/inputs/map/MapWithZones';
 import { RadioGroup } from '@headlessui/react';
 
 import { BriefcaseBusiness, Building, Home } from 'lucide-react';
 import { useUserContext } from '@/app/components/context/UserContext';
-import { API_BASE_URL } from '@/config/base-url';
 import { MadeOrderInput, madeOrderSchema } from '@/validators/checkoutcreditecard.schema';
 import { useCart } from '@/store/quick-cart/cart.context';
 import usePrice from '@hooks/use-price';
 import { shopId } from '@/config/shopId';
 import axiosClient from '@/app/components/fetch/api';
-import { Loader2, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslation } from '@/app/i18n/client';
 // import Modal from '../ui/Modal';
 import Modal from '@/app/components/ui/Modal';
 import Login from '@/app/components/authPopups/Login';
+import AddressModalWithLogin from '@/app/components/profile/AddressModalWithLogin';
+import AddressModal from '@/app/components/profile/AddressModal';
 
 type Address = {
   id: string;
@@ -59,6 +40,7 @@ type Address = {
   latitude: number;
   longtude: number;
   buildingType: number;
+  phoneNumber: string;
 };
 
 // main order form component for create and update order
@@ -81,6 +63,9 @@ export default function CheckoutPageWrapper({
   const [loginModal, setLoginModal] = useState(false);
   const [currentModal, setCurrentModal] = useState<'login' | 'register' | 'resetPassword'>('login');
   const accessToken = localStorage.getItem('accessToken');
+  
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isAddressOpen, setIsAddressOpen] = useState<boolean>(false);
 
   const methods = useForm<MadeOrderInput>({
     mode: 'onChange',
@@ -169,6 +154,7 @@ export default function CheckoutPageWrapper({
 
   // Active selected address ID
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(addresses[addresses?.length - 1]?.id || null);
+  const [selectedAddress, setSelectedAddress] = useState<any>();
 
   // Handle location change from the map
   const handleLocationChange = (newLocation: { lat: number; lng: number }) => {
@@ -272,6 +258,62 @@ export default function CheckoutPageWrapper({
   const toggleLoginModal = () => {
     setLoginModal(true);
   };
+  const handleAddNewAddress = () => {
+		const phoneNumber = localStorage.getItem('phoneNumber');
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				setSelectedAddress({
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+					phoneNumber: phoneNumber,
+				});
+				setIsOpen(true);
+			},
+			(error) => {
+				console.error('Error fetching user location:', error);
+				setSelectedAddress({
+					lat: 30.023173855111207,
+					lng: 31.185028997638923,
+					phoneNumber: phoneNumber,
+				});
+				setIsOpen(true);
+			},
+			{
+				enableHighAccuracy: true,
+				timeout: 5000,
+				maximumAge: 0,
+			}
+		);
+		
+	};
+  const handleAddAddress = () => {
+		const phoneNumber = localStorage.getItem('phoneNumber');
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				setSelectedAddress({
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+					phoneNumber: phoneNumber,
+				});
+				setIsAddressOpen(true);
+			},
+			(error) => {
+				console.error('Error fetching user location:', error);
+				setSelectedAddress({
+					lat: 30.023173855111207,
+					lng: 31.185028997638923,
+					phoneNumber: phoneNumber,
+				});
+				setIsAddressOpen(true);
+			},
+			{
+				enableHighAccuracy: true,
+				timeout: 5000,
+				maximumAge: 0,
+			}
+		);
+		
+	};
   
   return (
     <div className='w-[90%] mx-auto mt-8'>
@@ -327,11 +369,11 @@ export default function CheckoutPageWrapper({
                           <div className={cn('flex flex-col gap-2 max-w-full', className)}>
                             <span className={`px-3 py-2 rounded-lg transition duration-150 flex items-center gap-2 max-w-full`}>
                               {address.buildingType === 0 ? (
-                                <Building className={`pt-1 ${checked ?'text-white':'text-orange-500'}`} />
+                                <Building className={`pt-1 ${checked ?'text-white':'text-mainColor'}`} />
                               ) : address.buildingType === 1 ? (
-                                <Home className={`pt-1 ${checked ?'text-white':'text-orange-500'}`} />
+                                <Home className={`pt-1 ${checked ?'text-white':'text-mainColor'}`} />
                               ) : (
-                                <BriefcaseBusiness className={`pt-1 ${checked ?'text-white':'text-orange-500'}`} />
+                                <BriefcaseBusiness className={`pt-1 ${checked ?'text-white':'text-mainColor'}`} />
                               )}
                               <span className='whitespace-nowrap overflow-hidden truncate max-w-[200px] sm:max-w-[80%]'>
                                 {address.apartmentNumber}, {address.floor ? address.floor + ', ' : ''}
@@ -353,22 +395,23 @@ export default function CheckoutPageWrapper({
                 {!accessToken ? (
                   <button
                     type='button'
-                    onClick={toggleLoginModal}
+                    onClick={handleAddNewAddress}
                     className="w-fit col-span-full large:self-start flex gap-1 items-center px-3 py-2 rounded-lg text-white border border-transparent hover:border-mainColor bg-mainColor hover:bg-transparent hover:text-mainColor  transition duation-150"
                   >
                     <Plus />
-                    {t('login')}
+                    {t('Add-Address')} 
                   </button>
                 ) : (
-                  <Link href={`/${lang}/profile`}>
+                  // <Link href={`/${lang}/profile`}>
                     <button
                       type='button'
+                      onClick={handleAddAddress}
                       className="w-fit col-span-full large:self-start flex gap-1 items-center px-3 py-2 rounded-lg text-white border border-transparent hover:border-mainColor bg-mainColor hover:bg-transparent hover:text-mainColor  transition duation-150"
                     >
                       <Plus />
                       {t('New-Address')}
                     </button>
-                  </Link>
+                  // </Link>
                 )}
                 
                 {/* <Link href={`/${lang}/profile`}>
@@ -397,7 +440,7 @@ export default function CheckoutPageWrapper({
           </div>
         </form>
       </FormProvider>
-      {loginModal && (
+      {/* {loginModal && (
         <Modal isOpen={loginModal} setIsOpen={setLoginModal}>
           {currentModal === 'login' && (
             <Login
@@ -409,7 +452,13 @@ export default function CheckoutPageWrapper({
             />
           )}
         </Modal>
-      )}
+      )} */}
+      <AnimatePresence mode="wait">
+				{isOpen && <AddressModalWithLogin lang={lang} isOpen={isOpen} setIsOpen={setIsOpen} address={selectedAddress} />}
+			</AnimatePresence>
+      <AnimatePresence mode="wait">
+        {isAddressOpen && <AddressModal lang={lang} isOpen={isAddressOpen} setIsOpen={setIsAddressOpen} address={selectedAddress} />}
+      </AnimatePresence>
     </div>
   );
 }

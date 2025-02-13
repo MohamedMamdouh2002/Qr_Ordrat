@@ -55,7 +55,7 @@ const MyPhoneInput = ({
 			readOnly={disabled} // Prevent editing
 			countryCallingCodeEditable={false}
 			className={
-				'bg-white w-full p-3 rounded-lg outline-0 border px-3 py-2 hover:border-orange-500 focus-within:border-orange-500 focus-within:outline-none disabled:text-stone-400'
+				'bg-white w-full p-3 rounded-lg outline-0 border px-3 py-2 hover:border-mainColor focus-within:border-mainColor focus-within:outline-none disabled:text-stone-400'
 			}
 			defaultCountry={props.defaultCountry || 'EG'}
 			value={value}
