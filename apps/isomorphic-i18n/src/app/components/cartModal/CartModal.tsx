@@ -67,9 +67,9 @@ function CartModal({ lang }: { lang?: string }) {
         <>
             {/* {productDetailsArray.length > 0 && ( */}
             <div className="relative">
-            <div
+            {/* <div
                 onClick={() => setModal(true)}
-                className="bg-mainColor w-16 h-16 rounded-lg fixed top-[50%] right-0 z-[9999] flex flex-col gap-4 items-center justify-center p-2 cursor-pointer"
+                className="bg-mainColor w-16 h-16 rounded-lg fixed top-[50%] right-0 z-[999] flex flex-col gap-4 items-center justify-center p-2 cursor-pointer"
                 >
                 <div className="flex gap-2 text-white relative">
                     <FontAwesomeIcon icon={faCartShopping as any} className="text-white text-lg" />
@@ -78,7 +78,7 @@ function CartModal({ lang }: { lang?: string }) {
                     {items.length}
                     </span>
                 </div>
-            </div>
+            </div> */}
 
             </div>
             {/* )} */}

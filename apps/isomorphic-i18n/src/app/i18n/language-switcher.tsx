@@ -18,7 +18,7 @@ export default function LanguageSwitcher({ lang = "en", variant = "icon", classN
 
   useEffect(() => {
     if (lang) {
-      setCurrentLang(lang); // ضبط اللغة المبدئية إذا كانت ممررة من الخصائص
+      setCurrentLang(lang);
     }
   }, [lang]);
 
