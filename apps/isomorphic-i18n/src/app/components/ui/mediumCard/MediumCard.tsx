@@ -38,7 +38,7 @@ function MediumCard(data:Props) {
             <div className="relative w-full sm:w-8/12 4xl:w-9/12">
               <div className="sm:pe-2 4xl:pe-0">
                 {data?.isTopRated || data.isTopSelling ? (
-                  <span className="text-[8px] font-bold text-center rounded-lg bg-[#FECACA] text-[#EF4444]">
+                  <span className="text-[8px] font-bold text-center rounded-lg ">
                     {data.isTopRated ? (
                       <Badge Icon={Star} title="Top Rated" className="-ms-1" />
                     ) : (

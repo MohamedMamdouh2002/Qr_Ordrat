@@ -42,7 +42,7 @@ export default function LocationPicker({ lang, apiKey, onLocationSelect, initLat
     }
   }, [isLoaded]);
   useEffect(() => {
-    if (initLat && initLng) {
+    if (initLat && initLng && isLoaded && window.google) {
       const isValidLocation = isInsideAnyZone(initLat, initLng);
       setError(!isValidLocation);
       if (isValidLocation) {
@@ -51,11 +51,11 @@ export default function LocationPicker({ lang, apiKey, onLocationSelect, initLat
         onLocationSelect(undefined, undefined, '');
       }
     }
-  }, [lang]);
+  }, [lang, isLoaded]);
 
   const isInsideAnyZone = (lat: number, lng: number) => {
     return branchZones.some(zone => {
-      const distance = google.maps.geometry.spherical.computeDistanceBetween(
+      const distance = google?.maps?.geometry?.spherical?.computeDistanceBetween(
         new google.maps.LatLng(lat, lng),
         new google.maps.LatLng(zone.lat, zone.lng)
       );

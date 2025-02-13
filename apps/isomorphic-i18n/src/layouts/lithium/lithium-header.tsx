@@ -210,8 +210,8 @@ export default function Header({ lang }: { lang?: string }) {
         ? "fixed top-0 z-50 w-full bg-white  "
         : "hidden"}`}>
         <div className="w-5/6 mx-auto flex justify-between h-16  items-center">
-          <Link href={'/'}>
-            <h1 className='text-base'>{t('title')}</h1>
+          <Link href={`/${lang}/`}>
+            <h1 className='text-base'>{shopName}</h1>
           </Link>
           <div className="  flex justify-between items-center">
             <div className="flex gap-5">
@@ -283,10 +283,10 @@ export default function Header({ lang }: { lang?: string }) {
       </div>
     ) : (
       <nav>
-        <div className={`flex lg:hidden fixed top-0 z-[999] w-full bg-white   `}>
+        <div className={`flex lg:hidden fixed top-0 z-[999] w-full bg-white`}>
           <div className="w-5/6 mx-auto flex justify-between h-16 items-center">
-            <Link href={'/'}>
-              <h1 className='text-base'>karam El Sham</h1>
+            <Link href={`/${lang}/`}>
+              <h1 className='text-base'>{shopName}</h1>
             </Link>
             <div className="  flex justify-between items-center">
               <div className="flex gap-5">

@@ -220,7 +220,7 @@ export function ProfileHeader({
   return (
     <div
       className={cn(
-        " relative z-0 pt-28 before:absolute before:start-0 before:top-0 before:h-40 before:w-full before:bg-gradient-to-r before:from-[#F8E1AF] before:to-[#db9b6e] @3xl:pt-[190px] @3xl:before:h-[calc(100%-120px)] dark:before:from-[#bca981] dark:before:to-[#cbb4b4] 3xl:-mx-[33px]",
+        " relative z-0 pt-28 before:absolute before:start-0 before:top-0 before:h-40 before:w-full before:bg-gradient-to-r before:from-Color30 before:to-Color90 @3xl:pt-[190px] @3xl:before:h-[calc(100%-120px)] 3xl:-mx-[33px]",
         layout === LAYOUT_OPTIONS.BERYLLIUM && expandedLeft
           ? "before:start-5 3xl:before:start-[25px]"
           : "xl:before:w-[calc(100%_+_10px)]"

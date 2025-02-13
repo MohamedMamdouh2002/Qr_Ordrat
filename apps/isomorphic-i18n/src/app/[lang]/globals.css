@@ -1647,6 +1647,6 @@ div[style='z-index: 1000001;'],
   height: 41.6px !important;
 }
 
-.custom-li li {
-  @apply relative mt-2 flex items-start ps-4 before:content-['•'] before:text-red-500 before:text-2xl before:absolute before:start-0;
-}
+/* .custom-li li {
+  @apply relative mt-2 flex items-start ps-4 before:content-['•'] before:text-mainColor before:text-2xl before:absolute before:start-0;
+} */

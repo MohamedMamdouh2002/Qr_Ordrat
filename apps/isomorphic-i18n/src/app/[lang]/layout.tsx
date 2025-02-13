@@ -54,8 +54,10 @@ async function fetchShopData() {
     
     return {
       ...shopData,
-      mainColor: shopData.mainColor || "#0000ff",
-      mainColorHover: shopData.secondaryColor || "#c96722",
+      mainColor:  "#003049",
+      mainColorHover: "#003049",
+      // mainColor: shopData.mainColor || "#003049",
+      // mainColorHover: shopData.secondaryColor || "#003049",
       subdomainName: shopData.subdomainName || "",
       logoUrl: shopData.logoUrl || "",
     };

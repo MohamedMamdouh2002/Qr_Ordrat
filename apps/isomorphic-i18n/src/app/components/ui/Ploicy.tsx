@@ -30,7 +30,7 @@ function Policy({ lang, sections }: { lang?: string, sections?: props }) {
                   <ul key={index} className="space-y-2 mt-4">
                     {listItems.map((item, i) => (
                       <li key={i} className="flex items-center gap-2">
-                        <span className="text-red-500 text-2xl">•</span>
+                        <span className="text-mainColor text-2xl">•</span>
                         <span dangerouslySetInnerHTML={{ __html: item.replace(/<\/?li>/g, '') }} />
                       </li>
                     ))}
