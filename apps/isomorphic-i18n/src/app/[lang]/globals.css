@@ -1642,10 +1642,11 @@ div[style='z-index: 1000001;'],
 } 
 .input-height{
   height: 41.6px !important;
-  } */
+  } 
 .new-address .\[\&\>\.selected-flag\]\:\!h-\[46px\]>.selected-flag{
   height: 41.6px !important;
 }
+
 .custom-li li {
   @apply relative mt-2 flex items-start ps-4 before:content-['•'] before:text-red-500 before:text-2xl before:absolute before:start-0;
 }
