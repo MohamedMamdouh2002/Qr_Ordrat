@@ -36,11 +36,11 @@ function Pagination({ lang, totalPages, onPageChange }: PaginationProps) {
             border: 0,
           },
           '& .MuiPaginationItem-root.Mui-selected': {
-            backgroundColor: '#f97316',
+            backgroundColor: 'var(--main-color)',
             color: '#fff',
           },
           '& .MuiPaginationItem-root.Mui-selected:hover': {
-            backgroundColor: '#f97316',
+            backgroundColor: 'var(--main-color)',
             color: '#fff',
           },
         }}

@@ -99,7 +99,7 @@ export default function Content({lang}: { lang?: string }) {
 		<>
 			<div className="flex flex-col gap-5 mobile:gap-10 pb-5 mobile:pb-0 bg-[#fff]">
 				<div className="relative">
-					<div className='relative h-[25vh]  after:w-full after:h-full after:inset-0 after:absolute after:bg-orange-500/20 after:backdrop-blur-sm'>
+					<div className='relative h-[25vh]  after:w-full after:h-full after:inset-0 after:absolute after:bg-ColorLitleHover after:backdrop-blur-sm'>
 						<Image src={kft} alt="background" loading="lazy" decoding="async" data-nimg="fill" 
 						className='!relative object-cover' style={{position:"absolute",height:"100%",width:"100%",left:0,top:0,right:0,bottom:0,objectFit:"cover", color:"transparent"}} />
 					</div>

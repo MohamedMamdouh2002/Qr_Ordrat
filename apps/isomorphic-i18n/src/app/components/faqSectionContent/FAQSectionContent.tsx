@@ -74,7 +74,7 @@ function FAQSectionContent({ lang }: { lang: string }) {
               <div key={`${index}`} className="mb-8 relative rounded-xl shadow-lg border border-mainColor border-s-0">
                   <button
                       aria-expanded={openAccordion === `${index}`}
-                      style={{ borderColor: index % 2 === 0 ? '#f97316' : '#5B5B5B' }}
+                      style={{ borderColor: index % 2 === 0 ? 'var(--main-color)' : '#5B5B5B' }}
                       onClick={() => toggleAccordion(`${index}`)}
                       className={`relative 4xl:h-32 bg-white dark:bg-secDark dark:text-white font-monbold flex justify-between items-center w-full ps-0 p-4 border h-auto md:h-min-[90px]
                           ${openAccordion === `${index}` ? 'rounded-b-none rounded-xl border-b-0 border-s-8 border-t-0 border-e-0' : 'border-b-0 border-s-8 border-t-0 border-e-0 rounded-xl'}`}
@@ -83,7 +83,7 @@ function FAQSectionContent({ lang }: { lang: string }) {
                       <FontAwesomeIcon className="4xl:text-2xl ps-2" icon={openAccordion === `${index}` ? faAngleUp : faAngleDown  as any} />
                   </button>
                   <div
-                      style={{ borderColor: index % 2 === 0 ? '#f97316' : '#5B5B5B' }} 
+                      style={{ borderColor: index % 2 === 0 ? 'var(--main-color)' : '#5B5B5B' }} 
                       className={`top-0 end-0 grid overflow-hidden 4xl:text-2xl transition-all text-md text-[#747794] dark:bg-secDark
                           ${openAccordion === `${index}` ? 'rounded-t-0 ps-5 px-10 bg-white grid-rows-[1fr] opacity-100 rounded-b-xl pb-5 border-s-8 border-t-0 border-b-0 border-e-0' : 'grid-rows-[0fr] opacity-0'}`}
                   >

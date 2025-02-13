@@ -43,7 +43,7 @@ const TextInput = ({
 			onChange={e => handleOnChange(e.target.value)}
 			onBlur={handleOnBlur}
 			className={cn(
-				'w-full  p-3 rounded-lg outline-0 min-h-[140px] resize-none border px-3 py-2 focus-within:border-dotted focus-within:border-orange-500  focus-within:outline-none disabled:text-stone-400',
+				'w-full  p-3 rounded-lg outline-0 min-h-[140px] resize-none border px-3 py-2 focus-within:border-dotted focus-within:border-mainColor  focus-within:outline-none disabled:text-stone-400',
 				inputClasses
 			)}
 			{...props}
@@ -55,7 +55,7 @@ const TextInput = ({
 			onChange={e => handleOnChange(e.target.value)}
 			onBlur={handleOnBlur}
 			className={
-				'w-full p-3 rounded-lg outline-0 border px-3 py-2 focus-within:border-dotted focus-within:border-orange-500  focus-within:outline-none disabled:text-stone-400'
+				'w-full p-3 rounded-lg outline-0 border px-3 py-2 focus-within:border-dotted focus-within:border-mainColor  focus-within:outline-none disabled:text-stone-400'
 			}
 			{...props}
 		/>

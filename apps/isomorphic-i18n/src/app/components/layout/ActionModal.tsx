@@ -45,7 +45,7 @@ function ActionModal({
 					<DialogTitle
 						className={`text-xl font-bold text-heaader pb-4 border-b font-header flex items-center gap-3`}
 					>
-						<AlertCircleIcon className="text-orange-500 mt-1" />
+						<AlertCircleIcon className="text-mainColor mt-1" />
 						{title}
 					</DialogTitle>
 					<Description>
@@ -66,7 +66,7 @@ function ActionModal({
 							className={`flex gap-1 items-center px-3 py-2 text-white font-bold text-sm rounded-lg transition duration-150${
 								deleteAction
 									? ' bg-red-500 hover:bg-red-600 '
-									: ' bg-orange-500/90 hover:bg-orange-500 '
+									: ' bg-Color90 hover:bg-mainColor '
 							}`}
 						>
 							{deleteAction ? (

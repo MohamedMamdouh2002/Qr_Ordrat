@@ -29,7 +29,7 @@ function SpecialNotes({ des, className, notes, setNotes }: Props) {
 						</div>
 					</div>
 				</div>
-				<button type='button' onClick={() => setShowNoteInput(true)} className="text-orange-500 font-bold">
+				<button type='button' onClick={() => setShowNoteInput(true)} className="text-mainColor font-bold">
 					{notes ? 'Edit' : 'Add'} notes
 				</button>
 			</div>
@@ -51,7 +51,7 @@ function SpecialNotes({ des, className, notes, setNotes }: Props) {
 								id="notes"
 								value={notes}
 								onChange={e => setNotes(e.target.value)}
-								className=" border-orange-500 border rounded-lg px-3 py-2 focus-within:outline-none"
+								className=" border-mainColor border rounded-lg px-3 py-2 focus-within:outline-none"
 							></textarea>
 						</div>
 					</Sheet.Content>

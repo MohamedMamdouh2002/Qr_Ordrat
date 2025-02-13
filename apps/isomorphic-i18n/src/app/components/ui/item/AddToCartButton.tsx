@@ -35,7 +35,7 @@ function AddToCartButton({
 			type={buttonType}
 			onClick={action}
 			className={cn(
-				'flex text-white bg-orange-500 px-2 py-1 rounded-lg font-bold items-center justify-center gap-1',
+				'flex text-white bg-mainColor px-2 py-1 rounded-lg font-bold items-center justify-center gap-1',
 				className
 			)}
 		>

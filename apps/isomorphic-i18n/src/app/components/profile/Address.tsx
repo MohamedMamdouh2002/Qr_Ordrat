@@ -9,11 +9,11 @@ function Address({ address, className }: Props) {
 		<div className={cn('flex flex-col gap-2 max-w-full', className)}>
 			<span className={`px-3 py-2 rounded-lg transition duration-150 flex items-center gap-2 max-w-full`}>
 				{address.type === 0 ? (
-					<Building className="pt-1 text-orange-500" />
+					<Building className="pt-1 text-mainColor" />
 				) : address.type === 1 ? (
-					<Home className="pt-1 text-orange-500" />
+					<Home className="pt-1 text-mainColor" />
 				) : (
-					<BriefcaseBusiness className="pt-1 text-orange-500" />
+					<BriefcaseBusiness className="pt-1 text-mainColor" />
 				)}
 				<span className='whitespace-nowrap overflow-hidden truncate max-w-[250px] xs:max-w-[140px] sm:max-w-[80%]'>
 					{address.aptNo}, {address.floor ? address.floor + ', ' : ''}

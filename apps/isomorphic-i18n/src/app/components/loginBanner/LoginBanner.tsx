@@ -4,7 +4,7 @@ import logPhoto from '@public/assets/online-chatting-app-cartoon-characters-comm
 
 function LoginBanner() {
   return <>
-  <div className="bg-mainColor/30 py-3">
+  <div className="bg-Color30 py-3">
     <div className="w-[90%] mx-auto flex justify-between items-center">
     <div className="">
         <h2 className='text-lg font-semibold'>Hey there!</h2>

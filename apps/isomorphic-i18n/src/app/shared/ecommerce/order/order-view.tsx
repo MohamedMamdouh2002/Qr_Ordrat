@@ -86,7 +86,7 @@ export default function OrderView({lang}:{lang:string}) {
       id: 1,
       paymentMethod: {
         name: `${t('cash-on-delivery')}`,
-        image:<BadgeCent className="text-orange-500" />
+        image:<BadgeCent className="text-mainColor" />
       },
       // price: '$1575.00',
     },

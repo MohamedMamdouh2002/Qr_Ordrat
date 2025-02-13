@@ -2,8 +2,7 @@
 import { Dialog, RadioGroup } from '@headlessui/react';
 import { motion } from 'framer-motion';
 import { Form, Formik } from 'formik';
-import { BriefcaseBusiness, Building, Home, PenBox, PlusCircle, XOctagon } from 'lucide-react';
-import useAddressValidation from '../ui/forms/AddressSchema';
+import { BriefcaseBusiness, Building, Home, Loader2, PenBox, PlusCircle, XOctagon } from 'lucide-react';
 import Text from '../ui/inputs/Text';
 import Phone from '../ui/inputs/phone';
 import LocationPicker from '../ui/inputs/map/LocationPicker';
@@ -11,8 +10,12 @@ import { API_BASE_URL } from '@/config/base-url';
 import toast from 'react-hot-toast';
 import { useUserContext } from '../context/UserContext';
 import { useTranslation } from '@/app/i18n/client';
+import useAddressValidation from '../ui/forms/NewAddressSchema';
+import { PhoneNumber } from '@ui/phone-input';
+import { shopId } from '@/config/shopId';
+import { useState } from 'react';
 
-export default function AddressModal({
+export default function AddressModalWithLogin({
 	isOpen,
 	setIsOpen,
 	address,
@@ -26,7 +29,7 @@ export default function AddressModal({
 	const [schema, initialValues] = useAddressValidation();
 	const { updateAddresses, setUpdateAddresses } = useUserContext();
 	const { t } = useTranslation(lang!, 'profile');
-
+	const [loading, setLoading] = useState(false);
 	// console.log("address: ",address);
 
 	const initialLocation = {
@@ -58,47 +61,45 @@ export default function AddressModal({
 		}
 	];
 
-	const updateAddress = async (vals: any) => {
-		const token = localStorage.getItem('accessToken');
-		if (!token) {
-			toast.error('No token found, please log in again.');
-			return;
-		}
-
+	const sendData = async (values: any) => {
 		try {
-			const response = await fetch(
-				`${API_BASE_URL}/api/Address/UpdateEndUserAddress?id=${vals.id}`,
-				{
-					method: 'PUT',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Bearer ${token}`,
-					},
-					body: JSON.stringify({
-						additionalDirections: vals.additionalDirections,
-						apartmentNumber: vals.aptNo,
-						floor: vals.floor,
-						street: vals.street,
-						latitude: vals.lat,
-						longtude: vals.lng,
-						buildingType: vals.type
-					}),
+			const jsonData = {
+				phoneNumber: values.phoneNumber,
+				shopId: shopId
+			};
+
+			const res = await fetch(`${API_BASE_URL}/api/Auth/EndUserLogin`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(jsonData),
+			});
+
+			if (res.ok) {
+				const result = await res.json();
+				toast.success(t('welcome-to-Karam-Elsham'));
+
+				if (result?.refreshToken) {
+					localStorage.setItem('accessToken', result?.accessToken);
+					localStorage.setItem('Token', result?.refreshToken);
+					localStorage.setItem('phoneNumber', result?.phoneNumber);
+					localStorage.setItem('userData', JSON.stringify({
+						phoneNumber: result.phoneNumber,
+						firstName: result.firstName || '',
+						lastName: result.lastName || '',
+						email: result.email || '',
+					}));
+
+					return true;
 				}
-			);
-
-			const result = await response.json();
-
-			if (response.ok) {
-				toast.success(result.message || 'Address updated successfully!');
-				setUpdateAddresses(true);
-				setIsOpen(false);
 			} else {
-				toast.error(result.message || 'Failed to update the address');
+				toast.error(t('authentication-failed'));
 			}
 		} catch (error) {
-			console.error('Error updating address:', error);
-			toast.error('An error occurred while updating the address.');
+			console.error('Error in authentication:', error);
+			toast.error(t('authentication-error'));
 		}
+
+		return false;
 	};
 
 	const addAddress = async (vals: any) => {
@@ -142,7 +143,7 @@ export default function AddressModal({
 		} catch (error) {
 			console.error('Error creating address:', error);
 			toast.error('An error occurred while creating the address.');
-		}
+		} 
 	};
 
 	const handleLocationSelect = (lat: number | undefined, lng: number | undefined, address: string, setFieldValue: any, validateForm: any) => {
@@ -198,19 +199,29 @@ export default function AddressModal({
 								initialValues={mergedInitialValues}
 								enableReinitialize
 								validationSchema={schema}
+								validateOnBlur={true}
 								onSubmit={async (vals) => {
 									console.log('vals: ', vals);
-									if (address?.id) {
-										await updateAddress(vals);
-									} else {
+									// if (address?.id) {
+									// 	await updateAddress(vals);
+									// } else {
+									// 	await addAddress(vals);
+									// }
+									setLoading(true);
+									const isAuthenticated = await sendData(vals);
+									if (isAuthenticated) {
 										await addAddress(vals);
 									}
+									setLoading(false);
 								}}
 							>
-								{({ errors, touched, values, setFieldValue, initialValues, isValid, validateForm }) => {
-									console.log("isValid: ", isValid);
-									console.log("errors: ", errors);
-									console.log("values: ", values);
+								{({ errors, touched, values, setFieldValue, initialValues, isValid, validateForm, setFieldTouched ,handleBlur }) => {
+									// console.log("isValid: ", isValid);
+									// console.log("errors: ", errors);
+									// console.log("values: ", values);
+									// console.log("phone error 1: ", touched.phoneNumber && errors.phoneNumber," :",errors.phoneNumber);
+									// console.log("phone error 2: ", errors.phoneNumber," :",errors.phoneNumber);
+									// console.log("phone error 3: ", touched.phoneNumber," :",errors.phoneNumber);
 									
 									return (
 										
@@ -257,11 +268,42 @@ export default function AddressModal({
 													))}
 													</RadioGroup>
 												</div>
-												<div className="grid sm:grid-cols-2 grid-cols-1 gap-x-3  me-1 md:me-0">
+												<div className="new-address grid sm:grid-cols-2 grid-cols-1 gap-x-3  me-1 md:me-0">
 													<Text name="aptNo" label={t('apt-lable')} placeholder={t('apt-lable')} required={true} />
 													<Text name="floor" label={t('floor-lable')} placeholder={t('floor-lable')} required={true}/>
 													<Text name="street" label={t('street-lable')} placeholder={t('street-lable')} required={true} />
-													<Phone disabled={true} name="phoneNumber" label={t('phoneNumber-lable')} placeholder={t('phoneNumber-lable')} required={true} />
+													{/* <Phone name="phoneNumber" label={t('phoneNumber-lable')} placeholder={t('phoneNumber-lable')} required={true} /> */}
+													<div>
+														<PhoneNumber
+															label={t('phoneNumber-lable')}
+															country="eg"
+															size='lg'
+															inputClassName="!h-[41.6px] w-full p-3 !ps-10 !bg-white rounded-lg outline-0 border !border-[rgb(227,227,227,1)] hover:!border-[rgb(227,227,227,1)] px-3 py-2 focus-within:!border-dotted focus-within:!border-mainColor  focus-within:!outline-none disabled:!text-stone-400 focus:!border-mainColor focus:!outline-none focus:!ring-2 focus:!ring-transparent focus:!ring-offset-0"
+															dropdownClassName="!h-[150px]"
+															labelClassName='mb-3 text-header capitalize font-bold text-sm pe-3 basis-auto w-max break-words pointer-events-none'
+															preferredCountries={['eg']}
+															value={values.phoneNumber}  
+															onChange={(value) => setFieldValue('phoneNumber', value)}
+															onBlur={(e) => {
+																setFieldTouched('phoneNumber', true); // ✅ Mark field as touched
+																handleBlur(e); // ✅ Call Formik's default blur handler
+															}}
+															// error={touched.phoneNumber && errors.phoneNumber ? String(errors.phoneNumber) : undefined}
+														/>
+														{touched.phoneNumber && errors.phoneNumber ? 
+															<div
+																className={
+																	'basis-full text-xs mt-1.5 mb-2 self-start flex items-center gap-2 text-[#F24444] font-medium capitalize'
+																}
+															>
+																<XOctagon size={16} className="mt-0" />
+								
+																{String(errors.phoneNumber) }
+															</div>
+															: undefined
+														}
+													</div>
+
 													<div className="col-span-full">
 														<Text
 															name="additionalDirections"
@@ -283,11 +325,11 @@ export default function AddressModal({
 													{t('cancelAddressModal')}
 												</button>
 												<button
-													disabled={!isValid}
+													disabled={!isValid || loading}
 													className="px-8 py-2 text-slate-50 bg-mainColor border border-transparent hover:border-mainColor hover:text-mainColor hover:bg-transparent transition duration-150 rounded-lg disabled:bg-black/50 disabled:text-white disabled:border-none"
 													type="submit"
 												>
-													{t('save')}
+													{loading ? <Loader2 className="animate-spin" size={20} /> : t('save')}
 												</button>
 											</div>
 										</Form>

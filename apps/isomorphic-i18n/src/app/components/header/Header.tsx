@@ -15,7 +15,7 @@ function Header({ lang }: { lang?: string }) {
 
   return (
     <>
-      <div className="bg-mainColor/30 h-[400px] hidden lg:flex">
+      <div className="bg-Color30 h-[400px] hidden lg:flex">
         <div className="w-[90%] mx-auto pt-10 relative flex justify-between items-center">
           <div>
             <h2 className="text-2xl lg:text-3xl xl:text-5xl font-bold">

@@ -195,30 +195,32 @@ function FAQSection({ lang }: { lang: string }) {
           <div className={style.faqCardsContainer}>
             {faqData.map((item, index) => (
               item.faQs.length > 0 && (
+                
                 <div key={index} className={`${style.faqCardWrapperContainer} group`}>
-                  <div className={style.faqCardWrapper}>
-                    <div className={style.faqCardHead} style={{ alignItems: 'center' }}>
-                      <div className={style.iconWrapper} style={{ width: '50px', marginInlineEnd: '5px' }}>
-                        <Image
-                          src={item.imageUrl || images[index]}
-                          width="50"
-                          height="50"
-                          alt={item.name}
-                        />
-                      </div>
-                      <h4 className={style.faqCardTitle}>{item.name}</h4>
-                    </div>
-                    <div className={style.faqCardBody}>
-                      {item.faQs.slice(0, 3).map((faq, faqIndex) => (
-                        <p key={faqIndex} className={style.faqCardDescription}>{faq.question}</p>
-                      ))}
-                    </div>
-                  </div>
                   <Link href={routes.faq.details(`${index}`)} onClick={() => setFaqs([item])}>
+                    <div className={style.faqCardWrapper}>
+                      <div className={style.faqCardHead} style={{ alignItems: 'center' }}>
+                        <div className={style.iconWrapper} style={{ width: '50px', marginInlineEnd: '5px' }}>
+                          <Image
+                            src={item.imageUrl || images[index]}
+                            width="50"
+                            height="50"
+                            alt={item.name}
+                          />
+                        </div>
+                        <h4 className={style.faqCardTitle}>{item.name}</h4>
+                      </div>
+                      <div className={style.faqCardBody}>
+                        {item.faQs.slice(0, 3).map((faq, faqIndex) => (
+                          <p key={faqIndex} className={style.faqCardDescription}>{faq.question}</p>
+                        ))}
+                      </div>
+                    </div>
+                    {/* <Link href={routes.faq.details(`${index}`)} onClick={() => setFaqs([item])}> */}
                     <button className={style.faqCardBtn}>
                       <p className='text-[#828e99] group-hover:text-mainColor'>{t('view-all')}</p>
                       <Image className={style.arrow} src={arrow} alt="arrow icon" />
-                      <Image className={style.arrowHover} src={arrowHover} alt="hover arrow icon" />
+                      <Image className={`${style.arrowHover} fill-mainColor`} src={arrowHover} alt="hover arrow icon" />
                     </button>
                   </Link>
                 </div>

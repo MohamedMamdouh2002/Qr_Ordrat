@@ -89,8 +89,17 @@ export default function Header({ lang }: { lang?: string }) {
   const [isOpen, setIsOpen] = useState(false); // حالة التحكم في ظهور الـ SideNav
   const pathname = usePathname(); // استخدام usePathname للحصول على المسار الحالي
   const { t, i18n } = useTranslation(lang!, 'nav');
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [shopName, setShopName] = useState<string | null>(null);
+  
   useEffect(() => {
     i18n.changeLanguage(lang);
+    const storedLogo = localStorage.getItem("logoUrl");
+    const storedName = localStorage.getItem("subdomainName");
+    if (storedLogo) {
+        setLogoUrl(storedLogo);
+        setShopName(storedName);
+    }
   }, [lang, i18n]);
 
   useEffect(() => {
@@ -118,7 +127,7 @@ export default function Header({ lang }: { lang?: string }) {
 
     <StickyHeader
 
-      className={`hidden lg:flex  w-full z-40  ${isStickyVisible ? "bg-orange-500/75  backdrop-blur-lg *:text-white" : "bg-white border-b-2"
+      className={`hidden lg:flex  w-full z-40  ${isStickyVisible ? "bg-navbarColorScroll  backdrop-blur-lg *:text-white" : "bg-white border-b-2"
 
         }`}
     >
@@ -129,8 +138,14 @@ export default function Header({ lang }: { lang?: string }) {
             href={`/${lang}/`}
             className="me-4 hidden w-[220px] shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 lg:flex gap-4 items-center"
           >
-            <Image src={logo} alt="logo" className="max-w-[60px]" />
-            <h1 className={`font-bold text-lg ${isStickyVisible ? `text-white` : `text-black`}`}>Karam El Sham</h1>
+            {/* <Image src={logo} alt="logo" className="max-w-[60px]" /> */}
+            {logoUrl ? (
+              <Image
+                  src={logoUrl} width={60} height={60} alt="logo" className="max-w-[60px]" />
+              ) : (
+              <div className="w-[60px] h-[60px] bg-gray-200 rounded-full"></div>
+            )}
+            <h1 className={`font-bold text-lg ${isStickyVisible ? `text-white` : `text-black`}`}>{shopName}</h1>
           </Link>
           <HeaderMenuLeft lang={lang} />
         </div>
@@ -171,12 +186,12 @@ export default function Header({ lang }: { lang?: string }) {
               variant="icon"
             />
             <Link href={`/${lang!}/cart`}>
-              <ShoppingCart className={`transition duration-150  ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`} />
+              <ShoppingCart className={`transition duration-150  ${isStickyVisible ? "hover:text-black" : "hover:text-mainColor"}`} />
 
             </Link>
             <button
               onClick={() => setIsOpen(true)}
-              className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
+              className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-mainColor"}`}
             >
               <AlignCenter />
             </button>
@@ -210,7 +225,7 @@ export default function Header({ lang }: { lang?: string }) {
               </Link>
               <button
                 onClick={() => setIsOpen(true)}
-                className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
+                className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-mainColor"}`}
               >
                 <AlignCenter />
               </button>
@@ -258,7 +273,7 @@ export default function Header({ lang }: { lang?: string }) {
             <div className="w-10 h-10 bg-white rounded-full flex justify-center items-center">
               <button
                 onClick={() => setIsOpen(true)}
-                className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
+                className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-mainColor"}`}
               >
                 <AlignCenter />
               </button>
@@ -285,7 +300,7 @@ export default function Header({ lang }: { lang?: string }) {
                 </Link>
                 <button
                   onClick={() => setIsOpen(true)}
-                  className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-orange-500"}`}
+                  className={`transition duration-150 ${isStickyVisible ? "hover:text-black" : "hover:text-mainColor"}`}
                 >
                   <AlignCenter />
                 </button>

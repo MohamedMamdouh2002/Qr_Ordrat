@@ -63,7 +63,7 @@ type Props = Food & {
                 ) : (
                 ""
                 )}
-                <div className="absolute bottom-1.5 end-1.5 w-9 h-9 bg-white rounded-lg flex justify-center items-center text-3xl text-orange-500">
+                <div className="absolute bottom-1.5 end-1.5 w-9 h-9 bg-white rounded-lg flex justify-center items-center text-3xl text-mainColor">
                 <Plus />
                 </div>
             </div>

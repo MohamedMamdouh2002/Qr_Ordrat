@@ -80,7 +80,7 @@ function AddressItem({ address, i, setIsOpen, lang,setSelectedAddress }: Props) 
 							setSelectedAddress(address);
 							setIsOpen && setIsOpen(true);
 						}}
-						className={`cursor-pointer col-span-full w-full hover:bg-orange-500/20 py-2 px-3`}
+						className={`cursor-pointer col-span-full w-full hover:bg-ColorLitleHover py-2 px-3`}
 					>
 						<Address address={address} />
 					</div>

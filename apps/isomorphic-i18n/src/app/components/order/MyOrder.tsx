@@ -15,7 +15,8 @@ import fetchClient from '../fetch/api';
 const MyOrder: React.FC<{ lang: string }> = ({ lang }) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
-
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [shopName, setShopName] = useState<string | null>(null); 
   const { t } = useTranslation(lang, 'order');
 
   useEffect(() => {
@@ -36,6 +37,12 @@ const MyOrder: React.FC<{ lang: string }> = ({ lang }) => {
     };
 
     fetchOrders();
+    const storedLogo = localStorage.getItem("logoUrl");
+    const storedName = localStorage.getItem("subdomainName");
+    if (storedLogo) {
+        setLogoUrl(storedLogo);
+        setShopName(storedName);
+    }
   }, [lang]);
 
   return (
@@ -93,13 +100,18 @@ const MyOrder: React.FC<{ lang: string }> = ({ lang }) => {
                       </div>
                       <div className="flex justify-between">
                         <div className="gap-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-                          <div className="flex w-fit items-center p-2 rounded-lg gap-2 border border-dashed border-orange-500">
-                            <BadgeCent className="text-orange-500" />
+                          <div className="flex w-fit items-center p-2 rounded-lg gap-2 border border-dashed border-mainColor">
+                            <BadgeCent className="text-mainColor" />
                             <span className="text-xs font-light">{t('cash-on-delivery')}</span>
                           </div>
                         </div>
                         <div className="absolute end-3 bottom-4">
                           <Image width={60} height={60} src={Logo} alt="logo" />
+                          {logoUrl ? (
+                            <Image src={logoUrl} width={60} height={60} alt="logo" />
+                            ) : (
+                            <div className="w-[60px] h-[60px] bg-gray-200 rounded-full"></div>
+                          )}
                         </div>
                       </div>
                     </div>

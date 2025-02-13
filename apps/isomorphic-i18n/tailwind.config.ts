@@ -10,8 +10,13 @@ const config: Pick<Config, "prefix" | "presets" | "content" | "theme" |"plugins"
   theme: {
     extend: {
       colors: {
-        mainColor:"#f97316",
-        mainColorHover:"#c96722"
+        mainColor:"var(--main-color)",
+        mainColorHover:"var(--main-color-hover)",
+        navbarColorScroll:"var(--navbar-color-scroll)",
+        ColorLitleHover:"var(--color-20)",
+        Color30:"var(--color-30)",
+        Color90:"var(--color-90)",
+        Color50:"var(--color-50)",
       },
       fontFamily: {
         // rubik: ['Rubik', 'sans-serif'],
