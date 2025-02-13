@@ -113,7 +113,7 @@ function Footer({ lang }: Props) {
   return (
     <>
       <div className="mt-auto bg-ColorLitleHover">
-        <div className="mt-10">
+        <div className="mt-10 mb-0">
           <div className="w-[90%] mx-auto grid md:grid-cols-2 lg:grid-cols-6 py-4 gap-6">
             {/* Logo Section */}
             <div className="col-span-2 flex flex-col gap-2 me-10">
