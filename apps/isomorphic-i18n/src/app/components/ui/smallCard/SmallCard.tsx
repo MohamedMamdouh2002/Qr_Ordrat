@@ -23,13 +23,17 @@ type Props = Food & {
     const [isModalOpen, setIsModalOpen] = useState(false); 
     const [quantity, setQuantity] = useState(1);
 
+
     const handleOpenModal = () => {
+      console.log("Opening Modal...");
       setIsModalOpen(true);
     };
-  
+    
     const handleCloseModal = () => {
+      console.log("Closing Modal...");
       setIsModalOpen(false);
     };
+    
   return<>
     <>
         <div
@@ -93,7 +97,9 @@ type Props = Food & {
         <Modal
             lang={data.lang}
             modalId={data.id}
-            setIsModalOpen={handleCloseModal}
+            setIsModalOpen={setIsModalOpen} // تأكد من تمرير الحالة
+
+            // setIsModalOpen={handleCloseModal}
             quantity={quantity}
             setQuantity={setQuantity}
             // setShowItem={function (val: boolean): void {

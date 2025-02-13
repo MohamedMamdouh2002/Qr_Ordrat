@@ -1,8 +1,9 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from '@/app/i18n/client';
 import Title from '../ui/title/Title';
 import Policy from '../ui/Ploicy';
+import axiosClient from '../fetch/api';
 
 type props = {
   title: string,
@@ -16,49 +17,32 @@ type props = {
 
 function PrivacyPolicy({ lang }: { lang?: string }) {
   const { t, i18n } = useTranslation(lang!, 'policy');
+const [policy,setPolicy]=useState()
+ 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        // setLoading(true);
+        const response = await axiosClient.get(`/api/Term/GetByShopIdAndType/952e762c-010d-4e2b-8035-26668d99e23e?termType=0`, {
+          headers: {
+            'Accept-Language': lang,
+          },
+        });
+        setPolicy(response.data);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      } finally {
+        // setLoading(false);
+      }
+    };
 
-  const sections: props[] = [
-    {
-      title: t('privacypolicy'),
-      descriptions: [
-        { description: t('dataCollectionDesc') },
-        { description: t('dataCollectionDesc1') },
-        { description: t('dataCollectionDesc') },
-      ],
-      points: [
-        { point: t('collectedData1') },
-        { point: t('collectedData2') },
-        { point: t('collectedData3') }
-      ]
-    },
-    {
-      title: t('privacypolicy'),
-      descriptions: [
-        { description: t('dataCollectionDesc') },
-  
-      ],
-  
-    },
-    {
-      title: t('privacypolicy'),
-      descriptions: [
-        { description: t('dataCollectionDesc') },
-        { description: t('dataCollectionDesc1') },
-        { description: t('dataCollectionDesc') },
-      ],
-      points: [
-        { point: t('collectedData1') },
-        { point: t('collectedData2') },
-        { point: t('collectedData3') }
-      ]
-    },
-  
-  ];
+    fetchOrders();
+  }, [lang]);
 
   return (
     <div className="w-5/6 sm:w-8/12 mx-auto mb-10 ">
-      {/* <Title className="text-center mt-20 text-[#404040]" title={t('privacypolicy')}/> */}
-    <Policy sections={sections} />
+      <Title className="text-center mt-20 text-[#404040]" title={t('privacypolicy')}/>
+    <Policy sections={policy} />
     </div>
   );
 }
