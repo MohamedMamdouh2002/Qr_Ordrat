@@ -18,6 +18,7 @@ import { MantineProvider } from "@mantine/core";
 
 import { SessionContextProvider } from "@/utils/fetch/contexts";
 import ShopLocalStorage from "../components/ui/ShopLocalStorage/ShopLocalStorage";
+import { shopId } from "@/config/shopId";
 
 const NextProgress = dynamic(() => import("@components/next-progress"), {
   ssr: false,
@@ -35,7 +36,7 @@ export async function generateStaticParams() {
 async function fetchShopData() {
   try {
     const res = await fetch(
-      "https://testapi.ordrat.com/api/Shop/GetById/952E762C-010D-4E2B-8035-26668D99E23E",
+      `https://testapi.ordrat.com/api/Shop/GetById/${shopId}`,
       {
         headers: {
           Accept: "*/*",
@@ -72,6 +73,35 @@ async function fetchShopData() {
   }
 }
 
+async function fetchBranchZones(shopId: string) {
+  try {
+    const res = await fetch(
+      `https://testapi.ordrat.com/api/Branch/GetByShopId/${shopId}`,
+      {
+        headers: {
+          Accept: "*/*",
+          "Accept-Language": "en",
+        },
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch branch zones");
+    }
+
+    const data = await res.json();
+    return data.map((branch: any) => ({
+      lat: branch.centerLatitude,
+      lng: branch.centerLongitude,
+      zoonRadius: branch.coverageRadius,
+    }));
+  } catch (error) {
+    console.error("Error fetching branch zones:", error);
+    return [];
+  }
+}
+
 function hexToRgba(hex: string, opacity: number) {
   hex = hex.replace("#", "");
   let r = parseInt(hex.substring(0, 2), 16);
@@ -90,6 +120,7 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession(authOptions);
   const shopData = await fetchShopData();
+  const branchZones = await fetchBranchZones(shopId);
   return (
     <html
       lang={lang}
@@ -114,7 +145,6 @@ export default async function RootLayout({
           `}
         </style>
         {/* Save subdomainName and logoUrl to localStorage on client-side */}
-        <ShopLocalStorage subdomainName={shopData.subdomainName} logoUrl={shopData.logoUrl} />
 
         <MantineProvider>
 
@@ -124,6 +154,7 @@ export default async function RootLayout({
                 <ThemeProvider>
                   <UserProvider>
                     <NextProgress />
+                    <ShopLocalStorage subdomainName={shopData.subdomainName} logoUrl={shopData.logoUrl} branchZones={branchZones} />
                     {children}
                     <Toaster />
                     <GlobalDrawer />

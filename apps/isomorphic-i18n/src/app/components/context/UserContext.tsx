@@ -40,6 +40,9 @@ type UserContextType = {
   setOrder: React.Dispatch<React.SetStateAction<Order[]>>;
   product: string[];
   setProduct: React.Dispatch<React.SetStateAction<string[]>>;
+  
+  branchZones: { lat: number; lng: number; zoonRadius: number }[];
+  setBranchZones: React.Dispatch<React.SetStateAction<{ lat: number; lng: number; zoonRadius: number }[]>>;
 
 };
 
@@ -58,6 +61,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children  }) =
   const [product, setProduct] = useState<string[]>([]);
   const [faqs, setFaqs] = useState<FaqType[]>([]);
   const [updatefaqs, setUpdateFaqs] = useState<boolean>(false);
+  const [branchZones, setBranchZones] = useState<{ lat: number; lng: number; zoonRadius: number }[]>([]);
     
   async function GetHome({lang}:{lang:string}) {
     try {
@@ -120,7 +124,24 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children  }) =
   }
   
   return (
-    <UserContext.Provider value={{product,setProduct,order,setOrder,token,setToken, orderNote, setOrderNote, copone, setCopone, profileUserName, setProfileUserName, accessToken,setAccessToken, userData, setUserData, updateAddresses, setUpdateAddresses, faqs, setFaqs, updatefaqs, setUpdateFaqs, page, setPage, GetHome, GetProduct ,GetRewiew }}>
+    <UserContext.Provider value={{
+      product,setProduct,
+      order,setOrder,
+      token,setToken, 
+      orderNote, setOrderNote, 
+      copone, setCopone, 
+      profileUserName, setProfileUserName, 
+      accessToken,setAccessToken, 
+      userData, setUserData, 
+      updateAddresses, setUpdateAddresses, 
+      faqs, setFaqs, 
+      updatefaqs, setUpdateFaqs, 
+      branchZones, setBranchZones, 
+      page, setPage, 
+      GetHome, 
+      GetProduct,
+      GetRewiew
+    }}>
       {children}
     </UserContext.Provider>
   );
