@@ -42,7 +42,7 @@ export default function LocationPicker({ lang, apiKey, onLocationSelect, initLat
     }
   }, [isLoaded]);
   useEffect(() => {
-    if (initLat && initLng && isLoaded && window.google) {
+    if (initLat && initLng && window.google) {
       const isValidLocation = isInsideAnyZone(initLat, initLng);
       setError(!isValidLocation);
       if (isValidLocation) {
@@ -51,7 +51,7 @@ export default function LocationPicker({ lang, apiKey, onLocationSelect, initLat
         onLocationSelect(undefined, undefined, '');
       }
     }
-  }, [lang, isLoaded]);
+  }, [lang]);
 
   const isInsideAnyZone = (lat: number, lng: number) => {
     return branchZones.some(zone => {
