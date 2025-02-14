@@ -10,6 +10,7 @@ import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useUserContext } from '../context/UserContext';
 import { useTranslation } from '@/app/i18n/client';
+import axiosClient from '../fetch/api';
 
 type UserData = {
 	firstName: string;
@@ -62,19 +63,57 @@ function UpdateProfileForm({lang}:{lang:string}) {
 	};
 
 	const updateUserProfile = async (values: any) => {
+		// try {
+		// 	const token = localStorage.getItem('accessToken');
+
+		// 	const response = await fetch(`${API_BASE_URL}/api/User/UpdateUser`, {
+		// 		method: 'PUT',
+		// 		headers: {
+		// 			'Content-Type': 'application/json',
+		// 			Authorization: `Bearer ${token}`,
+		// 		},
+		// 		body: JSON.stringify(values),
+		// 	});
+		// 	const result = await response.json();
+
+		// 	if (result.message === 'Access token is invalid') {
+		// 		localStorage.removeItem('Token');
+		// 		localStorage.removeItem('accessToken');
+		// 		localStorage.removeItem('phoneNumber');
+		// 		toast.error('Access token is invalid, redirecting to home...');
+		// 		router.push('/');
+		// 		return;
+		// 	}
+
+		// 	if (!response.ok) {
+		// 		throw new Error('Failed to update user');
+		// 	}
+						
+		// 	const updatedUserData = {
+		// 		phoneNumber: result.updateduser.phoneNumber,
+		// 		firstName: result.updateduser.firstName,
+		// 		lastName: result.updateduser.lastName,
+		// 		email: result.updateduser.email,
+		// 	};
+			
+		// 	localStorage.setItem('userData', JSON.stringify(updatedUserData));
+		// 	setUserData(updatedUserData);
+		// 	toast.success('User profile updated successfully!');			
+		// } catch (error) {
+		// 	if (error instanceof Error) {
+		// 		toast.error(error.message || 'Error updating profile. Please try again.');
+		// 	} else {
+		// 		toast.error('An unknown error occurred. Please try again.');
+		// 	}
+		// }
 		try {
 			const token = localStorage.getItem('accessToken');
 
-			const response = await fetch(`${API_BASE_URL}/api/User/UpdateUser`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify(values),
-			});
-			const result = await response.json();
+			const response = await axiosClient.put('/api/User/UpdateUser', values);
 
+			const result = response.data;
+
+			// Check for invalid token
 			if (result.message === 'Access token is invalid') {
 				localStorage.removeItem('Token');
 				localStorage.removeItem('accessToken');
@@ -84,26 +123,21 @@ function UpdateProfileForm({lang}:{lang:string}) {
 				return;
 			}
 
-			if (!response.ok) {
-				throw new Error('Failed to update user');
-			}
-						
+			// Extract updated user data
 			const updatedUserData = {
-				phoneNumber: result.updateduser.phoneNumber,
-				firstName: result.updateduser.firstName,
-				lastName: result.updateduser.lastName,
-				email: result.updateduser.email,
+			phoneNumber: result.updateduser.phoneNumber,
+			firstName: result.updateduser.firstName,
+			lastName: result.updateduser.lastName,
+			email: result.updateduser.email,
 			};
-			
+
+			// Save to localStorage and update state
 			localStorage.setItem('userData', JSON.stringify(updatedUserData));
 			setUserData(updatedUserData);
-			toast.success('User profile updated successfully!');			
-		} catch (error) {
-			if (error instanceof Error) {
-				toast.error(error.message || 'Error updating profile. Please try again.');
-			} else {
-				toast.error('An unknown error occurred. Please try again.');
-			}
+			toast.success('User profile updated successfully!');
+		} catch (error: any) {
+			console.error('Error updating profile:', error);
+			toast.error(error.response?.data?.message || 'Error updating profile. Please try again.');
 		}
 	};
 	return (
