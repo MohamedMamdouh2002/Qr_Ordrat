@@ -11,6 +11,7 @@ import { API_BASE_URL } from '@/config/base-url';
 import toast from 'react-hot-toast';
 import { useUserContext } from '../context/UserContext';
 import { useTranslation } from '@/app/i18n/client';
+import axiosClient from '../fetch/api';
 
 export default function AddressModal({
 	isOpen,
@@ -24,7 +25,7 @@ export default function AddressModal({
 	lang?:string;
 }) {
 	const [schema, initialValues] = useAddressValidation();
-	const { updateAddresses, setUpdateAddresses } = useUserContext();
+	const { updateAddresses, setUpdateAddresses, branchZones } = useUserContext();
 	const { t } = useTranslation(lang!, 'profile');
 
 	// console.log("address: ",address);
@@ -66,38 +67,25 @@ export default function AddressModal({
 		}
 
 		try {
-			const response = await fetch(
-				`${API_BASE_URL}/api/Address/UpdateEndUserAddress?id=${vals.id}`,
-				{
-					method: 'PUT',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Bearer ${token}`,
-					},
-					body: JSON.stringify({
-						additionalDirections: vals.additionalDirections,
-						apartmentNumber: vals.aptNo,
-						floor: vals.floor,
-						street: vals.street,
-						latitude: vals.lat,
-						longtude: vals.lng,
-						buildingType: vals.type
-					}),
-				}
+			const response = await axiosClient.put(
+			`/api/Address/UpdateEndUserAddress?id=${vals.id}`,
+			{
+				additionalDirections: vals.additionalDirections,
+				apartmentNumber: vals.aptNo,
+				floor: vals.floor,
+				street: vals.street,
+				latitude: vals.lat,
+				longtude: vals.lng,
+				buildingType: vals.type
+			},
 			);
 
-			const result = await response.json();
-
-			if (response.ok) {
-				toast.success(result.message || 'Address updated successfully!');
-				setUpdateAddresses(true);
-				setIsOpen(false);
-			} else {
-				toast.error(result.message || 'Failed to update the address');
-			}
-		} catch (error) {
+			toast.success(response.data.message || 'Address updated successfully!');
+			setUpdateAddresses(true);
+			setIsOpen(false);
+		} catch (error: any) {
 			console.error('Error updating address:', error);
-			toast.error('An error occurred while updating the address.');
+			toast.error(error.response?.data?.message || 'An error occurred while updating the address.');
 		}
 	};
 
@@ -230,10 +218,7 @@ export default function AddressModal({
 														onLocationSelect={(lat, lng, address) => handleLocationSelect(lat, lng, address, setFieldValue, validateForm)}
 														initLat={address?.lat || 30.023173855111207}
 														initLng={address?.lng || 31.185028997638923}
-														branchZones={[
-															{ lat: 30.05, lng: 31.22, zoonRadius: 5000 },
-															{ lat: 30.07, lng: 31.25, zoonRadius: 3000 }
-														]}
+														branchZones={branchZones}
 														lang={lang!}
 													/>
 													<RadioGroup

@@ -27,7 +27,7 @@ export default function AddressModalWithLogin({
 	lang?:string;
 }) {
 	const [schema, initialValues] = useAddressValidation();
-	const { updateAddresses, setUpdateAddresses } = useUserContext();
+	const { updateAddresses, setUpdateAddresses, branchZones } = useUserContext();
 	const { t } = useTranslation(lang!, 'profile');
 	const [loading, setLoading] = useState(false);
 	// console.log("address: ",address);
@@ -241,10 +241,7 @@ export default function AddressModalWithLogin({
 														onLocationSelect={(lat, lng, address) => handleLocationSelect(lat, lng, address, setFieldValue, validateForm)}
 														initLat={address?.lat || 30.023173855111207}
 														initLng={address?.lng || 31.185028997638923}
-														branchZones={[
-															{ lat: 30.05, lng: 31.22, zoonRadius: 5000 },
-															{ lat: 30.07, lng: 31.25, zoonRadius: 3000 }
-														]}
+														branchZones={branchZones}
 														lang={lang!}
 													/>
 													<RadioGroup

@@ -28,7 +28,7 @@ axiosClient.interceptors.response.use(
       // قم بطلب Refresh Token API لتحديث التوكين
       try {
         const refreshToken = localStorage.getItem('Token'); // الحصول على الريفريش توكين
-        const refreshResponse = await axios.put(
+        const refreshResponse = await axios.post(
           'https://testapi.ordrat.com/api/Auth/RefreshAccessToken', // الرابط الكامل لتحديث التوكين
           {},
           {

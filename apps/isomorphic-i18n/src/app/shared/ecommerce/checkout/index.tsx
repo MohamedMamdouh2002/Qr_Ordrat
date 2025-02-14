@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import OrderSummery from '@/app/shared/ecommerce/checkout/order-summery';
 import { Text } from 'rizzui';
 import cn from '@utils/class-names';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import MapWithZones from '@/app/components/ui/inputs/map/MapWithZones';
 import { RadioGroup } from '@headlessui/react';
 
@@ -76,7 +76,7 @@ export default function CheckoutPageWrapper({
   // Sample addresses
   const [addresses, setAddresses] = useState<Address[]>([]);
 	const [isAddressApiLoading, setIsAddressApiLoading] = useState(false);
-	const { updateAddresses, setUpdateAddresses } = useUserContext();
+	const { updateAddresses, setUpdateAddresses, branchZones } = useUserContext();
   
   
   const fetchAddresses = async () => {
@@ -170,12 +170,22 @@ export default function CheckoutPageWrapper({
   };
 
   // Define some zones (circles) with center points and radii
-  const zones = [
-    { center: { lat: 30.013056, lng: 31.208853 }, radius: 2000, color: '#FF0000' }, // Central Giza
-    { center: { lat: 30.001219, lng: 31.168858 }, radius: 1800, color: '#00FF00' },  // Near Pyramids
-    { center: { lat: 29.976480, lng: 31.131302 }, radius: 1300, color: '#0000FF' },  // Giza Pyramids
-    { center: { lat: 30.020817, lng: 31.275039 }, radius: 1000, color: '#FFFF00' },  // Eastern Giza
-  ];
+  // const zones = [
+  //   { center: { lat: 30.013056, lng: 31.208853 }, radius: 2000, color: '#FF0000' }, // Central Giza
+  //   { center: { lat: 30.001219, lng: 31.168858 }, radius: 1800, color: '#00FF00' },  // Near Pyramids
+  //   { center: { lat: 29.976480, lng: 31.131302 }, radius: 1300, color: '#0000FF' },  // Giza Pyramids
+  //   { center: { lat: 30.020817, lng: 31.275039 }, radius: 1000, color: '#FFFF00' },  // Eastern Giza
+  // ];
+  const colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FFA500", "#800080"];
+
+  const zones = useMemo(() => 
+    branchZones.map((zone, index) => ({
+      center: { lat: zone.lat, lng: zone.lng },
+      radius: zone.zoonRadius,
+      color: colors[index % colors.length]
+    })), 
+    [branchZones]
+  );
 
   console.log("errors: ",methods.formState.errors);
   
