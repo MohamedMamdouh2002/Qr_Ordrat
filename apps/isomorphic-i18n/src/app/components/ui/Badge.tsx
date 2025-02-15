@@ -19,7 +19,7 @@ function Badge({ Icon, title, className }: Props) {
 				className
 			)}
 		>
-			<Icon className="fill-mainColor text-mainColor " size={12} /> {title}
+			<Icon className="fill-mainColor text-mainColor" size={12} /> {title}
 		</div>
 	);
 }
