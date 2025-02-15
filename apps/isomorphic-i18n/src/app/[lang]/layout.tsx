@@ -18,7 +18,8 @@ import { MantineProvider } from "@mantine/core";
 
 import { SessionContextProvider } from "@/utils/fetch/contexts";
 import ShopLocalStorage from "../components/ui/ShopLocalStorage/ShopLocalStorage";
-import { shopId } from "@/config/shopId";
+// import { shopId } from "@/config/shopId";
+import { headers } from "next/headers";
 
 const NextProgress = dynamic(() => import("@components/next-progress"), {
   ssr: false,
@@ -32,8 +33,28 @@ export const metadata = {
 export async function generateStaticParams() {
   return languages.map((lang) => ({ lang }));
 }
+// function getServerSiteUrl() {
+//   const host = headers().get("host") || "localhost:3000";
+//   const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
+//   return `${protocol}://${host}`;
+// }
+function getServerSiteUrl() {
+  const host = "Karam%20ELSham";
+  const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
+  return `${host}`;
+}
+// function getFullServerUrl() {
+//   const host = headers().get("host") || "localhost:3000";
+//   const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
+//   const pathname = headers().get("referer") || "/";
+//   return `${protocol}://${host}${new URL(pathname).pathname}`;
+// }
+async function fetchShopData(shopId: string) {
+  const siteUrl = getServerSiteUrl(); // Get website URL dynamically
+  // const fullSiteUrl = getFullServerUrl(); // Get website URL dynamically
+  console.log("Fetching shop data from:", siteUrl);
+  // console.log("Fetching full SiteUrl from:", fullSiteUrl);
 
-async function fetchShopData() {
   try {
     const res = await fetch(
       `https://testapi.ordrat.com/api/Shop/GetById/${shopId}`,
@@ -102,6 +123,30 @@ async function fetchBranchZones(shopId: string) {
   }
 }
 
+async function fetchSubdomain(subdomain: string) {
+  try {
+    const res = await fetch(
+      `https://testapi.ordrat.com/api/Shop/GetBySubdomain/${subdomain}`,
+      {
+        headers: {
+          Accept: "*/*",
+          "Accept-Language": "en",
+        },
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch branch zones");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching branch zones:", error);
+    return [];
+  }
+}
+
 function hexToRgba(hex: string, opacity: number) {
   hex = hex.replace("#", "");
   let r = parseInt(hex.substring(0, 2), 16);
@@ -118,9 +163,14 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: any;
 }) {
+  const realPath = getServerSiteUrl(); // Get the real site URL
+  console.log("Website Real Path:", realPath);
+  const shopId = await fetchSubdomain(realPath);
+  console.log("subdomain data:", shopId);
   const session = await getServerSession(authOptions);
-  const shopData = await fetchShopData();
-  const branchZones = await fetchBranchZones(shopId);
+  const shopData = await fetchShopData(shopId.id);
+  const branchZones = await fetchBranchZones(shopId.id);
+
   return (
     <html
       lang={lang}
@@ -154,7 +204,7 @@ export default async function RootLayout({
                 <ThemeProvider>
                   <UserProvider>
                     <NextProgress />
-                    <ShopLocalStorage subdomainName={shopData.subdomainName} logoUrl={shopData.logoUrl} branchZones={branchZones} />
+                    <ShopLocalStorage subdomainName={shopData.subdomainName} logoUrl={shopData.logoUrl} branchZones={branchZones} shopId={shopId.id} />
                     {children}
                     <Toaster />
                     <GlobalDrawer />

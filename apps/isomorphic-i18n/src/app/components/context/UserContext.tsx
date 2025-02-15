@@ -1,7 +1,7 @@
 'use client';
 
 import { API_BASE_URL } from '@/config/base-url';
-import { shopId } from '@/config/shopId';
+// import { shopIdId } from '@/config/shopIdId';
 import { AllCategories, Food, FoodId, Order, Review } from '@/types';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
@@ -40,6 +40,9 @@ type UserContextType = {
   setOrder: React.Dispatch<React.SetStateAction<Order[]>>;
   product: string[];
   setProduct: React.Dispatch<React.SetStateAction<string[]>>;
+
+  shopId: string;
+  setshopId: React.Dispatch<React.SetStateAction<string>>;
   
   branchZones: { lat: number; lng: number; zoonRadius: number }[];
   setBranchZones: React.Dispatch<React.SetStateAction<{ lat: number; lng: number; zoonRadius: number }[]>>;
@@ -62,6 +65,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children  }) =
   const [faqs, setFaqs] = useState<FaqType[]>([]);
   const [updatefaqs, setUpdateFaqs] = useState<boolean>(false);
   const [branchZones, setBranchZones] = useState<{ lat: number; lng: number; zoonRadius: number }[]>([]);
+  const [shopId, setshopId] = useState<string>('');
     
   async function GetHome({lang}:{lang:string}) {
     try {
@@ -137,6 +141,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children  }) =
       faqs, setFaqs, 
       updatefaqs, setUpdateFaqs, 
       branchZones, setBranchZones, 
+      shopId, setshopId, 
       page, setPage, 
       GetHome, 
       GetProduct,

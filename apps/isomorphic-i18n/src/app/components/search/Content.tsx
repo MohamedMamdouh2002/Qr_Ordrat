@@ -5,11 +5,12 @@ import kft from '../../../../public/assets/kfc-background.jpg';
 import SearchInput from '../ui/SearchInput';
 import { useEffect, useState, useRef } from 'react';
 import Card from '../ui/card/Card';
-import { shopId } from '@/config/shopId';
+// import { shopId } from '@/config/shopId';
 import { API_BASE_URL } from '@/config/base-url';
 import { Food } from '@/types';
 import { useTranslation } from '@/app/i18n/client';
 import { Loader } from 'lucide-react';
+import { useUserContext } from '../context/UserContext';
 
 export default function Content({lang}: { lang?: string }) {
 	const [searchValue, setSearchValue] = useState('');
@@ -23,6 +24,7 @@ export default function Content({lang}: { lang?: string }) {
 	const [hasMore, setHasMore] = useState(true);
 	const observerRef = useRef<HTMLDivElement | null>(null);
 	const { t } = useTranslation(lang!, 'search');
+	const { shopId } = useUserContext();
 
 	const fetchData = async (searchTerm: string, page: number) => {
 		if (isLoading || !hasMore) return;

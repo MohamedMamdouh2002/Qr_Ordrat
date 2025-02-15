@@ -6,8 +6,9 @@ import sliderPhoto from '@public/assets/Web-00h-1.jpg'
 import sliderPhoto1 from '@public/assets/9175da.jpg'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { shopId } from '@/config/shopId';
+// import { shopId } from '@/config/shopId';
 import { API_BASE_URL } from '@/config/base-url';
+import { useUserContext } from '../context/UserContext';
 type images={
     img:any
 }
@@ -24,6 +25,7 @@ type Banner = {
   };
 function MainSlider() {
   const [banner, setbanner] = useState<Banner[]>([]);
+  const { shopId } = useUserContext();
 
     const [loading, setLoading] = useState(false);
 

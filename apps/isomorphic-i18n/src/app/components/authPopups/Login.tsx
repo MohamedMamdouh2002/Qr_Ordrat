@@ -13,7 +13,7 @@ import Image from 'next/image';
 import { Input } from 'rizzui';
 import * as yup from 'yup';
 
-import { shopId } from '@/config/shopId';
+// import { shopId } from '@/config/shopId';
 import { API_BASE_URL } from '@/config/base-url';
 import { method } from 'lodash';
 import { useUserContext } from '../context/UserContext';
@@ -33,7 +33,7 @@ type Props = {
 function Login({ onLogin, setCurrentModal }: Props, { lang }: { lang?: string }) {
 	const { t } = useTranslation(lang!, 'nav');
 
-	const { accessToken, setAccessToken, token, setToken } = useUserContext()
+	const { accessToken, setAccessToken, token, setToken, shopId } = useUserContext()
 	const [loading, setLoading] = useState(false);
 	const [logoUrl, setLogoUrl] = useState<string | null>(null);
     const [shopName, setShopName] = useState<string | null>(null);
