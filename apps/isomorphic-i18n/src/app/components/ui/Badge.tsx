@@ -15,7 +15,7 @@ function Badge({ Icon, title, className }: Props) {
 	return (
 		<div
 			className={cn(
-				'flex items-center gap-1 bg-Color30 text-mainColor   font-semibold text-[10px] w-fit px-1 py-.5 rounded-md',
+				'flex items-center gap-1 bg-Color30  text-mainColor   font-semibold text-[10px] w-fit px-1 py-.5 rounded-md',
 				className
 			)}
 		>

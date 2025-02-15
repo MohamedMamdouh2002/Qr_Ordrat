@@ -1,7 +1,7 @@
 'use client';
 
 import { API_BASE_URL } from '@/config/base-url';
-import { shopId } from '@/config/shopId';
+// import { shopIdId } from '@/config/shopIdId';
 import { AllCategories, Food, FoodId, Order, Review } from '@/types';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
@@ -41,6 +41,12 @@ type UserContextType = {
   product: string[];
   setProduct: React.Dispatch<React.SetStateAction<string[]>>;
 
+<<<<<<< HEAD
+=======
+  shopId: string;
+  setshopId: React.Dispatch<React.SetStateAction<string>>;
+  
+>>>>>>> db2b0d9290a7c3e127c40071a2922b49266397f6
   branchZones: { lat: number; lng: number; zoonRadius: number }[];
   setBranchZones: React.Dispatch<React.SetStateAction<{ lat: number; lng: number; zoonRadius: number }[]>>;
 
@@ -62,8 +68,14 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [faqs, setFaqs] = useState<FaqType[]>([]);
   const [updatefaqs, setUpdateFaqs] = useState<boolean>(false);
   const [branchZones, setBranchZones] = useState<{ lat: number; lng: number; zoonRadius: number }[]>([]);
+<<<<<<< HEAD
 
   async function GetHome({ lang }: { lang: string }) {
+=======
+  const [shopId, setshopId] = useState<string>('');
+    
+  async function GetHome({lang}:{lang:string}) {
+>>>>>>> db2b0d9290a7c3e127c40071a2922b49266397f6
     try {
       const response = await fetch(`${API_BASE_URL}/api/Category/GetAll/${shopId}`, {
         method: 'GET',
@@ -125,6 +137,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   return (
     <UserContext.Provider value={{
+<<<<<<< HEAD
       product, setProduct,
       order, setOrder,
       token, setToken,
@@ -139,6 +152,23 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       branchZones, setBranchZones,
       page, setPage,
       GetHome,
+=======
+      product,setProduct,
+      order,setOrder,
+      token,setToken, 
+      orderNote, setOrderNote, 
+      copone, setCopone, 
+      profileUserName, setProfileUserName, 
+      accessToken,setAccessToken, 
+      userData, setUserData, 
+      updateAddresses, setUpdateAddresses, 
+      faqs, setFaqs, 
+      updatefaqs, setUpdateFaqs, 
+      branchZones, setBranchZones, 
+      shopId, setshopId, 
+      page, setPage, 
+      GetHome, 
+>>>>>>> db2b0d9290a7c3e127c40071a2922b49266397f6
       GetProduct,
       GetRewiew
     }}>
