@@ -12,7 +12,7 @@ import { useUserContext } from '../context/UserContext';
 import { useTranslation } from '@/app/i18n/client';
 import useAddressValidation from '../ui/forms/NewAddressSchema';
 import { PhoneNumber } from '@ui/phone-input';
-import { shopId } from '@/config/shopId';
+// import { shopId } from '@/config/shopId';
 import { useState } from 'react';
 
 export default function AddressModalWithLogin({
@@ -27,7 +27,7 @@ export default function AddressModalWithLogin({
 	lang?:string;
 }) {
 	const [schema, initialValues] = useAddressValidation();
-	const { updateAddresses, setUpdateAddresses, branchZones } = useUserContext();
+	const { updateAddresses, setUpdateAddresses, branchZones, shopId } = useUserContext();
 	const { t } = useTranslation(lang!, 'profile');
 	const [loading, setLoading] = useState(false);
 	// console.log("address: ",address);

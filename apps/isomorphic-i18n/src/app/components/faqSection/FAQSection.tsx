@@ -19,7 +19,7 @@ import { routes } from '@/config/routes';
 import { fetchData } from '@/utils/fetch/fetch';
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../context/UserContext';
-import { shopId } from '@/config/shopId';
+// import { shopId } from '@/config/shopId';
 import { useTranslation } from '@/app/i18n/client';
 import { Loader } from 'lucide-react';
 
@@ -137,7 +137,7 @@ function FAQSection({ lang }: { lang: string }) {
   // ]; 
   
   const [faqData, setFaqData] = useState<FaqType[]>([]);
-  const { setFaqs,updatefaqs,setUpdateFaqs } = useUserContext(); 
+  const { setFaqs,updatefaqs,setUpdateFaqs, shopId } = useUserContext(); 
   const { t } = useTranslation(lang!, 'nav');
   const [loading, setLoading] = useState(false); 
 

@@ -20,7 +20,7 @@ import { useUserContext } from '@/app/components/context/UserContext';
 import { MadeOrderInput, madeOrderSchema } from '@/validators/checkoutcreditecard.schema';
 import { useCart } from '@/store/quick-cart/cart.context';
 import usePrice from '@hooks/use-price';
-import { shopId } from '@/config/shopId';
+// import { shopId } from '@/config/shopId';
 import axiosClient from '@/app/components/fetch/api';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
@@ -53,7 +53,7 @@ export default function CheckoutPageWrapper({
 }) {
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
-  const { orderNote, setOrderNote, copone, setCopone } = useUserContext();
+  const { orderNote, setOrderNote, copone, setCopone, shopId } = useUserContext();
   const { items, total, addItemToCart, removeItemFromCart, clearItemFromCart } =
     useCart();
   const { price: totalPrice } = usePrice({

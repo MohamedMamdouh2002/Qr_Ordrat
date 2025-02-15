@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import { useUserContext } from '../context/UserContext';
 import { fetchData } from '@/utils/fetch/fetch';
-import { shopId } from '@/config/shopId';
+// import { shopId } from '@/config/shopId';
 import { useParams } from 'next/navigation';
 import { Loader } from 'lucide-react';
 
@@ -17,7 +17,7 @@ function FAQSectionContent({ lang }: { lang: string }) {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   // const { faqs } = useUserContext(); 
   const [faqData, setFaqData] = useState<FaqType[]>([]);
-  const { setFaqs,updatefaqs,setUpdateFaqs } = useUserContext(); 
+  const { setFaqs,updatefaqs,setUpdateFaqs, shopId } = useUserContext(); 
   
   console.log("faqscontext: ",faqData);
   const toggleAccordion = (id: string) => {

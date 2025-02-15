@@ -3,7 +3,7 @@ import { useUserContext } from '@/app/components/context/UserContext';
 import Card from '@/app/components/ui/card/Card';
 import MediumCard from '@/app/components/ui/mediumCard/MediumCard'; 
 import { API_BASE_URL } from '@/config/base-url';
-import { shopId } from '@/config/shopId';
+// import { shopId } from '@/config/shopId';
 import { Food } from '@/types';
 import { Loader } from 'lucide-react';
 import { useParams } from 'next/navigation';
@@ -22,6 +22,7 @@ export default function AllProduct({
   const [hasMore, setHasMore] = useState(true); 
   const params = useParams();
   const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
+  const { shopId } = useUserContext();
 
   // ref لمراقبة الوصول إلى نهاية القائمة
   const observerRef = useRef<HTMLDivElement | null>(null);
