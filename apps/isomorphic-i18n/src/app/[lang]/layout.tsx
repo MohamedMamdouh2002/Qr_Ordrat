@@ -48,7 +48,6 @@ function getServerSiteUrl() {
 //   const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
 //   const pathname = headers().get("referer") || "/";
 //   return `${protocol}://${host}${new URL(pathname).pathname}`;
-// }
 async function fetchShopData(shopId: string) {
   const siteUrl = getServerSiteUrl(); // Get website URL dynamically
   // const fullSiteUrl = getFullServerUrl(); // Get website URL dynamically
@@ -158,7 +157,7 @@ function hexToRgba(hex: string, opacity: number) {
 
 export default async function RootLayout({
   children,
-  params: { lang },
+  params: { lang, id },
 }: {
   children: React.ReactNode;
   params: any;
