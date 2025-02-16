@@ -36,14 +36,8 @@ export async function generateStaticParams() {
 // function getServerSiteUrl() {
 //   const host = headers().get("host") || "localhost:3000";
 //   const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
-<<<<<<< HEAD
-//   return ${protocol}://${host};
-// }
-
-=======
 //   return `${protocol}://${host}`;
-// }
->>>>>>> db2b0d9290a7c3e127c40071a2922b49266397f6
+// } 
 function getServerSiteUrl() {
   const host = "Karam%20ELSham";
   const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
@@ -53,12 +47,7 @@ function getServerSiteUrl() {
 //   const host = headers().get("host") || "localhost:3000";
 //   const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
 //   const pathname = headers().get("referer") || "/";
-<<<<<<< HEAD
-//   // return `${protocol}://${host}${new URL(pathname).pathname}`;
-=======
 //   return `${protocol}://${host}${new URL(pathname).pathname}`;
->>>>>>> db2b0d9290a7c3e127c40071a2922b49266397f6
-// }
 async function fetchShopData(shopId: string) {
   const siteUrl = getServerSiteUrl(); // Get website URL dynamically
   // const fullSiteUrl = getFullServerUrl(); // Get website URL dynamically
@@ -214,11 +203,7 @@ export default async function RootLayout({
                 <ThemeProvider>
                   <UserProvider>
                     <NextProgress />
-<<<<<<< HEAD
-                    <ShopLocalStorage subdomainName={shopData.subdomainName} logoUrl={shopData.logoUrl} branchZones={branchZones}  />
-=======
                     <ShopLocalStorage subdomainName={shopData.subdomainName} logoUrl={shopData.logoUrl} branchZones={branchZones} shopId={shopId.id} />
->>>>>>> db2b0d9290a7c3e127c40071a2922b49266397f6
                     {children}
                     <Toaster />
                     <GlobalDrawer />
